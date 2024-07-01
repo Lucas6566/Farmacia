@@ -1,0 +1,20 @@
+unit Farmacia.Model.Dao.FormaPagamento.Interfaces;
+
+interface
+
+type
+  iCrudFormaPagamento = interface
+    Ctrl+Shift+G
+    function AlimentarDados:iCrudFormaPagamento;
+    function Cadastro:iCrudFormaPagamento;
+    function DataSet:TDataSet;
+    function Select:iCrudFormaPagamento;
+    function Insert:iCrudFormaPagamento;
+    function Update:iCrudFormaPagamento;
+    function Delete:iCrudFormaPagamento;
+  end;
+
+
+implementation
+
+end.

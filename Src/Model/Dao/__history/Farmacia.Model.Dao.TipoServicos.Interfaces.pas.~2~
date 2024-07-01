@@ -1,0 +1,24 @@
+unit Farmacia.Model.Dao.TipoServicos.Interfaces;
+
+interface
+
+uses
+  Data.DB,
+  Farmacia.Model.Entity.TipoServicos.Interfaces;
+
+type
+  iCrudTipoServico = interface
+    ['{3CC21BA4-C2D4-4B01-BE3D-1DB53B395DB7}']
+    function AlimentaDados : iModelTipoServicos;
+    function Cadastro : iModelTipoServicos;
+
+    function OpenQuery : iCrudTipoServico;
+    function Select : iCrudTipoServico;
+    function Insert : iCrudTipoServico;
+    function Update : iCrudTipoServico;
+    function Delete : iCrudTipoServico;
+  end;
+
+implementation
+
+end.

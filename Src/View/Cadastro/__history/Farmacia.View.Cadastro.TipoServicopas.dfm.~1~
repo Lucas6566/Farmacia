@@ -1,0 +1,6 @@
+inherited FormCadastroPai1: TFormCadastroPai1
+  Caption = 'FormCadastroPai1'
+  ExplicitWidth = 636
+  ExplicitHeight = 479
+  TextHeight = 15
+end

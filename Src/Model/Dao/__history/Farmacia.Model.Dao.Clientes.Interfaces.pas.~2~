@@ -1,0 +1,25 @@
+unit Farmacia.Model.Dao.Clientes.Interfaces;
+
+interface
+
+uses
+  Data.DB,
+  Farmacia.Model.Entity.Clientes.Interfaces;
+
+type
+  iCrudClientes = interface
+    ['{0A6DD146-81E3-4B89-B54C-955FF0B27D57}']
+    function AlimentaDados : iModelClientes;
+    function Cadastro : iModelClientes;
+
+    function OpenQuery : iCrudClientes;
+    function Select : iCrudClientes;
+    function Insert : iCrudClientes;
+    function Update : iCrudClientes;
+    function Delete : iCrudClientes;
+  end;
+
+
+implementation
+
+end.

@@ -1,0 +1,22 @@
+unit Farmacia.Model.Dao.MovimentoDetalhes.Interfaces;
+
+interface
+
+type
+  iCrudMovimentoDetalhes = interface
+    ['{C76E9F4D-4A23-4DF9-8479-C800BAE597EC}']
+    function AlimentarDados:iCrudMovimentoDetalhes;
+    function Cadastro:iCrudMovimentoDetalhes;
+    function DataSet:TDataSet;
+    function Select(pTodosRegistro:Boolean = True):iCrudMovimentoDetalhes;
+    function Insert:iCrudMovimentoDetalhes;
+    function Update:iCrudMovimentoDetalhes;
+    function Delete:iCrudMovimentoDetalhes;
+    function This:iCrudMovimentoDetalhes;
+    function SetDataSet(pDataSource:TDataSource):iCrudMovimentoDetalhes;
+    function SetIndexFieldNames(pValue:String):iCrudMovimentoDetalhes;
+  end;
+
+implementation
+
+end.

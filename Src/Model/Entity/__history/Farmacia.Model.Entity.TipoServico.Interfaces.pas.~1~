@@ -1,0 +1,14 @@
+unit Farmacia.Model.Entity.TipoServicos.Interfaces;
+
+interface
+
+type
+  iModelTipoServicos = interface
+    ['{2C21B968-8191-4AAD-AC8B-0D455E845696}']
+    function Codigo( aValue : Integer ): iModelTipoServicos;
+    function Codigo( aValue : String ): iModelTipoServicos;
+  end;
+
+implementation
+
+end.

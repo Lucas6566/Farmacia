@@ -1,0 +1,107 @@
+object FormMain: TFormMain
+  Left = 0
+  Top = 0
+  Align = alClient
+  BorderStyle = bsNone
+  Caption = 'FormMain'
+  ClientHeight = 673
+  ClientWidth = 1070
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -12
+  Font.Name = 'Segoe UI'
+  Font.Style = []
+  OnCreate = FormCreate
+  TextHeight = 15
+  object PnlMain: TPanel
+    Left = 0
+    Top = 0
+    Width = 1070
+    Height = 673
+    Align = alClient
+    BevelOuter = bvNone
+    Color = clOlive
+    Ctl3D = True
+    ParentBackground = False
+    ParentCtl3D = False
+    TabOrder = 0
+    object PnlBackground: TPanel
+      Left = 0
+      Top = 0
+      Width = 1070
+      Height = 673
+      Align = alClient
+      BevelOuter = bvNone
+      Color = clOlive
+      Ctl3D = True
+      ParentBackground = False
+      ParentCtl3D = False
+      TabOrder = 0
+      object PnlTopMain: TPanel
+        Left = 0
+        Top = 0
+        Width = 1070
+        Height = 201
+        Align = alTop
+        BevelOuter = bvNone
+        Color = clOlive
+        Ctl3D = True
+        Padding.Top = 35
+        Padding.Bottom = 35
+        ParentBackground = False
+        ParentCtl3D = False
+        TabOrder = 0
+        object PnlTopMainBtn: TPanel
+          Left = 0
+          Top = 35
+          Width = 1070
+          Height = 131
+          Align = alClient
+          BevelOuter = bvNone
+          Color = clOlive
+          Ctl3D = True
+          Padding.Left = 30
+          ParentBackground = False
+          ParentCtl3D = False
+          TabOrder = 0
+          object PnlTopMainBtnCliente: TPanel
+            Left = 30
+            Top = 0
+            Width = 211
+            Height = 131
+            Align = alLeft
+            BevelOuter = bvNone
+            Color = clOlive
+            Ctl3D = True
+            ParentBackground = False
+            ParentCtl3D = False
+            TabOrder = 0
+            object SpbPesquisaCliente: TSpeedButton
+              Left = 0
+              Top = 0
+              Width = 211
+              Height = 131
+              Align = alClient
+              DisabledImageName = 'BtnCliente'
+              Caption = 'CLIENTE'
+              OnClick = SpbPesquisaClienteClick
+              ExplicitLeft = 56
+              ExplicitTop = 56
+              ExplicitWidth = 23
+              ExplicitHeight = 22
+            end
+          end
+        end
+      end
+    end
+  end
+  object BitBtn1: TBitBtn
+    Left = 496
+    Top = 328
+    Width = 75
+    Height = 25
+    Caption = 'BitBtn1'
+    TabOrder = 1
+  end
+end

@@ -1,0 +1,27 @@
+unit Farmacia.Service.Conexao;
+
+interface
+
+uses
+  FireDAC.Comp.Client;
+
+type
+  TConexao = class
+  private
+
+  public
+    FDConnection : TFDConnection;
+
+    class procedure SetConexao;
+  end;
+
+implementation
+
+{ TConexao }
+
+class procedure TConexao.SetConexao;
+begin
+
+end;
+
+end.

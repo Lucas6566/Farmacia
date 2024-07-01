@@ -1,0 +1,54 @@
+unit NewRetail.View.Main;
+
+interface
+
+uses
+  Winapi.Windows,
+  Winapi.Messages,
+  System.SysUtils,
+  System.Variants,
+  System.Classes,
+  Vcl.Graphics,
+  Vcl.Controls,
+  Vcl.Forms,
+  Vcl.Dialogs,
+  Vcl.StdCtrls,
+  Vcl.ExtCtrls,
+  Vcl.Buttons,
+  Router4D.Interfaces;
+
+type
+  TFormMain = class(TForm, iRouter4DComponent)
+    PnlBackground: TPanel;
+    procedure FormCreate(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+    function Render : TForm;
+    procedure unRender;
+  end;
+
+var
+  FormMain: TFormMain;
+
+implementation
+
+{$R *.dfm}
+
+procedure TFormMain.FormCreate(Sender: TObject);
+begin
+  PnlBackground.Color := $00FBFAF0;
+end;
+
+function TFormMain.Render: TForm;
+begin
+  Result := Self;
+end;
+
+procedure TFormMain.unRender;
+begin
+
+end;
+
+end.

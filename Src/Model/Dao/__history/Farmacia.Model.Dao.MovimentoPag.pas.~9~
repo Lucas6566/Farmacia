@@ -1,0 +1,193 @@
+unit Farmacia.Model.Dao.MovimentoPag;
+
+interface
+
+uses
+  Data.DB,
+  Datasnap.DBClient,
+  FireDAC.Stan.Param,
+  FireDAC.Comp.Client,
+  FireDAC.DApt,
+
+  FireDAC.Stan.Intf,
+  FireDAC.Stan.Option,
+  FireDAC.Stan.Error,
+  FireDAC.UI.Intf,
+  FireDAC.Phys.Intf,
+  FireDAC.Stan.Def,
+  FireDAC.Stan.Pool,
+  FireDAC.Stan.Async,
+  FireDAC.Phys,
+  FireDAC.Phys.FB,
+  FireDAC.Phys.FBDef,
+  FireDAC.VCLUI.Wait,
+
+  Midaslib,
+  Farmacia.Model.Dao.MovimentoPag.Interfaces,
+  Farmacia.Model.Dao.Pai.Interfaces,
+  Farmacia.Model.Dao.Pai,
+  Farmacia.Model.Entity.MovimentoPag.Interfaces,
+  Farmacia.Model.Entity.MovimentoPag,
+  Farmacia.Util.FunctionSQL;
+
+type
+  TCrudMovimentoPag = class(TDaoPai, iCrudMovimentoPag)
+  private
+    FMovimentoPag:iModelMovimentoPag;
+
+    procedure CreateFields;
+  public
+    function AlimentarDados:iModelMovimentoPag;
+    function Cadastro:iModelMovimentoPag;
+	
+  	function OpenQuery:iCrudMovimentoPag;
+    function DataSet:TDataSet;
+    function Select:iCrudMovimentoPag;
+    function Insert:iCrudMovimentoPag;
+    function Update:iCrudMovimentoPag;
+    function Delete:iCrudMovimentoPag;
+
+    constructor Create;
+    destructor Destroy; override;
+    class function New : iCrudMovimentoPag;
+  end;
+
+implementation
+
+{ TCrudMovimentoPag }
+
+constructor TCrudMovimentoPag.Create;
+begin
+  inherited;
+  GetInstancia;
+  FMovimentoPag := TModelMovimentoPag.New;
+  CreateFields;
+end;
+
+destructor TCrudMovimentoPag.Destroy;
+begin
+  inherited;
+end;
+
+class function TCrudMovimentoPag.New:iCrudMovimentoPag;
+begin
+  Result := Self.Create;
+end;
+
+function TCrudMovimentoPag.AlimentarDados:iModelMovimentoPag;
+begin
+  Result := FMovimentoPag.SeqPagamento(ClientDataSet.FieldByName('SEQ_PAGAMENTO').AsInteger)
+                         .CodMovimento(ClientDataSet.FieldByName('COD_MOVIMENTO').AsInteger)
+                         .SeqMovimento(ClientDataSet.FieldByName('SEQ_MOVIMENTO').AsInteger)
+                         .CodPagamento(ClientDataSet.FieldByName('COD_PAGAMENTO').AsInteger)
+                         .DesPagamento(ClientDataSet.FieldByName('DES_PAGAMENTO').AsString)
+                         .VlrReceber(ClientDataSet.FieldByName('VLR_RECEBER').AsFloat);
+end;
+
+function TCrudMovimentoPag.Cadastro:iModelMovimentoPag;
+begin
+  Result := FMovimentoPag;
+end;
+
+procedure TCrudMovimentoPag.CreateFields;
+begin
+  ClientDataSet.FieldDefs.Add('SEQ_PAGAMENTO', ftInteger);
+  ClientDataSet.FieldDefs.Add('COD_MOVIMENTO', ftInteger);
+  ClientDataSet.FieldDefs.Add('SEQ_MOVIMENTO', ftInteger);
+  ClientDataSet.FieldDefs.Add('COD_PAGAMENTO', ftInteger);
+  ClientDataSet.FieldDefs.Add('DES_PAGAMENTO', ftString, 80);
+  ClientDataSet.FieldDefs.Add('VLR_RECEBER', ftFloat);
+  ClientDataSet.CreateDataSet;
+
+  ClientDataSet.IndexFieldNames := 'COD_MOVIMENTO';
+end;
+
+function TCrudMovimentoPag.DataSet: TDataSet;
+begin
+  Result := ClientDataSet;
+end;
+
+function TCrudMovimentoPag.Select: iCrudMovimentoPag;
+begin
+  Result := Self;
+
+  Query.Close;
+  Query.SQL.Clear;
+  Query.SQL.Add('SELECT');
+  Query.SQL.Add('SEQ_PAGAMENTO,');
+  Query.SQL.Add('COD_MOVIMENTO,');
+  Query.SQL.Add('SEQ_MOVIMENTO,');
+  Query.SQL.Add('COD_PAGAMENTO,');
+  Query.SQL.Add('DES_PAGAMENTO,');
+  Query.SQL.Add('VLR_RECEBER');
+  Query.SQL.Add('FROM MOVIMENTO_PAGAMENTO');
+
+  OpenQuery;
+end;
+
+function TCrudMovimentoPag.Delete: iCrudMovimentoPag;
+begin
+  Result := Self;
+
+  Query.Close;
+  Query.SQL.Clear;
+  Query.SQL.Add(' DELETE FROM MOVIMENTO_PAGAMENTO');
+end;
+
+function TCrudMovimentoPag.Insert: iCrudMovimentoPag;
+begin
+  Result := Self;
+
+  Query.Close;
+  Query.SQL.Clear;
+  Query.SQL.Add('INSERT INTO MOVIMENTO_PAGAMENTO (');
+  Query.SQL.Add(' SEQ_PAGAMENTO,');
+  Query.SQL.Add(' COD_MOVIMENTO,');
+  Query.SQL.Add(' SEQ_MOVIMENTO,');
+  Query.SQL.Add(' COD_PAGAMENTO,');
+  Query.SQL.Add(' DES_PAGAMENTO,');
+  Query.SQL.Add(' VLR_RECEBER');
+  Query.SQL.Add(' ) VALUES ( ');
+  Query.SQL.Add(' :pSEQ_PAGAMENTO,');
+  Query.SQL.Add(' :pCOD_MOVIMENTO,');
+  Query.SQL.Add(' :pSEQ_MOVIMENTO,');
+  Query.SQL.Add(' :pCOD_PAGAMENTO,');
+  Query.SQL.Add(' :pDES_PAGAMENTO,');
+  Query.SQL.Add(' :pVLR_RECEBER');
+  Query.SQL.Add(' )');
+
+  Query.ParamByName('pSEQ_PAGAMENTO').AsInteger := Cadastro.GetSeqPagamento;
+  Query.ParamByName('pCOD_MOVIMENTO').AsInteger := Cadastro.GetCodMovimento;
+  Query.ParamByName('pSEQ_MOVIMENTO').AsInteger := Cadastro.GetSeqMovimento;
+  Query.ParamByName('pCOD_PAGAMENTO').AsInteger := Cadastro.GetCodPagamento;
+  Query.ParamByName('pDES_PAGAMENTO').AsString := Cadastro.GetDesPagamento;
+  Query.ParamByName('pVLR_RECEBER').AsFloat := Cadastro.GetVlrReceber;
+
+  Query.ExecSQL;
+end;
+
+function TCrudMovimentoPag.Update: iCrudMovimentoPag;
+begin
+  Result := Self;
+
+  Query.Close;
+  Query.SQL.Clear;
+  Query.SQL.Add('UPDATE MOVIMENTO_PAGAMENTO SET ');
+  Query.SQL.Add(' SEQ_PAGAMENTO =:pSEQ_PAGAMENTO,');
+  Query.SQL.Add(' COD_MOVIMENTO =:pCOD_MOVIMENTO,');
+  Query.SQL.Add(' SEQ_MOVIMENTO =:pSEQ_MOVIMENTO,');
+  Query.SQL.Add(' COD_PAGAMENTO =:pCOD_PAGAMENTO,');
+  Query.SQL.Add(' DES_PAGAMENTO =:pDES_PAGAMENTO,');
+  Query.SQL.Add(' VLR_RECEBER =:pVLR_RECEBER');
+
+  Query.ParamByName('pSEQ_PAGAMENTO').AsInteger := Cadastro.GetSeqPagamento;
+  Query.ParamByName('pCOD_MOVIMENTO').AsInteger := Cadastro.GetCodMovimento;
+  Query.ParamByName('pSEQ_MOVIMENTO').AsInteger := Cadastro.GetSeqMovimento;
+  Query.ParamByName('pCOD_PAGAMENTO').AsInteger := Cadastro.GetCodPagamento;
+  Query.ParamByName('pDES_PAGAMENTO').AsString := Cadastro.GetDesPagamento;
+  Query.ParamByName('pVLR_RECEBER').AsFloat := Cadastro.GetVlrReceber;
+
+  Query.ExecSQL;
+end;
+
+end.

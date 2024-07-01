@@ -1,0 +1,337 @@
+inherited FormCadastroCliente: TFormCadastroCliente
+  Caption = 'Cadastro de Cliente'
+  ClientHeight = 331
+  ClientWidth = 502
+  ExplicitWidth = 518
+  ExplicitHeight = 370
+  TextHeight = 15
+  inherited PnlBackground: TPanel
+    Width = 502
+    Height = 331
+    ExplicitWidth = 506
+    ExplicitHeight = 332
+    inherited Panel2: TPanel
+      Top = 294
+      Width = 504
+      TabOrder = 1
+      ExplicitTop = 294
+      ExplicitWidth = 504
+      inherited SpbGravar: TSpeedButton
+        Left = 382
+        ExplicitLeft = 382
+      end
+      inherited SpbCancelar: TSpeedButton
+        Left = 257
+        ExplicitLeft = 257
+      end
+    end
+    object PctCadastro: TcxPageControl
+      Left = 1
+      Top = 1
+      Width = 504
+      Height = 293
+      Align = alClient
+      TabOrder = 0
+      Properties.ActivePage = TbSCliente
+      Properties.CustomButtons.Buttons = <>
+      ClientRectBottom = 289
+      ClientRectLeft = 4
+      ClientRectRight = 500
+      ClientRectTop = 26
+      object TbSCliente: TcxTabSheet
+        Caption = 'Cliente'
+        ImageIndex = 0
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        object PnlCadastro: TPanel
+          Left = 0
+          Top = 0
+          Width = 500
+          Height = 264
+          Align = alTop
+          TabOrder = 0
+          ExplicitWidth = 496
+          object Label1: TLabel
+            Left = 7
+            Top = 9
+            Width = 39
+            Height = 15
+            Caption = 'C'#243'digo'
+          end
+          object Label2: TLabel
+            Left = 130
+            Top = 9
+            Width = 33
+            Height = 15
+            Caption = 'Nome'
+          end
+          object Label18: TLabel
+            Left = 394
+            Top = 90
+            Width = 18
+            Height = 15
+            Caption = 'Fax'
+          end
+          object Label10: TLabel
+            Left = 287
+            Top = 90
+            Width = 37
+            Height = 15
+            Caption = 'Celular'
+          end
+          object Label12: TLabel
+            Left = 287
+            Top = 49
+            Width = 22
+            Height = 15
+            Caption = 'Fixo'
+          end
+          object Label3: TLabel
+            Left = 7
+            Top = 49
+            Width = 105
+            Height = 15
+            Caption = 'Endere'#231'o Eletronico'
+          end
+          object LblCpfCnpj: TLabel
+            Left = 394
+            Top = 49
+            Width = 53
+            Height = 15
+            Caption = 'CPF/CNPJ'
+          end
+          object LblTipoPessoa: TLabel
+            Left = 421
+            Top = 9
+            Width = 30
+            Height = 15
+            Caption = 'Fisico'
+          end
+          object EdtCodigo: TEdit
+            Left = 7
+            Top = 24
+            Width = 117
+            Height = 23
+            TabOrder = 0
+          end
+          object EdtNome: TEdit
+            Left = 130
+            Top = 24
+            Width = 288
+            Height = 23
+            ImeName = 'Portuguese (Brazilian ABNT)'
+            TabOrder = 1
+          end
+          object PnlCadastroEndereco: TPanel
+            Left = 3
+            Top = 94
+            Width = 278
+            Height = 169
+            Align = alCustom
+            TabOrder = 2
+            DesignSize = (
+              278
+              169)
+            object Label6: TLabel
+              Left = 7
+              Top = 5
+              Width = 21
+              Height = 15
+              Caption = 'CEP'
+            end
+            object Label7: TLabel
+              Left = 7
+              Top = 85
+              Width = 77
+              Height = 15
+              Caption = 'Complemento'
+            end
+            object Label8: TLabel
+              Left = 7
+              Top = 125
+              Width = 31
+              Height = 15
+              Caption = 'Bairro'
+            end
+            object Label15: TLabel
+              Left = 7
+              Top = 45
+              Width = 62
+              Height = 15
+              Caption = 'Logradouro'
+            end
+            object Label16: TLabel
+              Left = 118
+              Top = 5
+              Width = 37
+              Height = 15
+              Caption = 'Cidade'
+            end
+            object Label4: TLabel
+              Left = 245
+              Top = 2
+              Width = 14
+              Height = 15
+              Caption = 'UF'
+            end
+            object Label5: TLabel
+              Left = 227
+              Top = 45
+              Width = 14
+              Height = 15
+              Caption = 'N'#176
+            end
+            object EdtCep: TEdit
+              Left = 7
+              Top = 20
+              Width = 104
+              Height = 23
+              TabOrder = 0
+            end
+            object EdtComplemento: TEdit
+              Left = 7
+              Top = 100
+              Width = 264
+              Height = 23
+              TabOrder = 1
+            end
+            object EdtBairro: TEdit
+              Left = 7
+              Top = 140
+              Width = 124
+              Height = 23
+              TabOrder = 2
+            end
+            object EdtLogradouro: TEdit
+              Left = 7
+              Top = 60
+              Width = 219
+              Height = 23
+              TabOrder = 3
+            end
+            object EdtCidade: TEdit
+              Left = 118
+              Top = 20
+              Width = 124
+              Height = 23
+              TabOrder = 4
+            end
+            object EdtUf: TEdit
+              Left = 245
+              Top = 20
+              Width = 26
+              Height = 23
+              TabOrder = 5
+            end
+            object btnAdiPesquisar: TcxButton
+              Left = 132
+              Top = 140
+              Width = 25
+              Height = 23
+              Cursor = crHandPoint
+              Hint = 'Pesquisar'
+              Anchors = [akTop, akRight]
+              LookAndFeel.NativeStyle = False
+              LookAndFeel.SkinName = 'Black'
+              OptionsImage.Glyph.SourceDPI = 96
+              OptionsImage.Glyph.Data = {
+                424D360400000000000036000000280000001000000010000000010020000000
+                000000000000C40E0000C40E0000000000000000000000000000000000000000
+                000000000000281B022B8559078EC78708D3E89D09F3E99F08F3CB8A06D48C5E
+                04952C1E012C0000000000000000000000000000000000000000000000000504
+                000686590993E79A0EFCEC9E0DFFEEA00CFFF1A30AFFEFA10AFFE39309FFE797
+                08FFEC9D07FC906304950503000500000000000000000000000005030006A76E
+                0DBCE59710FFE89A0FFFEA9C0EFFEC9E0DFFE89A0CFFD8870BFFDC8A0AFFE190
+                09FFE79708FFEF9F07FFB87E05BE05030005000000000000000081540B94E193
+                12FFE39511FFE59710FFE89A0FFFE4950EFFCE7B0EFFD07D0CFFD6840BFFDC8A
+                0AFFEEC176FFEEB44EFFEF9F07FF90630495000000002618042CDA8D15FCDF91
+                13FFE19312FFE39511FFDE900FFFC77616FFC77514FFCB780DFFD07D0CFFE9BC
+                7AFFFEFBF6FFE9AE4BFFE79708FFEC9D07FC2C1E012C7A4E0D90DA8C16FFDD8F
+                15FFDF9113FFD9942AFFDDC5ACFFFEFCFAFFFFFFFFFFF3E1CCFFE8C496FFFDFA
+                F6FFE1A54CFFDC8A0AFFE19009FFE79708FF8C5D0494B37214D5D88A17FFDA8C
+                16FFDC9423FFD3CBC2FFCDB7A4FFC78747FFC9853EFFE5C199FFFFFEFEFFE1B0
+                72FFD07D0CFFD6840BFFDC8A0AFFE69509FFCB8C06D3C97F18F2D68818FFD88A
+                17FFDAB987FFD0C1B4FFB05A10FFB35D0EFFB7620FFFBC660EFFE7C7A3FFEFD8
+                BDFFCB780DFFD07D0CFFDD8C0AFFF1A309FFE89E08F1C87E19F3D48619FFD688
+                18FFD8C8B0FFC39B7BFFAB530FFFB0590EFFB35D0EFFB7620FFFCF9254FFFAF3
+                ECFFC5710DFFD3810EFFEC9E0CFFF1A30AFFE79D09F2AD6C17D5D2841AFFD486
+                19FFD9C6ADFFC7A78DFFA8500EFFAB530FFFB0590EFFB35D0EFFD09B66FFF7ED
+                E3FFCA770EFFE89A0EFFEC9E0DFFEEA00CFFC78708D375481091CF811BFFD284
+                1AFFD8AB6BFFD2CFCBFFB16B3BFFA8500EFFAB530FFFB3631FFFD0C5BAFFD8B3
+                89FFE49510FFE89A0FFFEA9C0EFFEC9E0DFF8559078E2416052DCB7E1CFDCF81
+                1BFFD2841BFFD7BD98FFD3D0CEFFCBB19CFFC9AB93FFD2CBC6FFD0BEABFFDE93
+                19FFE39511FFE59710FFE89A0FFFE79A0EFC281B022B00000000794B1197CD7F
+                1CFFCF811BFFD2841AFFD9A661FFD9C19EFFD8BF9AFFDAAC68FFDC8F17FFDF91
+                13FFE19312FFE39511FFE59710FF86590993000000000000000006030107985E
+                16BECD7F1CFFCF811BFFD2841AFFD48619FFD68818FFD88A17FFDA8C16FFDD8F
+                15FFDF9113FFE19312FFA86E0DBD050400060000000000000000000000000603
+                0107784A1196CB7E1CFDCF811BFFD2841AFFD48619FFD68818FFD88A17FFDA8C
+                16FFDA8D15FC81540B9405030006000000000000000000000000000000000000
+                0000000000002416052D75481091AC6B16D4C97E19F4CB8018F4B27114D47A4E
+                0D902618042C00000000000000000000000000000000}
+              OptionsImage.ImageIndex = 4
+              TabOrder = 6
+              TabStop = False
+            end
+            object EdtNumEndereco: TEdit
+              Left = 227
+              Top = 60
+              Width = 44
+              Height = 23
+              TabOrder = 7
+            end
+          end
+          object EdtFax: TEdit
+            Left = 394
+            Top = 105
+            Width = 101
+            Height = 23
+            TabOrder = 3
+          end
+          object EdtCelular: TEdit
+            Left = 288
+            Top = 105
+            Width = 100
+            Height = 23
+            TabOrder = 4
+          end
+          object EdtFixo: TEdit
+            Left = 287
+            Top = 64
+            Width = 101
+            Height = 23
+            TabOrder = 5
+          end
+          object EdtEndEletronico: TEdit
+            Left = 7
+            Top = 65
+            Width = 274
+            Height = 23
+            TabOrder = 6
+          end
+          object EdtDocumento: TEdit
+            Left = 394
+            Top = 64
+            Width = 101
+            Height = 23
+            TabOrder = 7
+          end
+          object TgSTipoPessoa: TdxToggleSwitch
+            Left = 421
+            Top = 24
+            Checked = True
+            Properties.DisplayChecked = '1'
+            Properties.DisplayUnchecked = '2'
+            Properties.DisplayGrayed = '2'
+            Properties.ValueChecked = 1
+            Properties.ValueGrayed = 3
+            Properties.ValueUnchecked = 2
+            Style.TransparentBorder = False
+            TabOrder = 8
+            OnClick = TgSTipoPessoaClick
+          end
+        end
+      end
+    end
+  end
+end

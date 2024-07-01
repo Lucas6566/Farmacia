@@ -1,0 +1,54 @@
+unit Farmacia.View.Routers;
+
+interface
+
+type
+  TRouters = Class
+    private
+
+    public
+      Constructor Create;
+      Destructor Destroy; Override;
+  End;
+
+var
+  Router : TRouters;
+
+implementation
+
+uses
+  Router4D,
+  Farmacia.View.Main,
+  Farmacia.View.Pesquisa.Funcionario,
+  Farmacia.View.Pesquisa.Servico,
+  Farmacia.View.Pesquisa.TipoServico,
+  Farmacia.View.Pesquisa.Cliente,
+  Farmacia.View.Pesquisa.Movimento;
+
+{ TRouters }
+
+constructor TRouters.Create;
+begin
+  TRouter4D
+    .Switch
+      .Router('Principal', TFormMain)
+      .Router('Funcionario', TFormPesquisaFuncionario)
+      .Router('Servico', TFormPesquisaServico)
+      .Router('TipoServico', TFormPesquisaTipoServico)
+      .Router('Cliente', TFormPesquisaCliente)
+      .Router('Movimento', TFormPesquisaMovimento);
+end;
+
+destructor TRouters.Destroy;
+begin
+
+  inherited;
+end;
+
+initialization
+  Router := TRouters.Create;
+
+Finalization
+  Router.Free;
+
+end.

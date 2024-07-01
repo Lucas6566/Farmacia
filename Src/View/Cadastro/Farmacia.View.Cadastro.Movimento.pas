@@ -1,0 +1,537 @@
+unit Farmacia.View.Cadastro.Movimento;
+
+interface
+
+uses
+  Winapi.Windows,
+  Winapi.Messages,
+  System.SysUtils,
+  System.Variants,
+  System.Classes,
+  Vcl.Graphics,
+  Vcl.Controls,
+  Vcl.Forms,
+  Vcl.Dialogs,
+  Farmacia.View.Cadastro.Pai,
+  Vcl.Buttons,
+  Vcl.ExtCtrls,
+  Vcl.StdCtrls,
+  Vcl.ComCtrls,
+  cxGraphics,
+  cxControls,
+  cxLookAndFeels,
+  cxLookAndFeelPainters,
+  cxContainer,
+  cxEdit,
+  dxSkinsCore,
+  dxSkinBlack,
+  Vcl.Menus,
+  cxCurrencyEdit,
+  cxButtons,
+  cxMaskEdit,
+  cxDropDownEdit,
+  cxLookupEdit,
+  cxDBLookupEdit,
+  cxDBLookupComboBox,
+  cxTextEdit,
+  cxStyles,
+  cxCustomData,
+  cxFilter,
+  cxData,
+  cxDataStorage,
+  cxNavigator,
+  dxDateRanges,
+  dxScrollbarAnnotations,
+  Data.DB,
+  cxDBData,
+  cxGridLevel,
+  cxClasses,
+  cxGridCustomView,
+  cxGridCustomTableView,
+  cxGridTableView,
+  cxGridDBTableView,
+  cxGrid,
+  Farmacia.Util.Types,
+  Farmacia.Controller.Cadastros,
+  Farmacia.Controller.Cadastros.Interfaces,
+  Farmacia.Model.Dao.MovimentoDetalhes,
+  Farmacia.Model.Dao.MovimentoDetalhes.Interfaces,
+  Farmacia.Util.FunctionSQL,
+  Farmacia.View.Cadastro.Pagamento,
+  Farmacia.View.Pesquisa.Generic;
+
+type
+  TFormCadastroMovimento = class(TFormCadastroPai)
+    Panel1: TPanel;
+    EdtCodCliente: TEdit;
+    Label1: TLabel;
+    Panel3: TPanel;
+    Label3: TLabel;
+    Label4: TLabel;
+    EdtCodMovimento: TEdit;
+    DtpEmissao: TDateTimePicker;
+    EdtNomeCliente: TEdit;
+    EdtDocCliente: TEdit;
+    Label2: TLabel;
+    EdtFoneCliente: TEdit;
+    Label5: TLabel;
+    Panel4: TPanel;
+    lblBarra: TLabel;
+    lblProduto: TLabel;
+    btnServPesquisa: TcxButton;
+    edtQuantidadeItem: TcxCurrencyEdit;
+    lblQuantidade: TLabel;
+    edtDescontoItem: TcxCurrencyEdit;
+    lblDesconto: TLabel;
+    edtAcrescimoItem: TcxCurrencyEdit;
+    lblAcrescimo: TLabel;
+    edtTotalItem: TcxCurrencyEdit;
+    lblTotal: TLabel;
+    GridPesquisa: TcxGrid;
+    GridPesquisaDBTableView: TcxGridDBTableView;
+    GridPesquisaLevel: TcxGridLevel;
+    Panel5: TPanel;
+    Label6: TLabel;
+    Label9: TLabel;
+    Label10: TLabel;
+    Label11: TLabel;
+    EdtDescontoTotal: TcxCurrencyEdit;
+    EdtAcrescimoTotal: TcxCurrencyEdit;
+    EdtValorTotal: TcxCurrencyEdit;
+    EdtQuantidadeTotal: TcxCurrencyEdit;
+    EdtFrete: TcxCurrencyEdit;
+    Label7: TLabel;
+    Panel6: TPanel;
+    Label8: TLabel;
+    MemObs: TMemo;
+    EdtObsServico: TcxTextEdit;
+    Label12: TLabel;
+    EdtDescServico: TEdit;
+    btnSalvar: TcxButton;
+    btnCancelar: TcxButton;
+    btnExcluir: TcxButton;
+    GridCodServico: TcxGridDBColumn;
+    GridDescServico: TcxGridDBColumn;
+    GridTipo: TcxGridDBColumn;
+    GridQtde: TcxGridDBColumn;
+    GridVlrServico: TcxGridDBColumn;
+    GridVlrDesconto: TcxGridDBColumn;
+    GridVlrAcrescimo: TcxGridDBColumn;
+    GridVlrFrete: TcxGridDBColumn;
+    GridVlrTotal: TcxGridDBColumn;
+    GridObs: TcxGridDBColumn;
+    EdtUnitItem: TcxCurrencyEdit;
+    Label13: TLabel;
+    edtTipoServico: TEdit;
+    Label14: TLabel;
+    EdtCodServico: TEdit;
+    EdtSubTotal: TcxCurrencyEdit;
+    Label15: TLabel;
+    btnProdPesquisa: TcxButton;
+    Label16: TLabel;
+    procedure FormCreate(Sender: TObject);
+    procedure SpbGravarClick(Sender: TObject);
+    procedure btnSalvarClick(Sender: TObject);
+    procedure btnCancelarClick(Sender: TObject);
+    procedure btnExcluirClick(Sender: TObject);
+    procedure EdtUnitItemExit(Sender: TObject);
+    procedure edtQuantidadeItemExit(Sender: TObject);
+    procedure edtDescontoItemExit(Sender: TObject);
+    procedure edtAcrescimoItemExit(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure EdtFreteExit(Sender: TObject);
+    procedure EdtDescontoTotalExit(Sender: TObject);
+    procedure EdtAcrescimoTotalExit(Sender: TObject);
+    procedure EdtSubTotalPropertiesChange(Sender: TObject);
+    procedure btnServPesquisaClick(Sender: TObject);
+    procedure btnProdPesquisaClick(Sender: TObject);
+  private
+    FSeqDetalhe : Integer;
+    FSeqMovimento : Integer;
+
+    procedure OpenRegister;
+    procedure GetRegister;
+    procedure GetRegisterCab;
+    procedure GetRegisterDet;
+    procedure GetRegisterServico;
+    procedure GetRegisterClientes;
+    procedure IncludeData;
+    procedure IncludeDataCab;
+    procedure IncludeDataDet(pSeqDetalhe, pSeqMovimento: Integer);
+    procedure IncludeRegisterCab;
+    procedure ClearServico;
+    procedure CalcTotalItem;
+    procedure CalcTotaisDetExc;
+    procedure CalcTotais;
+    procedure CalcTotaisCab;
+    procedure IncludeRegisterDet;
+    procedure OpenGridItens;
+    procedure ReadOnlyFieldsTcx;
+    procedure SetCodigoDet;
+    procedure DeleteDet;
+    procedure DeleteDetItem;
+    procedure GravarMovimento;
+  public
+    class function MovimentoShow(pTypeOperation : TTypeOperation; pDados: iControllerCadastros): Boolean;
+  end;
+
+var
+  FormCadastroMovimento: TFormCadastroMovimento;
+
+implementation
+
+{$R *.dfm}
+
+{ TFormCadastroMovimento }
+
+procedure TFormCadastroMovimento.btnCancelarClick(Sender: TObject);
+begin
+  inherited;
+  ClearServico;
+end;
+
+procedure TFormCadastroMovimento.btnExcluirClick(Sender: TObject);
+begin
+  inherited;
+  DeleteDetItem;
+  OpenGridItens;
+end;
+
+procedure TFormCadastroMovimento.btnProdPesquisaClick(Sender: TObject);
+var
+  lCodigo : String;
+begin
+  inherited;
+  lCodigo := TFormPesquisaGeneric.ShowFormGerneric('Clientes','Nom_Cliente', 'Cod_Cliente', 'Cliente', FDados.Clientes.Select.DataSet);
+  if lCodigo <> '' then begin
+    FDados.Clientes.Select.DataSet.Locate('COD_Cliente', lCodigo, []);
+    GetRegisterClientes;
+  end;
+end;
+
+procedure TFormCadastroMovimento.btnServPesquisaClick(Sender: TObject);
+var
+  lCodigo : String;
+begin
+  inherited;
+  lCodigo := TFormPesquisaGeneric.ShowFormGerneric('Servicos','Des_Servico', 'Cod_Servico', 'Serviço', FDados.Servicos.Select.DataSet);
+  if lCodigo <> '' then begin
+    FDados.Servicos.Select.DataSet.Locate('COD_SERVICO', lCodigo, []);
+    GetRegisterServico;
+  end;
+end;
+
+procedure TFormCadastroMovimento.btnSalvarClick(Sender: TObject);
+begin
+  inherited;
+  GravarMovimento;
+end;
+
+procedure TFormCadastroMovimento.CalcTotais;
+begin
+  EdtQuantidadeTotal.Value := EdtQuantidadeTotal.Value + edtQuantidadeItem.Value;
+  EdtSubTotal.Value        := EdtValorTotal.Value + EdtTotalItem.Value;
+end;
+
+procedure TFormCadastroMovimento.CalcTotaisCab;
+begin
+  EdtValorTotal.Value := ( EdtSubTotal.Value +
+                           EdtFrete.Value +
+                           EdtAcrescimoTotal.Value -
+                           EdtDescontoTotal.Value ) ;
+end;
+
+procedure TFormCadastroMovimento.CalcTotaisDetExc;
+begin
+  EdtQuantidadeTotal.Value := EdtQuantidadeTotal.Value - DS.DataSet.FieldByName('QTD_SERVICOS').AsCurrency;
+  EdtSubTotal.Value        := EdtValorTotal.Value -
+                              DS.DataSet.FieldByName('QTD_SERVICOS').AsCurrency /
+                              DS.DataSet.FieldByName('VLR_SERVICO').AsCurrency;
+end;
+
+procedure TFormCadastroMovimento.CalcTotalItem;
+begin
+  edtTotalItem.Value := ( edtQuantidadeItem.Value * EdtUnitItem.Value ) +
+                        ( edtAcrescimoItem.Value ) -
+                        ( edtDescontoItem.Value );
+end;
+
+procedure TFormCadastroMovimento.ClearServico;
+begin
+  EdtCodServico.Text      := '';
+  EdtDescServico.Text     := '';
+  edtQuantidadeItem.Value := 0;
+  EdtUnitItem.Value       := 0;
+  edtDescontoItem.Value   := 0;
+  edtAcrescimoItem.Value  := 0;
+  edtTotalItem.Value      := 0;
+  EdtObsServico.Text      := '';
+end;
+
+procedure TFormCadastroMovimento.edtAcrescimoItemExit(Sender: TObject);
+begin
+  inherited;
+  CalcTotalItem;
+end;
+
+procedure TFormCadastroMovimento.EdtAcrescimoTotalExit(Sender: TObject);
+begin
+  inherited;
+  CalcTotaisCab;
+end;
+
+procedure TFormCadastroMovimento.edtDescontoItemExit(Sender: TObject);
+begin
+  inherited;
+  CalcTotalItem;
+end;
+
+procedure TFormCadastroMovimento.EdtDescontoTotalExit(Sender: TObject);
+begin
+  inherited;
+  CalcTotaisCab;
+end;
+
+procedure TFormCadastroMovimento.EdtFreteExit(Sender: TObject);
+begin
+  inherited;
+  CalcTotaisCab;
+end;
+
+procedure TFormCadastroMovimento.edtQuantidadeItemExit(Sender: TObject);
+begin
+  inherited;
+  CalcTotalItem;
+end;
+
+procedure TFormCadastroMovimento.EdtSubTotalPropertiesChange(Sender: TObject);
+begin
+  inherited;
+  CalcTotaisCab;
+end;
+
+procedure TFormCadastroMovimento.EdtUnitItemExit(Sender: TObject);
+begin
+  inherited;
+  CalcTotalItem;
+end;
+
+procedure TFormCadastroMovimento.FormCreate(Sender: TObject);
+begin
+  inherited;
+  FForm := Self;
+  FSeqDetalhe := 0;
+end;
+
+procedure TFormCadastroMovimento.FormShow(Sender: TObject);
+begin
+  inherited;
+  OpenGridItens;
+end;
+
+procedure TFormCadastroMovimento.GetRegister;
+begin
+  GetRegisterCab;
+  GetRegisterDet;
+end;
+
+procedure TFormCadastroMovimento.GetRegisterCab;
+begin
+  FDados.MovimentoCab.AlimentarDados;
+
+  EdtCodMovimento.Text := IntToStr(FDados.MovimentoCab.Cadastro.GetCodMovimento);
+  DtpEmissao.Date      := FDados.MovimentoCab.Cadastro.GetDatCadastro;
+  EdtCodCliente.Text   := IntToStr(FDados.MovimentoCab.Cadastro.GetCodPaciente);
+  EdtNomeCliente.Text  := FDados.MovimentoCab.Cadastro.GetNomPaciente;
+  EdtDocCliente.Text   := FDados.MovimentoCab.Cadastro.GetDocPaciente;
+  EdtFoneCliente.Text  := FDados.MovimentoCab.Cadastro.GetTelPaciente;
+  EdtSubTotal.Value    := FDados.MovimentoCab.Cadastro.GetVlrSubtotal;
+  EdtFrete.Value       := FDados.MovimentoCab.Cadastro.GetVlrFrete;
+  EdtDescontoTotal.Value  := FDados.MovimentoCab.Cadastro.GetVlrDesconto;
+  EdtAcrescimoTotal.Value := FDados.MovimentoCab.Cadastro.GetVlrAcrescimo;
+  EdtValorTotal.Value     := FDados.MovimentoCab.Cadastro.GetVlrTotal;
+  MemObs.Text             := FDados.MovimentoCab.Cadastro.GetObsMovimento;
+end;
+
+procedure TFormCadastroMovimento.GetRegisterClientes;
+begin
+  FDados.Clientes.AlimentaDados;
+  EdtCodCliente.Text  := IntToStr(FDados.Clientes.Cadastro.GetCodigo);
+  EdtNomeCliente.Text := FDados.Clientes.Cadastro.GetNome;
+  EdtDocCliente.Text  := FDados.Clientes.Cadastro.GetDocumento;
+  EdtFoneCliente.Text := FDados.Clientes.Cadastro.GetCelular;
+end;
+
+procedure TFormCadastroMovimento.GetRegisterDet;
+begin
+  FDados.MovimentoDetalhes.AlimentarDados;
+  CalcTotalItem;
+end;
+
+procedure TFormCadastroMovimento.GetRegisterServico;
+begin
+  FDados.Servicos.AlimentaDados;
+  EdtCodServico.Text     :=  FDados.Servicos.Cadastro.GetCodigo.ToString;
+  EdtDescServico.Text    :=  FDados.Servicos.Cadastro.GetDescricao;
+  EdtUnitItem.Text       :=  FDados.Servicos.Cadastro.GetValor.ToString;
+  edtQuantidadeItem.Value := 1;
+end;
+
+procedure TFormCadastroMovimento.IncludeData;
+begin
+  IncludeDataCab;
+  IncludeDataDet(FSeqDetalhe, FSeqMovimento);
+end;
+
+procedure TFormCadastroMovimento.IncludeDataCab;
+begin
+  FDados
+    .MovimentoCab
+	    .Cadastro
+        .CodMovimento(StrToInt(EdtCodMovimento.Text))
+        .DatCadastro(DtpEmissao.Date)
+        .CodPaciente(StrToIntDef(EdtCodCliente.Text,0))
+        .NomPaciente(EdtNomeCliente.Text)
+        .DocPaciente(EdtDocCliente.Text)
+        .TelPaciente(EdtFoneCliente.Text)
+        .VlrSubtotal(EdtSubTotal.Value)
+        .VlrFrete(EdtFrete.Value)
+        .VlrDesconto(EdtDescontoTotal.Value)
+        .VlrAcrescimo(EdtAcrescimoTotal.Value)
+        .VlrTotal(EdtValorTotal.Value)
+        .ObsMovimento(MemObs.Text);
+end;
+
+procedure TFormCadastroMovimento.IncludeDataDet(pSeqDetalhe, pSeqMovimento: Integer);
+begin
+  FDados
+    .MovimentoDetalhes
+	    .Cadastro
+        .SeqDetalhe(pSeqDetalhe)
+        .CodMovimento(StrToInt(EdtCodMovimento.Text))
+        .SeqMovimento(pSeqMovimento)
+	      .CodServico(StrToIntDef(EdtCodServico.Text,0))
+        .DesServico(EdtDescServico.Text)
+        .ObsServico(EdtObsServico.Text)
+        .QtdServicos(edtQuantidadeItem.Value)
+        .VlrServico(EdtUnitItem.Value)
+        .VlrDesconto(edtDescontoItem.Value)
+        .VlrAcrescimo(edtAcrescimoItem.Value)
+        .VlrTotal(edtTotalItem.Value);
+end;
+
+procedure TFormCadastroMovimento.IncludeRegisterCab;
+begin
+  case FTypeOperation of
+    TpInsert : begin
+      FDados
+        .MovimentoCab
+          .Insert;
+    end;
+
+    TpUpdate : begin
+      FDados
+        .MovimentoCab
+          .Update;
+    end;
+
+    TpDelete : begin
+      FDados
+        .MovimentoCab
+          .Delete;
+    end;
+  end;
+end;
+
+procedure TFormCadastroMovimento.IncludeRegisterDet;
+begin
+  //
+end;
+
+class function TFormCadastroMovimento.MovimentoShow(
+  pTypeOperation: TTypeOperation; pDados: iControllerCadastros): Boolean;
+begin
+  Result := False;
+  FormCadastroMovimento := TFormCadastroMovimento.Create(nil);
+  try
+    FormCadastroMovimento.FTypeOperation := pTypeOperation;
+    FormCadastroMovimento.FDados := pDados;
+    FormCadastroMovimento.OpenRegister;
+    FormCadastroMovimento.ShowModal;
+    if FormCadastroMovimento.ModalResult = mrOk then
+      Result := True
+    else
+      if pTypeOperation = TpInsert then
+        FormCadastroMovimento.DeleteDet;
+  finally
+    FreeAndNil(FormCadastroMovimento);
+  end;
+end;
+
+procedure TFormCadastroMovimento.GravarMovimento;
+begin
+  SetCodigoDet;
+  IncludeDataDet(FSeqDetalhe, FSeqMovimento);
+  FDados.MovimentoDetalhes.Insert;
+  OpenGridItens;
+  CalcTotais;
+  ClearServico;
+end;
+
+procedure TFormCadastroMovimento.DeleteDet;
+begin
+  IncludeDataDet(FSeqDetalhe, FSeqMovimento);
+  FDados.MovimentoDetalhes.Delete;
+end;
+
+procedure TFormCadastroMovimento.DeleteDetItem;
+begin
+  CalcTotaisDetExc;
+  IncludeDataDet(DS.DataSet.FieldByName('SEQ_DETALHE').AsInteger, DS.DataSet.FieldByName('SEQ_MOVIMENTO').AsInteger);
+  FDados.MovimentoDetalhes.DeleteItem;
+end;
+
+procedure TFormCadastroMovimento.OpenGridItens;
+begin
+  FDados.MovimentoDetalhes.Cadastro.CodMovimento(StrToInt(EdtCodMovimento.Text));
+  FDados.MovimentoDetalhes.Select;
+  DS.DataSet := FDados.MovimentoDetalhes.DataSet;
+end;
+
+procedure TFormCadastroMovimento.OpenRegister;
+begin
+  case FTypeOperation of
+    TpInsert : begin
+      EdtCodMovimento.Text := GetCodigo('Movimento_Cab', 'Cod_Movimento');
+    end else
+      GetRegister;
+  end;
+end;
+
+procedure TFormCadastroMovimento.ReadOnlyFieldsTcx;
+var
+  I: Integer;
+begin
+  for I := 0 to FForm.ComponentCount -1 do begin
+    if FForm.Components[i] is TcxCurrencyEdit then
+      (FForm.Components[i] as TcxCurrencyEdit).Enabled := True;
+  end;
+end;
+
+procedure TFormCadastroMovimento.SetCodigoDet;
+begin
+  Inc(FSeqDetalhe);
+  FSeqMovimento := GetCodigoSql('Movimento_Detalhes', 'Seq_Movimento');
+end;
+
+procedure TFormCadastroMovimento.SpbGravarClick(Sender: TObject);
+begin
+  IncludeDataCab;
+  if TFormCadastroPagamento.PagamentoShow(FTypeOperation, FDados) then
+    IncludeRegisterCab
+  else
+    Exit;
+  inherited;
+end;
+
+end.

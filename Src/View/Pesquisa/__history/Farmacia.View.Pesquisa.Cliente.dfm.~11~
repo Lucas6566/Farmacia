@@ -1,0 +1,92 @@
+inherited FormPesquisaCliente: TFormPesquisaCliente
+  Caption = 'Pesquisa de Clientes'
+  ClientHeight = 436
+  ClientWidth = 933
+  OnCreate = FormCreate
+  ExplicitWidth = 933
+  ExplicitHeight = 436
+  TextHeight = 15
+  inherited PnlMainCenter: TPanel
+    Width = 933
+    Height = 436
+    ExplicitWidth = 933
+    ExplicitHeight = 436
+    inherited PnlButton: TPanel
+      Top = 406
+      Width = 933
+      ExplicitTop = 406
+      ExplicitWidth = 933
+    end
+    inherited PnlClient: TPanel
+      Width = 933
+      Height = 310
+      ExplicitWidth = 933
+      ExplicitHeight = 310
+      inherited GridPesquisa: TcxGrid
+        Width = 933
+        Height = 310
+        ExplicitWidth = 933
+        ExplicitHeight = 348
+        inherited GridPesquisaDBTableView: TcxGridDBTableView
+          object GridCodigo: TcxGridDBColumn
+            Caption = 'C'#243'digo'
+            DataBinding.IsNullValueType = True
+            Width = 106
+          end
+          object GridNome: TcxGridDBColumn
+            Caption = 'Nome'
+            DataBinding.IsNullValueType = True
+            Width = 356
+          end
+          object GridNumDoc: TcxGridDBColumn
+            Caption = 'Cpf/Cnpj'
+            DataBinding.IsNullValueType = True
+            Width = 223
+          end
+          object GridNascimento: TcxGridDBColumn
+            Caption = 'Nascimento'
+            DataBinding.IsNullValueType = True
+            Width = 86
+          end
+          object GridTelefone: TcxGridDBColumn
+            Caption = 'Telefone'
+            DataBinding.IsNullValueType = True
+            Width = 159
+          end
+          object GridEmail: TcxGridDBColumn
+            Caption = 'Email'
+            DataBinding.IsNullValueType = True
+          end
+        end
+      end
+    end
+    inherited PnlTop: TPanel
+      Width = 933
+      ExplicitWidth = 933
+      inherited PnlTopTitle: TPanel
+        Width = 933
+        ExplicitWidth = 933
+        inherited LblTitleForm: TcxLabel
+          Style.LookAndFeel.SkinName = ''
+          StyleDisabled.LookAndFeel.SkinName = ''
+          StyleFocused.LookAndFeel.SkinName = ''
+          StyleHot.LookAndFeel.SkinName = ''
+          AnchorY = 26
+        end
+      end
+      inherited PnlTopInfo: TPanel
+        Width = 933
+        ExplicitWidth = 933
+        inherited Panel1: TPanel
+          Left = 518
+          inherited BtnAlterar: TSpeedButton
+            OnClick = BtnAlterarClick
+          end
+          inherited btnExcluir: TSpeedButton
+            OnClick = btnExcluirClick
+          end
+        end
+      end
+    end
+  end
+end

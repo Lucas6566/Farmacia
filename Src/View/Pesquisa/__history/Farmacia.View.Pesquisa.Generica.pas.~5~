@@ -1,0 +1,30 @@
+unit Farmacia.View.Pesquisa.Generica;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Farmacia.View.Pesquisa.Pai, cxGraphics,
+  cxControls, cxLookAndFeels, cxLookAndFeelPainters, dxSkinsCore, dxSkinBlack,
+  cxStyles, cxCustomData, cxFilter, cxData, cxDataStorage, cxEdit, cxNavigator,
+  dxDateRanges, dxScrollbarAnnotations, Data.DB, cxDBData, cxContainer,
+  cxTextEdit, Vcl.Buttons, Vcl.StdCtrls, cxLabel, cxGridLevel, cxClasses,
+  cxGridCustomView, cxGridCustomTableView, cxGridTableView, cxGridDBTableView,
+  cxGrid, Vcl.ExtCtrls;
+
+type
+  TFormPesquisaPai1 = class(TFormPesquisaPai)
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FormPesquisaPai1: TFormPesquisaPai1;
+
+implementation
+
+{$R *.dfm}
+
+end.

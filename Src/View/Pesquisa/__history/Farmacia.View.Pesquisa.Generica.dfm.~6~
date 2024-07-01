@@ -1,0 +1,34 @@
+inherited FormPesquisaGenerica: TFormPesquisaGenerica
+  Caption = 'FormPesquisaGenerica'
+  TextHeight = 15
+  inherited PnlMainCenter: TPanel
+    inherited PnlClient: TPanel
+      inherited GridPesquisa: TcxGrid
+        inherited GridPesquisaDBTableView: TcxGridDBTableView
+          object GridGeneric: TcxGridDBColumn
+            DataBinding.IsNullValueType = True
+          end
+        end
+      end
+    end
+    inherited PnlTop: TPanel
+      inherited PnlTopTitle: TPanel
+        inherited LblTitleForm: TcxLabel
+          Style.LookAndFeel.SkinName = ''
+          StyleDisabled.LookAndFeel.SkinName = ''
+          StyleFocused.LookAndFeel.SkinName = ''
+          StyleHot.LookAndFeel.SkinName = ''
+          AnchorY = 26
+        end
+      end
+      inherited PnlTopInfo: TPanel
+        DesignSize = (
+          945
+          44)
+        inherited btnAdiPesquisar: TcxButton
+          OnClick = btnAdiPesquisarClick
+        end
+      end
+    end
+  end
+end

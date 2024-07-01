@@ -1,0 +1,76 @@
+unit Farmacia.View.Pesquisa.Generica;
+
+interface
+
+uses
+  Winapi.Windows,
+  Winapi.Messages,
+  System.SysUtils,
+  System.Variants,
+  System.Classes,
+  Vcl.Graphics,
+  Vcl.Controls,
+  Vcl.Forms,
+  Vcl.Dialogs,
+  Farmacia.View.Pesquisa.Cliente,
+  cxGraphics,
+  cxControls,
+  cxLookAndFeels,
+  cxLookAndFeelPainters,
+  dxSkinsCore,
+  dxSkinBlack,
+  cxStyles,
+  cxCustomData,
+  cxFilter,
+  cxData,
+  cxDataStorage,
+  cxEdit,
+  cxNavigator,
+  dxDateRanges,
+  dxScrollbarAnnotations,
+  Data.DB, cxDBData,
+  cxContainer,
+  cxTextEdit,
+  Vcl.Buttons,
+  Vcl.StdCtrls,
+  cxLabel,
+  cxGridLevel,
+  cxGridCustomTableView,
+  cxGridTableView,
+  cxGridDBTableView,
+  cxClasses,
+  cxGridCustomView,
+  cxGrid,
+  Vcl.ExtCtrls;
+
+type
+  TFormPesquisaGenerica = class(TFormPesquisaCliente)
+  private
+    procedure OpenTable;
+  public
+    class function PesquisaShow( pClass : TClass; pCapForm, pTable : String ) : String;
+  end;
+
+var
+  FormPesquisaGenerica: TFormPesquisaGenerica;
+
+implementation
+
+{$R *.dfm}
+
+{ TFormPesquisaGenerica }
+
+class function TFormPesquisaGenerica.PesquisaShow(pClass: TClass; pCapForm,
+  pTable: String): String;
+begin
+  FormPesquisaGenerica := TFormPesquisaGenerica.Create(nil);
+  try
+    FormPesquisaGenerica.ShowModal;
+    if FormPesquisaGenerica.ModalResult = mrOk then
+      Result := '';
+  finally
+    FreeAndNil(FormPesquisaGenerica);
+  end;
+end;
+
+end.

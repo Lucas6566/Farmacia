@@ -1,0 +1,101 @@
+unit Farmacia.View.Pesquisa.Generic;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, cxGraphics, cxControls, cxLookAndFeels,
+  cxLookAndFeelPainters, dxSkinsCore, dxSkinBlack, cxStyles, cxCustomData,
+  cxFilter, cxData, cxDataStorage, cxEdit, cxNavigator, dxDateRanges,
+  dxScrollbarAnnotations, Data.DB, cxDBData, cxContainer, Vcl.Menus,
+  Vcl.StdCtrls, cxButtons, cxTextEdit, cxLabel, cxGridLevel,
+  cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxClasses,
+  cxGridCustomView, cxGrid, Vcl.ExtCtrls, Vcl.Imaging.pngimage;
+
+type
+  TFormPesquisaGeneric = class(TForm)
+    PnlMainCenter: TPanel;
+    PnlButton: TPanel;
+    PnlClient: TPanel;
+    GridPesquisa: TcxGrid;
+    GridPesquisaDBTableView: TcxGridDBTableView;
+    GridGeneric: TcxGridDBColumn;
+    GridPesquisaLevel: TcxGridLevel;
+    PnlTop: TPanel;
+    PnlTopTitle: TPanel;
+    LblTitleForm: TcxLabel;
+    PnlTopInfo: TPanel;
+    LblSearch: TLabel;
+    EdtSearch: TcxTextEdit;
+    btnSearch: TcxButton;
+    imgFechar: TImage;
+    procedure btnSearchClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure imgFecharClick(Sender: TObject);
+    procedure GridPesquisaDBTableViewCellDblClick(
+      Sender: TcxCustomGridTableView;
+      ACellViewInfo: TcxGridTableDataCellViewInfo; AButton: TMouseButton;
+      AShift: TShiftState; var AHandled: Boolean);
+  private
+    FDS : TDataSource;
+    FField : String;
+  public
+    class function ShowFormGerneric(pTable, pField, pFieldCaption, pTittlePesq: String; pDS: TDataSource): TDataSource;
+  end;
+
+var
+  FormPesquisaGeneric: TFormPesquisaGeneric;
+
+implementation
+
+{$R *.dfm}
+
+{ TForm1 }
+
+procedure TFormPesquisaGeneric.btnSearchClick(Sender: TObject);
+begin
+  if FDS.DataSet.FieldByName(FField).DataType = ftString then
+    FDS.DataSet.Locate(FField, EdtSearch.Text+'%', [])
+  else
+    FDS.DataSet.Locate(FField, EdtSearch.Text, []);
+  FDS.DataSet.Open;
+end;
+
+procedure TFormPesquisaGeneric.FormCreate(Sender: TObject);
+begin
+  FormPesquisaGeneric.GridGeneric.DataBinding.DataController.DataSource := FDS;
+  FormPesquisaGeneric.GridGeneric.DataBinding.FieldName := FField;
+end;
+
+procedure TFormPesquisaGeneric.GridPesquisaDBTableViewCellDblClick(
+  Sender: TcxCustomGridTableView; ACellViewInfo: TcxGridTableDataCellViewInfo;
+  AButton: TMouseButton; AShift: TShiftState; var AHandled: Boolean);
+begin
+  ModalResult := mrOk;
+end;
+
+procedure TFormPesquisaGeneric.imgFecharClick(Sender: TObject);
+begin
+  Close;
+end;
+
+class function TFormPesquisaGeneric.ShowFormGerneric(pTable, pField,
+  pFieldCaption, pTittlePesq: String; pDS: TDataSource): TDataSource;
+begin
+  FormPesquisaGeneric := TFormPesquisaGeneric.Create(nil);
+  try
+    FormPesquisaGeneric.LblTitleForm.Caption := pTittlePesq;
+    FormPesquisaGeneric.GridGeneric.Caption := pFieldCaption;
+    FormPesquisaGeneric.FField := pField;
+    FormPesquisaGeneric.FDS := pDS;
+
+    FormPesquisaGeneric.ShowModal;
+
+    if FormPesquisaGeneric.ModalResult = mrOk then
+      Result := FormPesquisaGeneric.FDS;
+  finally
+    FreeAndNil(FormPesquisaGeneric);
+  end;
+end;
+
+end.

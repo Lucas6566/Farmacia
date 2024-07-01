@@ -1,0 +1,7 @@
+unit Farmacia.Model.Dao.MovimentoCab.Interfaces;
+
+interface
+
+implementation
+
+end.

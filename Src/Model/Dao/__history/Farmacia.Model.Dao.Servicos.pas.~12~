@@ -1,0 +1,198 @@
+unit Farmacia.Model.Dao.Servicos;
+
+interface
+
+uses
+  Data.DB,
+  Datasnap.DBClient,
+  FireDAC.Stan.Param,
+  FireDAC.Comp.Client,
+  FireDAC.DApt,
+
+  FireDAC.Stan.Intf,
+  FireDAC.Stan.Option,
+  FireDAC.Stan.Error,
+  FireDAC.UI.Intf,
+  FireDAC.Phys.Intf,
+  FireDAC.Stan.Def,
+  FireDAC.Stan.Pool,
+  FireDAC.Stan.Async,
+  FireDAC.Phys,
+  FireDAC.Phys.FB,
+  FireDAC.Phys.FBDef,
+  FireDAC.VCLUI.Wait,
+
+  Midaslib,
+  Farmacia.Model.Dao.Servicos.Interfaces,
+  Farmacia.Model.Dao.Pai.Interfaces,
+  Farmacia.Model.Dao.Pai,
+  Farmacia.Model.Entity.Servicos.Interfaces,
+  Farmacia.Model.Entity.Servicos,
+  Farmacia.Util.FunctionSQL;
+
+type
+  TCrudServicos = class(TDaoPai, iCrudServicos)
+  private
+    FServicos : iModelServicos;
+    procedure CreateFields;
+    procedure SetParamQuery;
+  public
+    function AlimentaDados : iModelServicos;
+    function Cadastro : iModelServicos;
+
+    function OpenQuery : iCrudServicos;
+    function Select : iCrudServicos;
+    function Insert : iCrudServicos;
+    function Update : iCrudServicos;
+    function Delete : iCrudServicos;
+
+    constructor Create;
+    destructor Destroy; override;
+    class function New : iCrudServicos;
+  end;
+
+implementation
+
+{ TCrudServicos }
+
+function TCrudServicos.AlimentaDados: iModelServicos;
+begin
+  Result := FServicos.Codigo(ClientDataSet.FieldByName('COD_SERVICO').AsInteger)
+                     .Descricao(ClientDataSet.FieldByName('DES_SERVICO').AsString)
+                     .Valor(ClientDataSet.FieldByName('VLR_SERVICO').AsCurrency)
+                     .TipoServico(ClientDataSet.FieldByName('TIP_SERVICO').AsInteger)
+end;
+
+function TCrudServicos.Cadastro: iModelServicos;
+begin
+  Result := FServicos;
+end;
+
+constructor TCrudServicos.Create;
+begin
+  GetInstancia;
+  FServicos := TModelServicos.New;
+  CreateFields;
+end;
+
+procedure TCrudServicos.CreateFields;
+begin
+  ClientDataSet.FieldDefs.Add('COD_SERVICO', ftInteger);
+  ClientDataSet.FieldDefs.Add('DES_SERVICO', ftString, 80);
+  ClientDataSet.FieldDefs.Add('VLR_SERVICO', ftCurrency);
+  ClientDataSet.FieldDefs.Add('TIP_SERVICO', ftInteger);
+
+  ClientDataSet.CreateDataSet;
+
+  ClientDataSet.IndexFieldNames := 'COD_SERVICO';
+end;
+
+function TCrudServicos.Delete: iCrudServicos;
+begin
+  Result := Self;
+
+  Query.SQL.Clear;
+
+  Query.SQL.Add('DELETE FROM SERVICO');
+  Query.SQL.Add('  WHERE COD_SERVICO = :PCOD_SERVICO');
+
+  Query.ParamByName('pCOD_SERVICO').AsInteger := Cadastro.GetCodigo;
+
+  Query.ExecSQL;
+end;
+
+destructor TCrudServicos.Destroy;
+begin
+
+  inherited;
+end;
+
+function TCrudServicos.Insert: iCrudServicos;
+begin
+  Result := Self;
+
+  Query.SQL.Clear;
+
+  Query.SQL.Add('INSERT INTO FARMACIA.SERVICOS (');
+  Query.SQL.Add('  COD_SERVICO, ');
+  Query.SQL.Add('  DES_SERVICO,');
+  Query.SQL.Add('  VLR_SERVICO,');
+  Query.SQL.Add('  TIP_SERVICO,');
+  Query.SQL.Add('  COD_USUARIO_ALT,');
+  Query.SQL.Add('  DAT_CADASTRO,');
+  Query.SQL.Add('  DAT_ALTERACAO');
+  Query.SQL.Add(') VALUES (');
+  Query.SQL.Add('  :pCOD_SERVICO,');
+  Query.SQL.Add('  :pDES_SERVICO,');
+  Query.SQL.Add('  :pVLR_SERVICO,');
+  Query.SQL.Add('  :pTIP_SERVICO,');
+  Query.SQL.Add('  :pCOD_USUARIO_ALT,');
+  Query.SQL.Add('  :pDAT_CADASTRO,');
+  Query.SQL.Add('  :pDAT_ALTERACAO');
+  Query.SQL.Add(');');
+
+  SetParamQuery;
+
+  Query.ExecSQL;
+end;
+
+class function TCrudServicos.New: iCrudServicos;
+begin
+  Result := Self.Create;
+end;
+
+function TCrudServicos.OpenQuery: iCrudServicos;
+begin
+  Result := Self;
+  OpenQueryPai;
+end;
+
+function TCrudServicos.Select: iCrudServicos;
+begin
+  Result := Self;
+
+  Query.SQL.Clear;
+
+  Query.SQL.Add('SELECT ');
+  Query.SQL.Add('  S.COD_SERVICO,');
+  Query.SQL.Add('  S.DES_SERVICO,');
+  Query.SQL.Add('  S.VLR_SERVICO,');
+  Query.SQL.Add('  S.TIP_SERVICO,');
+  Query.SQL.Add('  S.COD_USUARIO_ALT,');
+  Query.SQL.Add('  S.DAT_CADASTRO,');
+  Query.SQL.Add('  S.DAT_ALTERACAO ');
+  Query.SQL.Add(' FROM FARMACIA.SERVICOS AS S');
+
+  OpenQuery;
+end;
+
+procedure TCrudServicos.SetParamQuery;
+begin
+  Query.ParamByName('pCOD_SERVICO').AsInteger  := Cadastro.GetCodigo;
+  Query.ParamByName('pDES_SERVICO').AsString   := Cadastro.GetDescricao;
+  Query.ParamByName('pVLR_SERVICO').AsCurrency := Cadastro.GetValor;
+  Query.ParamByName('pTIP_SERVICO').AsInteger  := Cadastro.GetTipoServico;
+end;
+
+function TCrudServicos.Update: iCrudServicos;
+begin
+  Result := Self;
+
+  Query.SQL.Clear;
+
+  Query.SQL.Add('UPDATE FARMACIA.SERVICOS SET');
+  Query.SQL.Add('  COD_SERVICOS    = :pCOD_SERVICOS,  ');
+  Query.SQL.Add('  DES_SERVICOS    = :pDES_SERVICOS,');
+  Query.SQL.Add('  VLR_SERVICOS    = :pVLR_SERVICOS,');
+  Query.SQL.Add('  TIP_SERVICOS    = :pTIP_SERVICOS,');
+  Query.SQL.Add('  COD_USUARIO_ALT = :pCOD_USUARIO_ALT,');
+  Query.SQL.Add('  DAT_CADASTRO    = :pDAT_CADASTRO,');
+  Query.SQL.Add('  DAT_ALTERACAO   = :pDAT_ALTERACAO ');
+  Query.SQL.Add('WHERE COD_TIPO = :pCOD_TIPO');
+
+  SetParamQuery;
+
+  Query.ExecSQL;
+end;
+
+end.

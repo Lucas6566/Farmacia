@@ -1,0 +1,187 @@
+unit Farmacia.Model.Dao.TipoServicos;
+
+interface
+
+uses
+  Data.DB,
+  Datasnap.DBClient,
+  FireDAC.Stan.Param,
+  FireDAC.Comp.Client,
+  FireDAC.DApt,
+
+  FireDAC.Stan.Intf,
+  FireDAC.Stan.Option,
+  FireDAC.Stan.Error,
+  FireDAC.UI.Intf,
+  FireDAC.Phys.Intf,
+  FireDAC.Stan.Def,
+  FireDAC.Stan.Pool,
+  FireDAC.Stan.Async,
+  FireDAC.Phys,
+  FireDAC.Phys.FB,
+  FireDAC.Phys.FBDef,
+  FireDAC.VCLUI.Wait,
+
+  Midaslib,
+  Farmacia.Model.Dao.TipoServicos.Interfaces,
+  Farmacia.Model.Dao.Pai.Interfaces,
+  Farmacia.Model.Dao.Pai,
+  Farmacia.Model.Entity.TipoServicos.Interfaces,
+  Farmacia.Model.Entity.TipoServicos,
+  Farmacia.Util.FunctionSQL;
+
+type
+  TCrudTipoServicos = class(TDaoPai, iCrudTipoServicos)
+  private
+    FTipoServicos : iModelTipoServicos;
+    procedure CreateFields;
+    procedure SetParamQuery;
+  public
+    function AlimentaDados : iModelTipoServicos;
+    function Cadastro : iModelTipoServicos;
+
+    function OpenQuery : iCrudTipoServicos;
+    function DataSet : TDataSet;
+    function Select : iCrudTipoServicos;
+    function Insert : iCrudTipoServicos;
+    function Update : iCrudTipoServicos;
+    function Delete : iCrudTipoServicos;
+
+    constructor Create;
+    destructor Destroy; override;
+    class function New : iCrudTipoServicos;
+  end;
+
+implementation
+
+{ TCrudTipoServico }
+
+function TCrudTipoServicos.AlimentaDados: iModelTipoServicos;
+begin
+  Result := FTipoServicos.Codigo(ClientDataSet.FieldByName('COD_TIPO').AsInteger)
+                         .Descricao(ClientDataSet.FieldByName('DES_TIPO').AsString)
+end;
+
+function TCrudTipoServicos.Cadastro: iModelTipoServicos;
+begin
+  Result := FTipoServicos;
+end;
+
+constructor TCrudTipoServicos.Create;
+begin
+  inherited;
+  GetInstancia;
+  FTipoServicos := TModelTipoServicos.New;
+  CreateFields;
+end;
+
+procedure TCrudTipoServicos.CreateFields;
+begin
+  ClientDataSet.FieldDefs.Add('COD_TIPO', ftInteger);
+  ClientDataSet.FieldDefs.Add('DES_TIPO', ftString, 80);
+
+  ClientDataSet.CreateDataSet;
+
+  ClientDataSet.IndexFieldNames := 'COD_TIPO';
+end;
+
+function TCrudTipoServicos.DataSet: TDataSet;
+begin
+  Result := ClientDataSet;
+end;
+
+function TCrudTipoServicos.Delete: iCrudTipoServicos;
+begin
+  Result := Self;
+
+  Query.SQL.Clear;
+
+  Query.SQL.Add('DELETE FROM TIPO_SERVICOS');
+  Query.SQL.Add('  WHERE COD_TIPO = :PCOD_TIPO');
+
+  Query.ParamByName('pCOD_TIPO').AsInteger := Cadastro.GetCodigo;
+
+  Query.ExecSQL;
+end;
+
+destructor TCrudTipoServicos.Destroy;
+begin
+
+  inherited;
+end;
+
+function TCrudTipoServicos.Insert: iCrudTipoServicos;
+begin
+  Result := Self;
+
+  Query.SQL.Clear;
+
+  Query.SQL.Add('INSERT INTO FARMACIA.TIPO_SERVICOS (');
+  Query.SQL.Add('  COD_TIPO,  ');
+  Query.SQL.Add('  DES_TIPO');
+  Query.SQL.Add(') VALUES (');
+  Query.SQL.Add('  :pCOD_TIPO,  ');
+  Query.SQL.Add('  :pDES_TIPO');
+  Query.SQL.Add(');');
+
+  SetParamQuery;
+
+  Query.ExecSQL;
+end;
+
+class function TCrudTipoServicos.New: iCrudTipoServicos;
+begin
+  Result := Self.Create;
+end;
+
+function TCrudTipoServicos.OpenQuery: iCrudTipoServicos;
+begin
+  Result := Self;
+  OpenQueryPai;
+end;
+
+function TCrudTipoServicos.Select: iCrudTipoServicos;
+begin
+  Result := Self;
+
+  Query.SQL.Clear;
+
+  Query.SQL.Add('SELECT ');
+  Query.SQL.Add('  T.COD_TIPO,');
+  Query.SQL.Add('  T.DES_TIPO,');
+  Query.SQL.Add('  T.COD_USUARIO_ALT,');
+  Query.SQL.Add('  T.DAT_CADASTRO,');
+  Query.SQL.Add('  T.DAT_ALTERACAO');
+  Query.SQL.Add('FROM FARMACIA.TIPO_SERVICOS AS T');
+
+  Query.SQL.Add(GetParam);
+
+  OpenQuery;
+end;
+
+procedure TCrudTipoServicos.SetParamQuery;
+begin
+  Query.ParamByName('pCOD_TIPO').AsInteger := Cadastro.GetCodigo;
+  Query.ParamByName('pDES_TIPO').AsString  := Cadastro.GetDescricao;
+end;
+
+function TCrudTipoServicos.Update: iCrudTipoServicos;
+begin
+  Result := Self;
+
+  Query.SQL.Clear;
+
+  Query.SQL.Add('UPDATE FARMACIA.TIPO_SERVICOS SET');
+  Query.SQL.Add('  COD_TIPO        = :pCOD_TIPO,  ');
+  Query.SQL.Add('  DES_TIPO        = :pDES_TIPO,');
+  Query.SQL.Add('  COD_USUARIO_ALT = :pCOD_USUARIO_ALT,');
+  Query.SQL.Add('  DAT_CADASTRO    = :pDAT_CADASTRO,');
+  Query.SQL.Add('  DAT_ALTERACAO   = :pDAT_ALTERACAO ');
+  Query.SQL.Add('WHERE COD_TIPO = :pCOD_TIPO');
+
+  Query.SQL.Add(GetParam);
+
+  Query.ExecSQL;
+end;
+
+end.

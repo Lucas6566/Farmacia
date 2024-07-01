@@ -1,0 +1,271 @@
+unit Farmacia.Model.Entity.MovimentoDetalhes;
+
+interface
+
+uses
+  System.SysUtils,
+  Data.DB,
+  Datasnap.DBClient,
+  FireDAC.Comp.Client,
+  FireDAC.Stan.Param,
+  Farmacia.Funcoes.Util,
+  Farmacia.Types.Util,
+  Farmacia.ConnectFuncoes.Util,
+  Farmacia.LoadClientDataSet.Util;
+
+type
+  TModelMovimentoCab = class(TInterfacedObject, iModelMovimentoCab)
+  private
+    FSeqDetalhe:Integer;
+    FCodMovimento:Integer;
+    FSeqMovimento:Integer;
+    FCodServico:Integer;
+    FDesServico:String;
+    FTipServico:Integer;
+    FQtdServicos:Double;
+    FVlrServico:Double;
+    FVlrDesconto:Double;
+    FVlrAcrescimo:Double;
+    FVlrFrete:Double;
+    FVlrTotal:Double;
+    FObsServico:String;
+    FCodUsuarioAlt:Integer;
+    FDatCadastro:TDateTime;
+    FDatAlteracao:TDateTime;
+  public
+    function SeqDetalhe(pValue:Integer):iModelMovimentoCab;
+    function CodMovimento(pValue:Integer):iModelMovimentoCab;
+    function SeqMovimento(pValue:Integer):iModelMovimentoCab;
+    function CodServico(pValue:Integer):iModelMovimentoCab;
+    function DesServico(pValue:String):iModelMovimentoCab;
+    function TipServico(pValue:Integer):iModelMovimentoCab;
+    function QtdServicos(pValue:Double):iModelMovimentoCab;
+    function VlrServico(pValue:Double):iModelMovimentoCab;
+    function VlrDesconto(pValue:Double):iModelMovimentoCab;
+    function VlrAcrescimo(pValue:Double):iModelMovimentoCab;
+    function VlrFrete(pValue:Double):iModelMovimentoCab;
+    function VlrTotal(pValue:Double):iModelMovimentoCab;
+    function ObsServico(pValue:String):iModelMovimentoCab;
+    function CodUsuarioAlt(pValue:Integer):iModelMovimentoCab;
+    function DatCadastro(pValue:TDateTime):iModelMovimentoCab;
+    function DatAlteracao(pValue:TDateTime):iModelMovimentoCab;
+
+    function GetSeqDetalhe:Integer;
+    function GetCodMovimento:Integer;
+    function GetSeqMovimento:Integer;
+    function GetCodServico:Integer;
+    function GetDesServico:String;
+    function GetTipServico:Integer;
+    function GetQtdServicos:Double;
+    function GetVlrServico:Double;
+    function GetVlrDesconto:Double;
+    function GetVlrAcrescimo:Double;
+    function GetVlrFrete:Double;
+    function GetVlrTotal:Double;
+    function GetObsServico:String;
+    function GetCodUsuarioAlt:Integer;
+    function GetDatCadastro:TDateTime;
+    function GetDatAlteracao:TDateTime;
+
+    constructor Create;
+    destructor Destroy; override;
+    class function New : iModelMovimentoCab;
+  end;
+
+implementation
+
+{ TModelMovimentoCab }
+
+constructor TModelMovimentoCab.Create;
+begin
+
+end;
+
+destructor TModelMovimentoCab.Destroy;
+begin
+
+  inherited;
+end;
+
+class function TModelMovimentoCab.New: iModelMovimentoCab;
+begin
+  Result := Self.Create;
+end;
+
+function TModelMovimentoCab.SeqDetalhe(pValue:Integer):iModelMovimentoCab;
+begin
+  Result := Self;
+  FSeqDetalhe:= pValue;
+end;
+
+function TModelMovimentoCab.CodMovimento(pValue:Integer):iModelMovimentoCab;
+begin
+  Result := Self;
+  FCodMovimento:= pValue;
+end;
+
+function TModelMovimentoCab.SeqMovimento(pValue:Integer):iModelMovimentoCab;
+begin
+  Result := Self;
+  FSeqMovimento:= pValue;
+end;
+
+function TModelMovimentoCab.CodServico(pValue:Integer):iModelMovimentoCab;
+begin
+  Result := Self;
+  FCodServico:= pValue;
+end;
+
+function TModelMovimentoCab.DesServico(pValue:String):iModelMovimentoCab;
+begin
+  Result := Self;
+  FDesServico:= pValue;
+end;
+
+function TModelMovimentoCab.TipServico(pValue:Integer):iModelMovimentoCab;
+begin
+  Result := Self;
+  FTipServico:= pValue;
+end;
+
+function TModelMovimentoCab.QtdServicos(pValue:Double):iModelMovimentoCab;
+begin
+  Result := Self;
+  FQtdServicos:= pValue;
+end;
+
+function TModelMovimentoCab.VlrServico(pValue:Double):iModelMovimentoCab;
+begin
+  Result := Self;
+  FVlrServico:= pValue;
+end;
+
+function TModelMovimentoCab.VlrDesconto(pValue:Double):iModelMovimentoCab;
+begin
+  Result := Self;
+  FVlrDesconto:= pValue;
+end;
+
+function TModelMovimentoCab.VlrAcrescimo(pValue:Double):iModelMovimentoCab;
+begin
+  Result := Self;
+  FVlrAcrescimo:= pValue;
+end;
+
+function TModelMovimentoCab.VlrFrete(pValue:Double):iModelMovimentoCab;
+begin
+  Result := Self;
+  FVlrFrete:= pValue;
+end;
+
+function TModelMovimentoCab.VlrTotal(pValue:Double):iModelMovimentoCab;
+begin
+  Result := Self;
+  FVlrTotal:= pValue;
+end;
+
+function TModelMovimentoCab.ObsServico(pValue:String):iModelMovimentoCab;
+begin
+  Result := Self;
+  FObsServico:= pValue;
+end;
+
+function TModelMovimentoCab.CodUsuarioAlt(pValue:Integer):iModelMovimentoCab;
+begin
+  Result := Self;
+  FCodUsuarioAlt:= pValue;
+end;
+
+function TModelMovimentoCab.DatCadastro(pValue:TDateTime):iModelMovimentoCab;
+begin
+  Result := Self;
+  FDatCadastro:= pValue;
+end;
+
+function TModelMovimentoCab.DatAlteracao(pValue:TDateTime):iModelMovimentoCab;
+begin
+  Result := Self;
+  FDatAlteracao:= pValue;
+end;
+
+function TModelMovimentoCab.GetSeqDetalhe:Integer;
+begin
+  Result := FSeqDetalhe;
+end;
+
+function TModelMovimentoCab.GetCodMovimento:Integer;
+begin
+  Result := FCodMovimento;
+end;
+
+function TModelMovimentoCab.GetSeqMovimento:Integer;
+begin
+  Result := FSeqMovimento;
+end;
+
+function TModelMovimentoCab.GetCodServico:Integer;
+begin
+  Result := FCodServico;
+end;
+
+function TModelMovimentoCab.GetDesServico:String;
+begin
+  Result := FDesServico;
+end;
+
+function TModelMovimentoCab.GetTipServico:Integer;
+begin
+  Result := FTipServico;
+end;
+
+function TModelMovimentoCab.GetQtdServicos:Double;
+begin
+  Result := FQtdServicos;
+end;
+
+function TModelMovimentoCab.GetVlrServico:Double;
+begin
+  Result := FVlrServico;
+end;
+
+function TModelMovimentoCab.GetVlrDesconto:Double;
+begin
+  Result := FVlrDesconto;
+end;
+
+function TModelMovimentoCab.GetVlrAcrescimo:Double;
+begin
+  Result := FVlrAcrescimo;
+end;
+
+function TModelMovimentoCab.GetVlrFrete:Double;
+begin
+  Result := FVlrFrete;
+end;
+
+function TModelMovimentoCab.GetVlrTotal:Double;
+begin
+  Result := FVlrTotal;
+end;
+
+function TModelMovimentoCab.GetObsServico:String;
+begin
+  Result := FObsServico;
+end;
+
+function TModelMovimentoCab.GetCodUsuarioAlt:Integer;
+begin
+  Result := FCodUsuarioAlt;
+end;
+
+function TModelMovimentoCab.GetDatCadastro:TDateTime;
+begin
+  Result := FDatCadastro;
+end;
+
+function TModelMovimentoCab.GetDatAlteracao:TDateTime;
+begin
+  Result := FDatAlteracao;
+end;
+
+end.

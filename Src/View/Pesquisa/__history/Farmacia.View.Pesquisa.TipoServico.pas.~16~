@@ -1,0 +1,139 @@
+unit Farmacia.View.Pesquisa.TipoServico;
+
+interface
+
+uses
+  Winapi.Windows,
+  Winapi.Messages,
+  System.SysUtils,
+  System.Variants,
+  System.Classes,
+  Vcl.Graphics,
+  Vcl.Controls,
+  Vcl.Forms,
+  Vcl.Dialogs,
+  Farmacia.View.Pesquisa.Pai,
+  cxGraphics,
+  cxControls,
+  cxLookAndFeels,
+  cxLookAndFeelPainters,
+  dxSkinsCore,
+  dxSkinBlack,
+  cxStyles,
+  cxCustomData,
+  cxFilter,
+  cxData,
+  cxDataStorage,
+  cxEdit,
+  cxNavigator,
+  dxDateRanges,
+  dxScrollbarAnnotations,
+  Data.DB,
+  cxDBData,
+  cxContainer,
+  cxTextEdit,
+  Vcl.Buttons,
+  Vcl.StdCtrls,
+  cxLabel,
+  cxGridLevel,
+  cxClasses,
+  cxGridCustomView,
+  cxGridCustomTableView,
+  cxGridTableView,
+  cxGridDBTableView,
+  cxGrid,
+  Vcl.ExtCtrls,
+  Router4D.Interfaces,
+  Router4D, Farmacia.View.Cadastro.TipoServico, Farmacia.Util.Types;
+
+type
+  TFormPesquisaTipoServico = class(TFormPesquisaPai, iRouter4DComponent)
+    GridCodigo: TcxGridDBColumn;
+    GridDescricao: TcxGridDBColumn;
+    procedure BtnAlterarClick(Sender: TObject);
+    procedure btnExcluirClick(Sender: TObject);
+    procedure BtnNewClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure SpbConsultarClick(Sender: TObject);
+    procedure EdtSearchPropertiesChange(Sender: TObject);
+  private
+    procedure Pesquisar;
+  public
+    function Render : TForm;
+    procedure unRender;
+  end;
+
+var
+  FormPesquisaTipoServico: TFormPesquisaTipoServico;
+
+implementation
+
+{$R *.dfm}
+
+{ TFormPesquisaTipoServico }
+
+procedure TFormPesquisaTipoServico.BtnAlterarClick(Sender: TObject);
+begin
+  inherited;
+  if TFormCadastroTipoServico.TipoServicoShow(TpUpdate, FDados) then
+    FDados
+      .TipoServicos
+        .Select
+        .DataSet.Locate('COD_TIPO', FDados.TipoServicos.Cadastro.GetCodigo, []);
+end;
+
+procedure TFormPesquisaTipoServico.btnExcluirClick(Sender: TObject);
+begin
+  inherited;
+  if TFormCadastroTipoServico.TipoServicoShow(TpDelete, FDados) then
+    FDados.TipoServicos.Select;
+end;
+
+procedure TFormPesquisaTipoServico.BtnNewClick(Sender: TObject);
+begin
+  inherited;
+  if TFormCadastroTipoServico.TipoServicoShow(TpInsert, FDados) then
+    FDados
+      .TipoServicos
+        .Select
+        .DataSet.Locate('COD_TIPO', FDados.TipoServicos.Cadastro.GetCodigo, []);
+end;
+
+procedure TFormPesquisaTipoServico.EdtSearchPropertiesChange(Sender: TObject);
+begin
+  inherited;
+  Pesquisar;
+end;
+
+procedure TFormPesquisaTipoServico.FormCreate(Sender: TObject);
+begin
+  inherited;
+  DS.DataSet := FDados.TipoServicos.DataSet;
+  FDados.TipoServicos.Select;
+  GridPesquisaDBTableViewColumnHeaderClick(GridPesquisaDBTableView, GridPesquisaDBTableView.Columns[0]);
+end;
+
+procedure TFormPesquisaTipoServico.Pesquisar;
+begin
+//  case FColumn.fie of
+//
+//  end;
+end;
+
+function TFormPesquisaTipoServico.Render: TForm;
+begin
+  Result := Self;
+end;
+
+procedure TFormPesquisaTipoServico.SpbConsultarClick(Sender: TObject);
+begin
+  inherited;
+  TFormCadastroTipoServico.TipoServicoShow(TpSelect, FDados);
+end;
+
+procedure TFormPesquisaTipoServico.unRender;
+begin
+  //
+end;
+
+end.

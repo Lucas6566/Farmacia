@@ -1,0 +1,7 @@
+unit Farmacia.Model.Entity.TipoServicos;
+
+interface
+
+implementation
+
+end.

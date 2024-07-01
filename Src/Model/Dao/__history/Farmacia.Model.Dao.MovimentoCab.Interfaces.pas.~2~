@@ -1,0 +1,44 @@
+unit Farmacia.Model.Dao.MovimentoCab.Interfaces;
+
+interface
+
+type
+  iMovimentoCab = interface
+    ['{F908C099-6A53-4C56-B6E5-F09E477CBB45}']
+    function CodMovimento(pValue:Integer):iMovimentoCab;
+    function CodPaciente(pValue:Integer):iMovimentoCab;
+    function NomPaciente(pValue:String):iMovimentoCab;
+    function DocPaciente(pValue:String):iMovimentoCab;
+    function TelPaciente(pValue:String):iMovimentoCab;
+    function VlrSubtotal(pValue:Double):iMovimentoCab;
+    function VlrDesconto(pValue:Double):iMovimentoCab;
+    function VlrAcrescimo(pValue:Double):iMovimentoCab;
+    function VlrFrete(pValue:Double):iMovimentoCab;
+    function VlrTotal(pValue:Double):iMovimentoCab;
+    function ObsMovimento(pValue:String):iMovimentoCab;
+    function QtdServicos(pValue:Double):iMovimentoCab;
+    function CodUsuarioAlt(pValue:Integer):iMovimentoCab;
+    function DatCadastro(pValue:TDateTime):iMovimentoCab;
+    function DatAlteracao(pValue:TDateTime):iMovimentoCab;
+
+    function GetCodMovimento:Integer;
+    function GetCodPaciente:Integer;
+    function GetNomPaciente:String;
+    function GetDocPaciente:String;
+    function GetTelPaciente:String;
+    function GetVlrSubtotal:Double;
+    function GetVlrDesconto:Double;
+    function GetVlrAcrescimo:Double;
+    function GetVlrFrete:Double;
+    function GetVlrTotal:Double;
+    function GetObsMovimento:String;
+    function GetQtdServicos:Double;
+    function GetCodUsuarioAlt:Integer;
+    function GetDatCadastro:TDateTime;
+    function GetDatAlteracao:TDateTime;
+    function Clear:MovimentoCab;
+  end;
+
+implementation
+
+end.

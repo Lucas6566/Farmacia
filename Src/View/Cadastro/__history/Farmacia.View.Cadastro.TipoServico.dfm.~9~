@@ -1,0 +1,60 @@
+inherited FormCadastroTipoServico: TFormCadastroTipoServico
+  Caption = 'Cadastro Servi'#231'o'
+  ClientHeight = 92
+  ClientWidth = 396
+  OnCreate = FormCreate
+  ExplicitWidth = 408
+  ExplicitHeight = 130
+  TextHeight = 15
+  inherited PnlBackground: TPanel
+    Width = 396
+    Height = 92
+    ExplicitLeft = 8
+    ExplicitTop = -8
+    ExplicitWidth = 562
+    ExplicitHeight = 173
+    object Label1: TLabel [0]
+      Left = 7
+      Top = 9
+      Width = 39
+      Height = 15
+      Caption = 'C'#243'digo'
+    end
+    object Label2: TLabel [1]
+      Left = 87
+      Top = 9
+      Width = 33
+      Height = 15
+      Caption = 'Nome'
+    end
+    object EdtCodigo: TEdit [2]
+      Left = 7
+      Top = 24
+      Width = 74
+      Height = 23
+      TabOrder = 0
+    end
+    object EdtNome: TEdit [3]
+      Left = 87
+      Top = 24
+      Width = 288
+      Height = 23
+      TabOrder = 1
+    end
+    inherited Panel2: TPanel
+      Top = 54
+      Width = 394
+      TabOrder = 2
+      ExplicitTop = 54
+      ExplicitWidth = 394
+      inherited SpbGravar: TSpeedButton
+        Left = 268
+        OnClick = SpbGravarClick
+      end
+      inherited SpbCancelar: TSpeedButton
+        Left = 143
+        OnClick = nil
+      end
+    end
+  end
+end

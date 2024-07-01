@@ -1,0 +1,11 @@
+{
+	"name": "Farmacia",
+	"description": "",
+	"version": "1.0.0",
+	"homepage": "",
+	"mainsrc": "./src",
+	"projects": [],
+	"dependencies": {
+		"github.com/bittencourtthulio/router4delphi": "^1.0.8"
+	}
+}

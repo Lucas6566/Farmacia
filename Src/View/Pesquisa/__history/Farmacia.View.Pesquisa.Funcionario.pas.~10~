@@ -1,0 +1,97 @@
+unit Farmacia.View.Pesquisa.Funcionario;
+
+interface
+
+uses
+  Winapi.Windows,
+  Winapi.Messages,
+  System.SysUtils,
+  System.Variants,
+  System.Classes,
+  Vcl.Graphics,
+  Vcl.Controls,
+  Vcl.Forms,
+  Vcl.Dialogs,
+  Farmacia.View.Pesquisa.Pai,
+  cxGraphics,
+  cxControls,
+  cxLookAndFeels,
+  cxLookAndFeelPainters,
+  dxSkinsCore,
+  dxSkinBlack,
+  cxStyles,
+  cxCustomData,
+  cxFilter,
+  cxData,
+  cxDataStorage,
+  cxEdit,
+  cxNavigator,
+  dxDateRanges,
+  dxScrollbarAnnotations,
+  Data.DB,
+  cxDBData,
+  cxContainer,
+  cxTextEdit,
+  Vcl.Buttons,
+  Vcl.StdCtrls,
+  cxLabel,
+  cxGridLevel,
+  cxClasses,
+  cxGridCustomView,
+  cxGridCustomTableView,
+  cxGridTableView,
+  cxGridDBTableView,
+  cxGrid,
+  Vcl.ExtCtrls,
+  Router4D.Interfaces,
+  Router4D,
+  Farmacia.View.Cadastro.Funcionario,
+  Farmacia.Util.Types;
+
+type
+  TFormPesquisaFuncionario = class(TFormPesquisaPai, iRouter4DComponent)
+    GridCodigo: TcxGridDBColumn;
+    GridNome: TcxGridDBColumn;
+    GridTipo: TcxGridDBColumn;
+    procedure FormCreate(Sender: TObject);
+    procedure BtnNewClick(Sender: TObject);
+  private
+
+  public
+    function Render : TForm;
+    procedure unRender;
+  end;
+
+var
+  FormPesquisaFuncionario: TFormPesquisaFuncionario;
+
+implementation
+
+{$R *.dfm}
+
+uses Farmacia.Service.Conexao;
+
+procedure TFormPesquisaFuncionario.BtnNewClick(Sender: TObject);
+begin
+  inherited;
+  TFormCadastroFuncionario.FuncionarioShow(TpInsert);
+end;
+
+procedure TFormPesquisaFuncionario.FormCreate(Sender: TObject);
+begin
+  inherited;
+  Ds.DataSet := FormConexao.QyFuncionarios;
+  Ds.DataSet.Open;
+end;
+
+function TFormPesquisaFuncionario.Render: TForm;
+begin
+  Result := Self;
+end;
+
+procedure TFormPesquisaFuncionario.unRender;
+begin
+  //
+end;
+
+end.

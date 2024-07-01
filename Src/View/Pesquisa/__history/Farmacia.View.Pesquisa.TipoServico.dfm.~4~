@@ -1,0 +1,45 @@
+inherited FormPesquisaTipoServico: TFormPesquisaTipoServico
+  Caption = 'Tipos de Servi'#231'os'
+  TextHeight = 15
+  inherited PnlMainCenter: TPanel
+    inherited PnlClient: TPanel
+      inherited GridPesquisa: TcxGrid
+        inherited GridPesquisaDBTableView: TcxGridDBTableView
+          object GridCodigo: TcxGridDBColumn
+            Caption = 'Codigo'
+            DataBinding.FieldName = 'COD_TIPO'
+            DataBinding.IsNullValueType = True
+          end
+          object GridDescricao: TcxGridDBColumn
+            Caption = 'Descri'#231#227'o'
+            DataBinding.FieldName = 'DES_TIPO'
+            DataBinding.IsNullValueType = True
+            Width = 390
+          end
+        end
+      end
+    end
+    inherited PnlTop: TPanel
+      inherited PnlTopTitle: TPanel
+        inherited LblTitleForm: TcxLabel
+          Style.LookAndFeel.SkinName = ''
+          StyleDisabled.LookAndFeel.SkinName = ''
+          StyleFocused.LookAndFeel.SkinName = ''
+          StyleHot.LookAndFeel.SkinName = ''
+          AnchorY = 26
+        end
+      end
+      inherited PnlTopInfo: TPanel
+        inherited Panel1: TPanel
+          inherited BtnAlterar: TSpeedButton
+            OnClick = BtnAlterarClick
+          end
+        end
+      end
+    end
+  end
+  inherited DS: TDataSource
+    Left = 16
+    Top = 401
+  end
+end

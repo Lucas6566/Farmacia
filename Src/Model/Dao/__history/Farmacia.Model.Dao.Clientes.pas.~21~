@@ -1,0 +1,291 @@
+
+unit Farmacia.Model.Dao.Clientes;
+
+interface
+
+uses
+  Data.DB,
+  Datasnap.DBClient,
+  FireDAC.Stan.Param,
+  FireDAC.Comp.Client,
+  FireDAC.DApt,
+
+  FireDAC.Stan.Intf,
+  FireDAC.Stan.Option,
+  FireDAC.Stan.Error,
+  FireDAC.UI.Intf,
+  FireDAC.Phys.Intf,
+  FireDAC.Stan.Def,
+  FireDAC.Stan.Pool,
+  FireDAC.Stan.Async,
+  FireDAC.Phys,
+  FireDAC.Phys.FB,
+  FireDAC.Phys.FBDef,
+  FireDAC.VCLUI.Wait,
+
+  Midaslib,
+  Farmacia.Model.Dao.Clientes.Interfaces,
+  Farmacia.Model.Dao.Pai.Interfaces,
+  Farmacia.Model.Dao.Pai,
+  Farmacia.Model.Entity.Clientes.Interfaces,
+  Farmacia.Model.Entity.Clientes,
+  Farmacia.Util.FunctionSQL;
+
+type
+  TCrudClientes = class(TDaoPai, iCrudClientes)
+  private
+    FClientes : iModelClientes;
+    procedure CreateFields;
+    procedure SetParamQuery;
+  public
+    function AlimentaDados : iModelClientes;
+    function Cadastro : iModelClientes;
+
+    function OpenQuery : iCrudClientes;
+    function DataSet : TDataSet;
+    function Select : iCrudClientes;
+    function Insert : iCrudClientes;
+    function Update : iCrudClientes;
+    function Delete : iCrudClientes;
+
+    constructor Create;
+    destructor Destroy; override;
+    class function New : iCrudClientes;
+  end;
+
+implementation
+
+{ TCrudClientes }
+
+function TCrudClientes.AlimentaDados: iModelClientes;
+begin
+  Result := FClientes.Codigo(ClientDataSet.FieldByName('COD_CLIENTE').AsInteger)
+                     .Nome(ClientDataSet.FieldByName('NOM_CLIENTE').AsString)
+                     .IndDocumento(ClientDataSet.FieldByName('IND_DOCUMENTO').AsInteger)
+                     .Documento(ClientDataSet.FieldByName('DOC_CLIENTE').AsString)
+                     .Cep(ClientDataSet.FieldByName('NUM_CEP').AsString)
+                     .Logradouro(ClientDataSet.FieldByName('END_LOGRADOURO').AsString)
+                     .NumEndereco(ClientDataSet.FieldByName('NUM_ENDERECO').AsInteger)
+                     .Bairro(ClientDataSet.FieldByName('NOM_BAIRRO').AsString)
+                     .Cidade(ClientDataSet.FieldByName('NOM_CIDADE').AsString)
+                     .Uf(ClientDataSet.FieldByName('SIG_UF').AsString)
+                     .Complemento(ClientDataSet.FieldByName('END_COMPLEMENTO').AsString)
+                     .EndEletronico(ClientDataSet.FieldByName('END_ELETRONICO').AsString)
+                     .TelFixo(ClientDataSet.FieldByName('TEL_FIXO').AsString)
+                     .Fax(ClientDataSet.FieldByName('TEL_FAX').AsString)
+                     .Celular(ClientDataSet.FieldByName('TEL_CELULAR').AsString)
+                     .CodigoUsuario(ClientDataSet.FieldByName('COD_USUAIRO_ALT').AsInteger)
+                     .DataCadastro(ClientDataSet.FieldByName('DAT_CADASTRO').AsDateTime)
+                     .DataAlteracao(ClientDataSet.FieldByName('DAT_ALTERACAO').AsDateTime);
+end;
+
+function TCrudClientes.Cadastro: iModelClientes;
+begin
+  Result := FClientes;
+end;
+
+constructor TCrudClientes.Create;
+begin
+  inherited;
+  GetInstancia;
+  FClientes := TModelClientes.New;
+  CreateFields;
+end;
+
+procedure TCrudClientes.CreateFields;
+begin
+  ClientDataSet.FieldDefs.Add('COD_CLIENTE', ftInteger);
+  ClientDataSet.FieldDefs.Add('NOM_CLIENTE', ftString, 80);
+  ClientDataSet.FieldDefs.Add('IND_DOCUMENTO', ftInteger);
+  ClientDataSet.FieldDefs.Add('DOC_CLIENTE', ftString, 80);
+  ClientDataSet.FieldDefs.Add('NUM_CEP', ftString, 80);
+  ClientDataSet.FieldDefs.Add('END_LOGRADOURO', ftString, 80);
+  ClientDataSet.FieldDefs.Add('NUM_ENDERECO', ftString, 80);
+  ClientDataSet.FieldDefs.Add('NOM_BAIRRO', ftString, 80);
+  ClientDataSet.FieldDefs.Add('NOM_CIDADE', ftString, 80);
+  ClientDataSet.FieldDefs.Add('SIG_UF', ftString, 80);
+  ClientDataSet.FieldDefs.Add('END_COMPLEMENTO', ftString, 80);
+  ClientDataSet.FieldDefs.Add('END_ELETRONICO', ftString, 80);
+  ClientDataSet.FieldDefs.Add('TEL_FIXO', ftString, 80);
+  ClientDataSet.FieldDefs.Add('TEL_FAX', ftString, 80);
+  ClientDataSet.FieldDefs.Add('TEL_CELULAR', ftString, 80);
+  ClientDataSet.FieldDefs.Add('COD_USUAIRO_ALT', ftInteger);
+  ClientDataSet.FieldDefs.Add('DAT_CADASTRO', ftDate);
+  ClientDataSet.FieldDefs.Add('DAT_ALTERACAO', ftDate);
+
+  ClientDataSet.CreateDataSet;
+
+  ClientDataSet.IndexFieldNames := 'COD_CLIENTE';
+end;
+
+function TCrudClientes.DataSet: TDataSet;
+begin
+  Result := ClientDataSet;
+end;
+
+function TCrudClientes.Delete: iCrudClientes;
+begin
+  Result := Self;
+
+  Query.SQL.Clear;
+
+  Query.SQL.Add('DELETE FROM CLIENTES');
+  Query.SQL.Add('  WHERE COD_CLIENTE = :pCOD_CLIENTE');
+
+  Query.ParamByName('pCOD_CLIENTE').AsInteger := Cadastro.GetCodigo;
+
+  Query.ExecSQL;
+end;
+
+destructor TCrudClientes.Destroy;
+begin
+
+  inherited;
+end;
+
+function TCrudClientes.Insert: iCrudClientes;
+begin
+  Result := Self;
+
+  Query.SQL.Clear;
+
+  Query.SQL.Add('INSERT INTO FARMACIA.CLIENTES (');
+  Query.SQL.Add('  COD_CLIENTE,');
+  Query.SQL.Add('  NOM_CLIENTE,');
+  Query.SQL.Add('  IND_DOCUMENTO,');
+  Query.SQL.Add('  DOC_CLIENTE,');
+  Query.SQL.Add('  NUM_CEP,');
+  Query.SQL.Add('  END_LOGRADOURO,');
+  Query.SQL.Add('  NUM_ENDERECO,');
+  Query.SQL.Add('  NOM_BAIRRO,');
+  Query.SQL.Add('  NOM_CIDADE,');
+  Query.SQL.Add('  SIG_UF,');
+  Query.SQL.Add('  END_COMPLEMENTO,');
+  Query.SQL.Add('  END_ELETRONICO,');
+  Query.SQL.Add('  TEL_FIXO,');
+  Query.SQL.Add('  TEL_FAX,');
+  Query.SQL.Add('  TEL_CELULAR,');
+  Query.SQL.Add('  COD_USUARIO_ALT,');
+  Query.SQL.Add('  DAT_CADASTRO, ');
+  Query.SQL.Add('  DAT_ALTERACAO');
+  Query.SQL.Add(') VALUES (');
+  Query.SQL.Add('  :pCOD_CLIENTE,');
+  Query.SQL.Add('  :pNOM_CLIENTE,');
+  Query.SQL.Add('  :pIND_DOCUMENTO,');
+  Query.SQL.Add('  :pDOC_CLIENTE,');
+  Query.SQL.Add('  :pNUM_CEP,');
+  Query.SQL.Add('  :pEND_LOGRADOURO,');
+  Query.SQL.Add('  :pNUM_ENDERECO,');
+  Query.SQL.Add('  :pNOM_BAIRRO,');
+  Query.SQL.Add('  :pNOM_CIDADE,');
+  Query.SQL.Add('  :pSIG_UF,');
+  Query.SQL.Add('  :pEND_COMPLEMENTO,');
+  Query.SQL.Add('  :pEND_ELETRONICO,');
+  Query.SQL.Add('  :pTEL_FIXO,');
+  Query.SQL.Add('  :pTEL_FAX,');
+  Query.SQL.Add('  :pTEL_CELULAR,');
+  Query.SQL.Add('  :pCOD_USUARIO_ALT,');
+  Query.SQL.Add('  :pDAT_CADASTRO,');
+  Query.SQL.Add('  :pDAT_ALTERACAO');
+  Query.SQL.Add(');');
+
+  SetParamQuery;
+
+  Query.ExecSQL;
+end;
+
+class function TCrudClientes.New: iCrudClientes;
+begin
+  Result := Self.Create;
+end;
+
+function TCrudClientes.OpenQuery: iCrudClientes;
+begin
+  Result := Self;
+  OpenQueryPai
+end;
+
+function TCrudClientes.Select: iCrudClientes;
+begin
+  Result := Self;
+
+  Query.SQL.Clear;
+  Query.SQL.Add('SELECT ');
+  Query.SQL.Add('  COD_CLIENTE,');
+  Query.SQL.Add('  NOM_CLIENTE,');
+  Query.SQL.Add('  IND_DOCUMENTO,');
+  Query.SQL.Add('  DOC_CLIENTE,');
+  Query.SQL.Add('  NUM_CEP,');
+  Query.SQL.Add('  END_LOGRADOURO,');
+  Query.SQL.Add('  NUM_ENDERECO,');
+  Query.SQL.Add('  NOM_BAIRRO,');
+  Query.SQL.Add('  NOM_CIDADE,');
+  Query.SQL.Add('  SIG_UF,');
+  Query.SQL.Add('  END_COMPLEMENTO,');
+  Query.SQL.Add('  END_ELETRONICO,');
+  Query.SQL.Add('  TEL_FIXO,');
+  Query.SQL.Add('  TEL_FAX,');
+  Query.SQL.Add('  TEL_CELULAR,');
+  Query.SQL.Add('  COD_USUARIO_ALT,');
+  Query.SQL.Add('  DAT_CADASTRO,');
+  Query.SQL.Add('  DAT_ALTERACAO ');
+  Query.SQL.Add('FROM FARMACIA.CLIENTES ');
+  Query.SQL.Add('	 WHERE 1=1');
+
+  OpenQuery;
+end;
+
+procedure TCrudClientes.SetParamQuery;
+begin
+  Query.ParamByName('pCOD_CLIENTE').AsInteger     := Cadastro.GetCodigo;
+  Query.ParamByName('pNOM_CLIENTE').AsString      := Cadastro.GetNome;
+  Query.ParamByName('pIND_DOCUMENTO').AsInteger   := Cadastro.GetIndDocumento;
+  Query.ParamByName('pDOC_CLIENTE').AsString      := Cadastro.GetDocumento;
+  Query.ParamByName('pNUM_CEP').AsString          := Cadastro.GetCep;
+  Query.ParamByName('pEND_LOGRADOURO').AsString   := Cadastro.GetLogradouro;
+  Query.ParamByName('pNUM_ENDERECO').AsInteger    := Cadastro.GetNumEndereco;
+  Query.ParamByName('pNOM_BAIRRO').AsString       := Cadastro.GetBairro;
+  Query.ParamByName('pNOM_CIDADE').AsString       := Cadastro.GetCidade;
+  Query.ParamByName('pSIG_UF').AsString           := Cadastro.GetUf;
+  Query.ParamByName('pEND_COMPLEMENTO').AsString  := Cadastro.GetComplemento;
+  Query.ParamByName('pEND_ELETRONICO').AsString   := Cadastro.GetEndEletronico;
+  Query.ParamByName('pTEL_FIXO').AsString         := Cadastro.GetTelFixo;
+  Query.ParamByName('pTEL_FAX').AsString          := Cadastro.GetFax;
+  Query.ParamByName('pTEL_CELULAR').AsString      := Cadastro.GetCelular;
+  Query.ParamByName('pCOD_USUARIO_ALT').AsInteger := Cadastro.GetCodigoUsuario;
+  Query.ParamByName('pDAT_CADASTRO').AsDate       := Cadastro.GetDataCadastro;
+  Query.ParamByName('pDAT_ALTERACAO').AsDate      := Cadastro.GetDataAlteracao;
+end;
+
+function TCrudClientes.Update: iCrudClientes;
+begin
+  Result := Self;
+
+  Query.SQL.Clear;
+  Query.SQL.Add('UPDATE FARMACIA.CLIENTES SET');
+  Query.SQL.Add('  NOM_CLIENTE     = :pNOM_CLIENTE,');
+  Query.SQL.Add('  IND_DOCUMENTO   = :pIND_DOCUMENTO,');
+  Query.SQL.Add('  DOC_CLIENTE     = :pDOC_CLIENTE,');
+  Query.SQL.Add('  NUM_CEP         = :pNUM_CEP,');
+  Query.SQL.Add('  END_LOGRADOURO  = :pEND_LOGRADOURO,');
+  Query.SQL.Add('  NUM_ENDERECO    = :pNUM_ENDERECO,');
+  Query.SQL.Add('  NOM_BAIRRO      = :pNOM_BAIRRO,');
+  Query.SQL.Add('  NOM_CIDADE      = :pNOM_CIDADE,');
+  Query.SQL.Add('  SIG_UF          = :pSIG_UF,');
+  Query.SQL.Add('  END_COMPLEMENTO = :pEND_COMPLEMENTO,');
+  Query.SQL.Add('  END_ELETRONICO  = :pEND_ELETRONICO,');
+  Query.SQL.Add('  TEL_FIXO        = :pTEL_FIXO,');
+  Query.SQL.Add('  TEL_FAX         = :pTEL_FAX,');
+  Query.SQL.Add('  TEL_CELULAR     = :pTEL_CELULAR,');
+  Query.SQL.Add('  COD_USUARIO_ALT = :pCOD_USUARIO_ALT,');
+  Query.SQL.Add('  DAT_CADASTRO    = :pDAT_CADASTRO,');
+  Query.SQL.Add('  DAT_ALTERACAO   = :pDAT_ALTERACAO ');
+  Query.SQL.Add('WHERE');
+  Query.SQL.Add('  COD_CLIENTE = :pCOD_CLIENTE');
+
+  SetParamQuery;
+
+  Query.ExecSQL;
+end;
+
+end.

@@ -1,0 +1,35 @@
+unit Farmacia.Model.Entity.TipoServicos;
+
+interface
+
+uses
+  Farmacia.Model.Entity.TipoServicos.Interfaces;
+
+type
+  TModelTipoServicos = class(TInterfacedObject, iModelTipoServicos)
+    private
+      FCodigo : Integer;
+      FDescricao : Integer;
+    public
+      function Codigo( aValue : Integer ): iModelTipoServicos;
+      function Descricao( aValue : String ): iModelTipoServicos;
+  end;
+
+implementation
+
+
+{ TModelTipoServicos }
+
+function TModelTipoServicos.Codigo(aValue: Integer): iModelTipoServicos;
+begin
+  Result := Self;
+  FCodigo := aValue;
+end;
+
+function TModelTipoServicos.Descricao(aValue: String): iModelTipoServicos;
+begin
+  Result := Self;
+  FDescricao := aValue;
+end;
+
+end.

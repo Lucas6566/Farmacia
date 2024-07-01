@@ -1,0 +1,112 @@
+unit NewRetail.View.Principal;
+
+interface
+
+uses
+  Winapi.Windows,
+  Winapi.Messages,
+  System.SysUtils,
+  System.Variants,
+  System.Classes,
+  Vcl.Graphics,
+  Vcl.Controls,
+  Vcl.Forms,
+  Vcl.Dialogs,
+  Vcl.ExtCtrls,
+  Vcl.Buttons,
+  System.ImageList,
+  Vcl.ImgList,
+  Router4D.Interfaces,
+  Router4D, frxClass;
+
+type
+  TFormPrincipal = class(TForm)
+    PnlPrincipal: TPanel;
+    PnlMainTop: TPanel;
+    PnlMainLeft: TPanel;
+    SbtHome: TSpeedButton;
+    PnlMainFull: TPanel;
+    PnlMainCenter: TPanel;
+    PnlLogo: TPanel;
+    ImageList: TImageList;
+    procedure FormCreate(Sender: TObject);
+    procedure SbtHomeClick(Sender: TObject);
+    procedure SbtHomeMouseMove(Sender: TObject; Shift: TShiftState; X,
+      Y: Integer);
+  private
+    vWidth : Integer;
+    procedure ApplyStyle;
+    procedure ApplyPnlSbt;
+    { Private declarations }
+  public
+    { Public declarations }
+    function Render : TForm;
+    procedure unRender;
+  end;
+
+var
+  FormPrincipal: TFormPrincipal;
+
+implementation
+
+{$R *.dfm}
+
+uses
+  NewRetail.View.Main,
+  NewRetail.View.Pesquisa.Cliente;
+
+procedure TFormPrincipal.FormCreate(Sender: TObject);
+begin
+  ShowMessage('0 - Verificar a questão a função do maicon FormCadastroClientes.fDados.Clientes.SelectPesquisa;, que puxa no CadastroCliente.View, na linha 486');
+  ShowMessage('1 - Arrumar os campos faltantes');
+  ShowMessage('2 - Fazer sistema de tarefas para controlar melhor o que tenho pendente');
+  ShowMessage('3 - Criar uma tabela que contrle certinho a questão da agenda telefonica e de contatos');
+  ApplyStyle;
+  TRouter4D.Render<TFormMain>.SetElement(PnlMainCenter, PnlPrincipal);
+end;
+
+function TFormPrincipal.Render: TForm;
+begin
+  Result := Self;
+end;
+
+procedure TFormPrincipal.SbtHomeClick(Sender: TObject);
+begin
+  TRouter4D.Link.&To('Principal');
+end;
+
+procedure TFormPrincipal.SbtHomeMouseMove(Sender: TObject; Shift: TShiftState;
+  X, Y: Integer);
+begin
+  //ApplyPnlSbt;
+end;
+
+procedure TFormPrincipal.unRender;
+begin
+
+end;
+
+procedure TFormPrincipal.ApplyPnlSbt;
+begin
+  if vWidth = 89 then
+    vWidth := 159
+  else
+    vWidth := 89;
+  PnlMainLeft.Width := vWidth;
+
+  if SbtHome.Caption = '' then
+    SbtHome.Caption := 'HOME'
+  else
+    SbtHome.Caption := '';
+end;
+
+procedure TFormPrincipal.ApplyStyle;
+begin
+  PnlLogo.Color     := $D4CF32;
+  PnlMainTop.Color  := $D4CF32;
+  PnlMainLeft.Color := $FCFEFF;
+
+  ImageList.GetBitmap(0, SbtHome.Glyph);
+end;
+
+end.

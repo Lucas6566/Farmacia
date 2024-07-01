@@ -1,0 +1,20 @@
+unit Farmacia.Model.Entity.Funcionario.Interfaces;
+
+interface
+
+type
+  iModelFuncionario = interface
+    ['{E3F6443B-CDE3-48F4-A2C7-1BBCBEF89ACE}']
+    function Codigo( aValue : Integer ): iModelFuncionario;
+    function Nome( aValue : String ): iModelFuncionario;
+    function Tipo( aValue : Integer ): iModelFuncionario;
+    function CodigoUsuario( aValue : TDate ): iModelFuncionario;
+    function DtaCadastro( aValue : TDate ): iModelFuncionario;
+    function DtaAlteracao( aValue : TDate ): iModelFuncionario;
+  end;
+
+
+
+implementation
+
+end.

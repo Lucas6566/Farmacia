@@ -1,0 +1,104 @@
+inherited FormCadastroServico: TFormCadastroServico
+  Caption = 'Cadastro de Servi'#231'o'
+  ClientHeight = 139
+  ClientWidth = 385
+  ExplicitWidth = 397
+  ExplicitHeight = 177
+  TextHeight = 15
+  inherited PnlBackground: TPanel
+    Width = 385
+    Height = 139
+    ExplicitWidth = 373
+    ExplicitHeight = 138
+    object Label2: TLabel [0]
+      Left = 87
+      Top = 9
+      Width = 51
+      Height = 15
+      Caption = 'Descricao'
+    end
+    object Label1: TLabel [1]
+      Left = 7
+      Top = 9
+      Width = 39
+      Height = 15
+      Caption = 'C'#243'digo'
+    end
+    object Label3: TLabel [2]
+      Left = 7
+      Top = 49
+      Width = 26
+      Height = 15
+      Caption = 'Valor'
+    end
+    inherited Panel2: TPanel
+      Top = 101
+      Width = 383
+      ExplicitTop = 100
+      ExplicitWidth = 371
+      inherited SpbGravar: TSpeedButton
+        Left = 257
+        ExplicitLeft = 259
+        ExplicitTop = -5
+      end
+      inherited SpbCancelar: TSpeedButton
+        Left = 132
+        ExplicitLeft = 118
+        ExplicitTop = -4
+      end
+    end
+    object EdtDesc: TEdit
+      Left = 87
+      Top = 22
+      Width = 288
+      Height = 23
+      TabOrder = 1
+    end
+    object EdtCodigo: TEdit
+      Left = 7
+      Top = 24
+      Width = 74
+      Height = 23
+      TabOrder = 2
+    end
+    object EdtValor: TEdit
+      Left = 7
+      Top = 64
+      Width = 74
+      Height = 23
+      TabOrder = 3
+    end
+    object Panel3: TPanel
+      Left = 87
+      Top = 51
+      Width = 288
+      Height = 40
+      BevelOuter = bvNone
+      Ctl3D = True
+      ParentBackground = False
+      ParentCtl3D = False
+      TabOrder = 4
+      object Label4: TLabel
+        Left = 0
+        Top = -2
+        Width = 80
+        Height = 15
+        Caption = 'Tipo de Servi'#231'o'
+      end
+      object EdtDescTipoServico: TEdit
+        Left = 53
+        Top = 13
+        Width = 235
+        Height = 23
+        TabOrder = 0
+      end
+      object EdtCodTipoServico: TEdit
+        Left = 0
+        Top = 13
+        Width = 51
+        Height = 23
+        TabOrder = 1
+      end
+    end
+  end
+end

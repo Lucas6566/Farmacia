@@ -1,0 +1,23 @@
+unit Farmacia.Model.Entity.Funcionarios;
+
+interface
+
+uses
+  Farmacia.Model.Entity.Funcionarios.Interfaces;
+
+type
+  TModelFuncionarios = class(TInterfacedObject, TModelFuncionarios)
+  private
+    FCodigo : Integer;
+
+  public
+
+
+    constructor Create;
+    destructor Destroy; override;
+    class function New : TModelFuncionarios;
+  end;
+
+implementation
+
+end.

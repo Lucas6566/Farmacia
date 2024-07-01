@@ -1,0 +1,268 @@
+unit Farmacia.Model.Dao.MovimentoCab;
+
+interface
+
+uses
+  Data.DB,
+  Datasnap.DBClient,
+  FireDAC.Stan.Param,
+  FireDAC.Comp.Client,
+  FireDAC.DApt,
+
+  FireDAC.Stan.Intf,
+  FireDAC.Stan.Option,
+  FireDAC.Stan.Error,
+  FireDAC.UI.Intf,
+  FireDAC.Phys.Intf,
+  FireDAC.Stan.Def,
+  FireDAC.Stan.Pool,
+  FireDAC.Stan.Async,
+  FireDAC.Phys,
+  FireDAC.Phys.FB,
+  FireDAC.Phys.FBDef,
+  FireDAC.VCLUI.Wait,
+
+  Midaslib,
+  Farmacia.Model.Dao.MovimentoCab.Interfaces,
+  Farmacia.Model.Dao.Pai.Interfaces,
+  Farmacia.Model.Dao.Pai,
+  Farmacia.Model.Entity.MovimentoCab.Interfaces,
+  Farmacia.Model.Entity.MovimentoCab,
+  Farmacia.Util.FunctionSQL;
+
+type
+  TCrudMovimentoCab = class(TDaoPai, iCrudMovimentoCab)
+  private
+    FMovimento:iModelMovimentoCab;
+    procedure CreateFields;
+    procedure SetParamQuery;
+  public
+    function AlimentarDados:iModelMovimentoCab;
+    function Cadastro:iModelMovimentoCab;
+	
+    function OpenQuery : iCrudMovimentoCab;
+    function DataSet:TDataSet;
+    function Select:iCrudMovimentoCab;
+    function Insert:iCrudMovimentoCab;
+    function Update:iCrudMovimentoCab;
+    function Delete:iCrudMovimentoCab;
+	
+    constructor Create;
+    destructor Destroy; override;
+    class function New : iCrudMovimentoCab;
+  end;
+
+implementation
+
+{ TCrudMovimentoCab }
+
+constructor TCrudMovimentoCab.Create;
+begin
+  GetInstancia;
+  FMovimento := TMovimentoCab.New;
+  CreateFields;
+end;
+
+destructor TCrudMovimentoCab.Destroy;
+begin
+  Query.DisposeOf;
+  ClientDataSet.DisposeOf;
+  inherited;
+end;
+
+class function TCrudMovimentoCab.New:iCrudMovimentoCab;
+begin
+  Result := Self.Create;
+end;
+
+function TCrudMovimentoCab.AlimentarDados:iModelMovimentoCab;
+begin
+  Result := FMovimento.CodMovimento(ClientDataSet.FieldByName('COD_MOVIMENTO').AsInteger)
+                      .CodPaciente(ClientDataSet.FieldByName('COD_PACIENTE').AsInteger)
+                      .NomPaciente(ClientDataSet.FieldByName('NOM_PACIENTE').AsString)
+                      .DocPaciente(ClientDataSet.FieldByName('DOC_PACIENTE').AsString)
+                      .TelPaciente(ClientDataSet.FieldByName('TEL_PACIENTE').AsString)
+                      .VlrSubtotal(ClientDataSet.FieldByName('VLR_SUBTOTAL').AsFloat)
+                      .VlrDesconto(ClientDataSet.FieldByName('VLR_DESCONTO').AsFloat)
+                      .VlrAcrescimo(ClientDataSet.FieldByName('VLR_ACRESCIMO').AsFloat)
+                      .VlrFrete(ClientDataSet.FieldByName('VLR_FRETE').AsFloat)
+                      .VlrTotal(ClientDataSet.FieldByName('VLR_TOTAL').AsFloat)
+                      .ObsMovimento(ClientDataSet.FieldByName('OBS_MOVIMENTO').AsString)
+                      .QtdServicos(ClientDataSet.FieldByName('QTD_SERVICOS').AsFloat)
+                      .CodUsuarioAlt(ClientDataSet.FieldByName('COD_USUARIO_ALT').AsInteger)
+                      .DatCadastro(ClientDataSet.FieldByName('DAT_CADASTRO').AsDateTime)
+                      .DatAlteracao(ClientDataSet.FieldByName('DAT_ALTERACAO').AsDateTime);
+end;
+
+function TCrudMovimentoCab.Cadastro:iModelMovimentoCab;
+begin
+  Result := FMovimento;
+end;
+
+procedure TCrudMovimentoCab.CreateFields;
+begin
+  ClientDataSet.FieldDefs.Add('COD_MOVIMENTO', ftInteger);
+  ClientDataSet.FieldDefs.Add('COD_PACIENTE', ftInteger);
+  ClientDataSet.FieldDefs.Add('NOM_PACIENTE', ftString, 80);
+  ClientDataSet.FieldDefs.Add('DOC_PACIENTE', ftString, 40);
+  ClientDataSet.FieldDefs.Add('TEL_PACIENTE', ftString, 20);
+  ClientDataSet.FieldDefs.Add('VLR_SUBTOTAL', ftFloat);
+  ClientDataSet.FieldDefs.Add('VLR_DESCONTO', ftFloat);
+  ClientDataSet.FieldDefs.Add('VLR_ACRESCIMO', ftFloat);
+  ClientDataSet.FieldDefs.Add('VLR_FRETE', ftFloat);
+  ClientDataSet.FieldDefs.Add('VLR_TOTAL', ftFloat);
+  ClientDataSet.FieldDefs.Add('OBS_MOVIMENTO', ftString, 250);
+  ClientDataSet.FieldDefs.Add('QTD_SERVICOS', ftFloat);
+  ClientDataSet.FieldDefs.Add('COD_USUARIO_ALT', ftInteger);
+  ClientDataSet.FieldDefs.Add('DAT_CADASTRO', ftDateTime);
+  ClientDataSet.FieldDefs.Add('DAT_ALTERACAO', ftDateTime);
+  ClientDataSet.CreateDataSet;
+
+  ClientDataSet.IndexFieldNames := 'COD_PACIENTE';
+end;
+
+function TCrudMovimentoCab.DataSet: TDataSet;
+begin
+  Result := ClientDataSet;
+end;
+
+function TCrudMovimentoCab.Select: iCrudMovimentoCab;
+begin
+  Result := Self;
+
+  Query.Close;
+  Query.SQL.Clear;
+  Query.SQL.Add('SELECT');
+  Query.SQL.Add('COD_MOVIMENTO,');
+  Query.SQL.Add('COD_PACIENTE,');
+  Query.SQL.Add('NOM_PACIENTE,');
+  Query.SQL.Add('DOC_PACIENTE,');
+  Query.SQL.Add('TEL_PACIENTE,');
+  Query.SQL.Add('VLR_SUBTOTAL,');
+  Query.SQL.Add('VLR_DESCONTO,');
+  Query.SQL.Add('VLR_ACRESCIMO,');
+  Query.SQL.Add('VLR_FRETE,');
+  Query.SQL.Add('VLR_TOTAL,');
+  Query.SQL.Add('OBS_MOVIMENTO,');
+  Query.SQL.Add('QTD_SERVICOS,');
+  Query.SQL.Add('COD_USUARIO_ALT,');
+  Query.SQL.Add('DAT_CADASTRO,');
+  Query.SQL.Add('DAT_ALTERACAO');
+  Query.SQL.Add('FROM MOVIMENTO_CAB');
+  Query.Open();
+  
+  OpenQuery;
+end;
+
+function TCrudMovimentoCab.Delete: iCrudMovimentoCab;
+begin
+  Result := Self;
+
+  Query.Close;
+  Query.SQL.Clear;
+  Query.SQL.Add(' DELETE FROM MOVIMENTO_CAB');
+  Query.ExecSQL;
+end;
+
+function TCrudMovimentoCab.Insert: iCrudMovimentoCab;
+begin
+  Result := Self;
+
+  Query.Close;
+  Query.SQL.Clear;
+  Query.SQL.Add('INSERT INTO MOVIMENTO_CAB (');
+  Query.SQL.Add(' COD_MOVIMENTO,');
+  Query.SQL.Add(' COD_PACIENTE,');
+  Query.SQL.Add(' NOM_PACIENTE,');
+  Query.SQL.Add(' DOC_PACIENTE,');
+  Query.SQL.Add(' TEL_PACIENTE,');
+  Query.SQL.Add(' VLR_SUBTOTAL,');
+  Query.SQL.Add(' VLR_DESCONTO,');
+  Query.SQL.Add(' VLR_ACRESCIMO,');
+  Query.SQL.Add(' VLR_FRETE,');
+  Query.SQL.Add(' VLR_TOTAL,');
+  Query.SQL.Add(' OBS_MOVIMENTO,');
+  Query.SQL.Add(' QTD_SERVICOS,');
+  Query.SQL.Add(' COD_USUARIO_ALT,');
+  Query.SQL.Add(' DAT_CADASTRO,');
+  Query.SQL.Add(' DAT_ALTERACAO');
+  Query.SQL.Add(' ) VALUES ( ');
+  Query.SQL.Add(' :pCOD_MOVIMENTO,');
+  Query.SQL.Add(' :pCOD_PACIENTE,');
+  Query.SQL.Add(' :pNOM_PACIENTE,');
+  Query.SQL.Add(' :pDOC_PACIENTE,');
+  Query.SQL.Add(' :pTEL_PACIENTE,');
+  Query.SQL.Add(' :pVLR_SUBTOTAL,');
+  Query.SQL.Add(' :pVLR_DESCONTO,');
+  Query.SQL.Add(' :pVLR_ACRESCIMO,');
+  Query.SQL.Add(' :pVLR_FRETE,');
+  Query.SQL.Add(' :pVLR_TOTAL,');
+  Query.SQL.Add(' :pOBS_MOVIMENTO,');
+  Query.SQL.Add(' :pQTD_SERVICOS,');
+  Query.SQL.Add(' :pCOD_USUARIO_ALT,');
+  Query.SQL.Add(' :pDAT_CADASTRO,');
+  Query.SQL.Add(' :pDAT_ALTERACAO');
+  Query.SQL.Add(' )');
+
+  Query.ParamByName('pCOD_MOVIMENTO').AsInteger := Cadastro.GetCodMovimento;
+  Query.ParamByName('pCOD_PACIENTE').AsInteger := Cadastro.GetCodPaciente;
+  Query.ParamByName('pNOM_PACIENTE').AsString := Cadastro.GetNomPaciente;
+  Query.ParamByName('pDOC_PACIENTE').AsString := Cadastro.GetDocPaciente;
+  Query.ParamByName('pTEL_PACIENTE').AsString := Cadastro.GetTelPaciente;
+  Query.ParamByName('pVLR_SUBTOTAL').AsFloat := Cadastro.GetVlrSubtotal;
+  Query.ParamByName('pVLR_DESCONTO').AsFloat := Cadastro.GetVlrDesconto;
+  Query.ParamByName('pVLR_ACRESCIMO').AsFloat := Cadastro.GetVlrAcrescimo;
+  Query.ParamByName('pVLR_FRETE').AsFloat := Cadastro.GetVlrFrete;
+  Query.ParamByName('pVLR_TOTAL').AsFloat := Cadastro.GetVlrTotal;
+  Query.ParamByName('pOBS_MOVIMENTO').AsString := Cadastro.GetObsMovimento;
+  Query.ParamByName('pQTD_SERVICOS').AsFloat := Cadastro.GetQtdServicos;
+  Query.ParamByName('pCOD_USUARIO_ALT').AsInteger := Cadastro.GetCodUsuarioAlt;
+  Query.ParamByName('pDAT_CADASTRO').AsDateTime := Cadastro.GetDatCadastro;
+  Query.ParamByName('pDAT_ALTERACAO').AsDateTime := Cadastro.GetDatAlteracao;
+
+  Query.ExecSQL;
+end;
+
+function TCrudMovimentoCab.Update: iCrudMovimentoCab;
+begin
+  Result := Self;
+
+  Query.Close;
+  Query.SQL.Clear;
+  Query.SQL.Add('UPDATE MOVIMENTO_CAB SET ');
+  Query.SQL.Add(' COD_MOVIMENTO =:pCOD_MOVIMENTO,');
+  Query.SQL.Add(' COD_PACIENTE =:pCOD_PACIENTE,');
+  Query.SQL.Add(' NOM_PACIENTE =:pNOM_PACIENTE,');
+  Query.SQL.Add(' DOC_PACIENTE =:pDOC_PACIENTE,');
+  Query.SQL.Add(' TEL_PACIENTE =:pTEL_PACIENTE,');
+  Query.SQL.Add(' VLR_SUBTOTAL =:pVLR_SUBTOTAL,');
+  Query.SQL.Add(' VLR_DESCONTO =:pVLR_DESCONTO,');
+  Query.SQL.Add(' VLR_ACRESCIMO =:pVLR_ACRESCIMO,');
+  Query.SQL.Add(' VLR_FRETE =:pVLR_FRETE,');
+  Query.SQL.Add(' VLR_TOTAL =:pVLR_TOTAL,');
+  Query.SQL.Add(' OBS_MOVIMENTO =:pOBS_MOVIMENTO,');
+  Query.SQL.Add(' QTD_SERVICOS =:pQTD_SERVICOS,');
+  Query.SQL.Add(' COD_USUARIO_ALT =:pCOD_USUARIO_ALT,');
+  Query.SQL.Add(' DAT_CADASTRO =:pDAT_CADASTRO,');
+  Query.SQL.Add(' DAT_ALTERACAO =:pDAT_ALTERACAO');
+
+  Query.ParamByName('pCOD_MOVIMENTO').AsInteger := Cadastro.GetCodMovimento;
+  Query.ParamByName('pCOD_PACIENTE').AsInteger := Cadastro.GetCodPaciente;
+  Query.ParamByName('pNOM_PACIENTE').AsString := Cadastro.GetNomPaciente;
+  Query.ParamByName('pDOC_PACIENTE').AsString := Cadastro.GetDocPaciente;
+  Query.ParamByName('pTEL_PACIENTE').AsString := Cadastro.GetTelPaciente;
+  Query.ParamByName('pVLR_SUBTOTAL').AsFloat := Cadastro.GetVlrSubtotal;
+  Query.ParamByName('pVLR_DESCONTO').AsFloat := Cadastro.GetVlrDesconto;
+  Query.ParamByName('pVLR_ACRESCIMO').AsFloat := Cadastro.GetVlrAcrescimo;
+  Query.ParamByName('pVLR_FRETE').AsFloat := Cadastro.GetVlrFrete;
+  Query.ParamByName('pVLR_TOTAL').AsFloat := Cadastro.GetVlrTotal;
+  Query.ParamByName('pOBS_MOVIMENTO').AsString := Cadastro.GetObsMovimento;
+  Query.ParamByName('pQTD_SERVICOS').AsFloat := Cadastro.GetQtdServicos;
+  Query.ParamByName('pCOD_USUARIO_ALT').AsInteger := Cadastro.GetCodUsuarioAlt;
+  Query.ParamByName('pDAT_CADASTRO').AsDateTime := Cadastro.GetDatCadastro;
+  Query.ParamByName('pDAT_ALTERACAO').AsDateTime := Cadastro.GetDatAlteracao;
+
+  Query.ExecSQL;
+end;
+
+end.

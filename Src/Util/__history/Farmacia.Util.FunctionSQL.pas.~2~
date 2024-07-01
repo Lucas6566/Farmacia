@@ -1,0 +1,29 @@
+unit Farmacia.Util.FunctionSQL;
+
+interface
+
+ uses
+  FireDAC.Comp.Client,
+  Farmacia.Service.Conexao;
+
+  function GetCodigoSql(pTable, pCodigo : String): Integer;
+
+implementation
+
+function GetCodigoSql(pTable, pCodigo : String): Integer;
+var
+  lQuery : TFDQuery;
+begin
+  try
+    lQuery := TFDQuery.Create(nil);
+    lQuery.Connection := FormConexao.FDConnection;
+    lQuery.SQL.Clear;
+    lQuery.SQL.Add('SELECT MAX(' + pCodigo + ') COD FROM ' + pTable);
+    lQuery.Open;
+    Result := lQuery.FieldByName('COD').AsInteger + 1;
+  finally
+    lQuery.Destroy;
+  end;
+
+end;
+end.

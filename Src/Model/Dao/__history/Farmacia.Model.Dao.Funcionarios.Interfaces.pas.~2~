@@ -1,0 +1,24 @@
+unit Farmacia.Model.Dao.Funcionarios.Interfaces;
+
+interface
+
+uses
+  Data.DB,
+  Farmacia.Model.Entity.Funcionarios.Interfaces;
+
+type
+  iCrudFuncionarios = interface
+    ['{3CC21BA4-C2D4-4B01-BE3D-1DB53B395DB7}']
+    function AlimentaDados : iModelFuncionarios;
+    function Cadastro : iModelFuncionarios;
+
+    function OpenQuery : iCrudFuncionarios;
+    function Select : iCrudFuncionarios;
+    function Insert : iCrudFuncionarios;
+    function Update : iCrudFuncionarios;
+    function Delete : iCrudFuncionarios;
+  end;
+
+implementation
+
+end.

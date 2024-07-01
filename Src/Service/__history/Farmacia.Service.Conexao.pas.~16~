@@ -1,0 +1,60 @@
+unit Farmacia.Service.Conexao;
+
+interface
+
+uses
+  FireDAC.Comp.Client,
+  IniFiles,
+  Vcl.ExtCtrls,
+  Farmacia.Model.Connection.Interfaces,
+  Farmacia.Model.Connection;
+
+type
+  TConexao = class
+  private
+    FConnecta : iModelConnection;
+    FConnect: TFDConnection;
+    function GetConnect: TFDConnection;
+    procedure SetConnect(const Value: TFDConnection);
+    procedure GetArquivoCfg;
+  public
+    property Connect: TFDConnection read GetConnect;
+  public
+    constructor Create;
+    destructor Destroy; override;
+  end;
+
+implementation
+
+{ TConexao }
+
+constructor TConexao.Create;
+begin
+  FConnecta := TConnection.New;
+  FConnect := FConnecta.Connection;
+end;
+
+destructor TConexao.Destroy;
+begin
+
+  inherited;
+end;
+
+procedure TConexao.GetArquivoCfg;
+var
+  lArquivo : TIniFile;
+begin
+  lArquivo := TIniFile.Create(ExtractFilePath(Application.ExeName) + 'config.ini')
+end;
+
+function TConexao.GetConnect: TFDConnection;
+begin
+  Result := FConnect;
+end;
+
+procedure TConexao.SetConnect(const Value: TFDConnection);
+begin
+
+end;
+
+end.

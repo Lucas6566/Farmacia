@@ -1,0 +1,41 @@
+unit Farmacia.Model.Entity.Clientes;
+
+interface
+
+
+uses
+  Farmacia.Model.Entity.Clientes.Interfaces;
+
+type
+  TModelClientes = class(TInterfacedObject, iModelClientes)
+  private
+    FCodigo : Integer;
+    FNome : String;
+    FTipo : Integer; I
+    FCodigoUsuario : Integer;
+    FDtaCadastro : TDate;
+    FDtaAlteracao : TDate;
+  public
+    function Codigo( aValue : Integer ): iModelFuncionarios;
+    function Nome( aValue : String ): iModelFuncionarios;
+    function Tipo( aValue : Integer ): iModelFuncionarios;
+    function CodigoUsuario( aValue : Integer ): iModelFuncionarios;
+    function DtaCadastro( aValue : TDate ): iModelFuncionarios;
+    function DtaAlteracao( aValue : TDate ): iModelFuncionarios;
+
+  	function GetCodigo : Integer;
+    function GetNome : String;
+    function GetTipo : Integer;
+    function GetCodigoUsuario : Integer;
+    function GetDtaCadastro : TDate;
+    function GetDtaAlteracao : TDate;
+
+    constructor Create;
+    destructor Destroy; override;
+    class function New : TModelFuncionarios;
+  end;
+
+
+implementation
+
+end.

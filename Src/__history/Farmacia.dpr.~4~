@@ -1,0 +1,18 @@
+program Farmacia;
+
+uses
+  Vcl.Forms,
+  Farmacia.View.Principal in 'View\Farmacia.View.Principal.pas' {FormPrincipal},
+  Farmacia.Service.Conexao in 'Service\Farmacia.Service.Conexao.pas' {FormConexao},
+  Farmacia.View.Pesquisa.Pai in 'View\Pesquisa\Farmacia.View.Pesquisa.Pai.pas' {FormPesquisaPai},
+  Farmacia.View.Pesquisa.Cliente in 'View\Pesquisa\Farmacia.View.Pesquisa.Cliente.pas' {FormPesquisaCliente};
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+  Application.CreateForm(TFormPrincipal, FormPrincipal);
+  Application.CreateForm(TFormConexao, FormConexao);
+  Application.Run;
+end.

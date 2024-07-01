@@ -1,0 +1,125 @@
+unit Farmacia.View.Cadastro.TipoServico;
+
+interface
+
+uses
+  Winapi.Windows,
+  Winapi.Messages,
+  System.SysUtils,
+  System.Variants,
+  System.Classes,
+  Vcl.Graphics,
+  Vcl.Controls,
+  Vcl.Forms,
+  Vcl.Dialogs,
+  Farmacia.View.Cadastro.Pai,
+  Vcl.ExtCtrls,
+  Vcl.StdCtrls,
+  Vcl.Buttons,
+  Farmacia.Service.Conexao,
+  Farmacia.Util.Types, Data.DB, Farmacia.Controller.Cadastros.Interfaces;
+
+type
+  TFormCadastroTipoServico = class(TFormCadastroPai)
+    EdtCodigo: TEdit;
+    EdtDesc: TEdit;
+    Label1: TLabel;
+    Label2: TLabel;
+    procedure FormCreate(Sender: TObject);
+    procedure SpbGravarClick(Sender: TObject);
+  private
+    procedure OpenRegister;
+    procedure IncludeData;
+    procedure IncludeRegister;
+    procedure GetRegister;
+  public
+    class function TipoServicoShow(pTypeOperation: TTypeOperation; pDados: iControllerCadastros): Boolean;
+  end;
+
+var
+  FormCadastroTipoServico: TFormCadastroTipoServico;
+
+implementation
+
+{$R *.dfm}
+
+{ TFormCadastroTipoServico }
+
+procedure TFormCadastroTipoServico.FormCreate(Sender: TObject);
+begin
+  inherited;
+  FForm := Self;
+end;
+
+procedure TFormCadastroTipoServico.GetRegister;
+begin
+  EdtCodigo.Text := FDados.TipoServicos.Cadastro.GetCodigo.ToString;
+  EdtDesc.Text   := FDados.TipoServicos.Cadastro.GetDescricao;
+end;
+
+procedure TFormCadastroTipoServico.IncludeData;
+begin
+  FDados
+    .TipoServicos
+      .Cadastro
+         .Codigo(StrToInt(EdtCodigo.Text))
+         .Descricao(EdtDesc.Text)
+end;
+
+procedure TFormCadastroTipoServico.IncludeRegister;
+begin
+  case FTypeOperation of
+    TpInsert : begin
+      FDados
+        .TipoServicos
+          .Insert;
+    end;
+
+    TpUpdate : begin
+      FDados
+        .TipoServicos
+          .Update;
+    end;
+
+    TpDelete : begin
+      FDados
+        .TipoServicos
+          .Delete;
+    end;
+  end;
+end;
+
+procedure TFormCadastroTipoServico.OpenRegister;
+begin
+  case FTypeOperation of
+    TpInsert : begin
+      EdtCodigo.Text := GetCodigo('Tipo_Servicos', 'COD_TIPO');
+    end else
+      GetRegister;
+  end;
+end;
+
+procedure TFormCadastroTipoServico.SpbGravarClick(Sender: TObject);
+begin
+  inherited;
+  IncludeData;
+  IncludeRegister;
+end;
+
+class function TFormCadastroTipoServico.TipoServicoShow(
+  pTypeOperation: TTypeOperation; pDados: iControllerCadastros): Boolean;
+begin
+  Result := False;
+  FormCadastroTipoServico := TFormCadastroTipoServico.Create(nil);
+  try
+    FormCadastroTipoServico.FTypeOperation := pTypeOperation;
+    FormCadastroTipoServico.OpenRegister;
+    FormCadastroTipoServico.ShowModal;
+    if FormCadastroTipoServico.ModalResult = mrOk then
+      Result := True;
+  finally
+    FreeAndNil(FormCadastroTipoServico);
+  end;
+end;
+
+end.

@@ -1,0 +1,7 @@
+unit Farmacia.Model.Entity.Funcionario.Interfaces;
+
+interface
+
+implementation
+
+end.

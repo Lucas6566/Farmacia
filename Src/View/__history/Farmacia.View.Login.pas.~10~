@@ -1,0 +1,100 @@
+unit Farmacia.View.Login;
+
+interface
+
+uses
+  Winapi.Windows,
+  Winapi.Messages,
+  System.SysUtils,
+  System.Variants,
+  System.Classes,
+  Vcl.Graphics,
+  Vcl.Controls,
+  Vcl.Forms,
+  Vcl.Dialogs,
+  Vcl.ExtCtrls,
+  cxGraphics,
+  cxControls,
+  cxLookAndFeels,
+  cxLookAndFeelPainters,
+  cxContainer,
+  cxEdit,
+  dxSkinsCore,
+  dxSkinBlack,
+  cxLabel,
+  Vcl.StdCtrls,
+  Vcl.Buttons,
+  Farmacia.Service.Conexao;
+
+type
+  TFormLogin = class(TForm)
+    PnlBackground: TPanel;
+    PnlBackgroundUsuario: TPanel;
+    PnlBackgroundTop: TPanel;
+    cxLabel1: TcxLabel;
+    PnlBackgroundUsuarioCenter: TPanel;
+    PnlBackgroundUsuarioCenterEdit: TPanel;
+    EdtLogin: TEdit;
+    Login: TLabel;
+    PnlBackgroundSenha: TPanel;
+    Panel2: TPanel;
+    Label1: TLabel;
+    EdtSenha: TEdit;
+    PnlBackgroundBotton: TPanel;
+    SpbConfirmar: TSpeedButton;
+    SpbCancelar: TSpeedButton;
+    procedure SpbCancelarClick(Sender: TObject);
+    procedure SpbConfirmarClick(Sender: TObject);
+  private
+    procedure CheckShowPrincipal;
+    procedure CreateFormPrincipal;
+    function SearchUser : Boolean;
+  public
+
+  end;
+
+var
+  FormLogin: TFormLogin;
+
+implementation
+
+{$R *.dfm}
+
+procedure TFormLogin.CheckShowPrincipal;
+begin
+  if SearchUser then
+    CreateFormPrincipal
+  else
+    //
+end;
+
+procedure TFormLogin.CreateFormPrincipal;
+begin
+  //
+end;
+
+function TFormLogin.SearchUser : Boolean;
+begin
+  Result := False;
+  try
+    FormConexao.QyUsuario.Open;
+    if (FormConexao.QyUsuario.Locate('LOG_USUARIO', EdtLogin.Text, [])) then
+      if FormConexao.QyUsuario.Locate('SEN_USUARIO', EdtSenha.Text, []) then
+        Result := True;
+  finally
+
+  end;
+
+end;
+
+procedure TFormLogin.SpbCancelarClick(Sender: TObject);
+begin
+  Close;
+end;
+
+procedure TFormLogin.SpbConfirmarClick(Sender: TObject);
+begin
+  CheckShowPrincipal;
+end;
+
+end.

@@ -1,0 +1,279 @@
+unit Farmacia.Model.Dao.MovimentoDetalhes;
+
+interface
+
+uses
+  Data.DB,
+  Datasnap.DBClient,
+  FireDAC.Stan.Param,
+  FireDAC.Comp.Client,
+  FireDAC.DApt,
+
+  FireDAC.Stan.Intf,
+  FireDAC.Stan.Option,
+  FireDAC.Stan.Error,
+  FireDAC.UI.Intf,
+  FireDAC.Phys.Intf,
+  FireDAC.Stan.Def,
+  FireDAC.Stan.Pool,
+  FireDAC.Stan.Async,
+  FireDAC.Phys,
+  FireDAC.Phys.FB,
+  FireDAC.Phys.FBDef,
+  FireDAC.VCLUI.Wait,
+
+  Midaslib,
+  Farmacia.Model.Dao.MovimentoDetalhes.Interfaces,
+  Farmacia.Model.Dao.Pai.Interfaces,
+  Farmacia.Model.Dao.Pai,
+  Farmacia.Model.Entity.MovimentoDetalhes.Interfaces,
+  Farmacia.Model.Entity.MovimentoDetalhes,
+  Farmacia.Util.FunctionSQL;
+
+
+type
+  TCrudMovimentoDetalhes = class(TDaoPai, iCrudMovimentoDetalhes)
+  private
+    FMovimento:iModelMovimentoDetalhes;
+    procedure CreateFields;
+  public
+    function AlimentarDados:iModelMovimentoDetalhes;
+    function Cadastro:iModelMovimentoDetalhes;
+
+    function OpenQuery : iCrudMovimentoDetalhes;
+    function DataSet:TDataSet;
+    function Select:iCrudMovimentoDetalhes;
+    function Insert:iCrudMovimentoDetalhes;
+    function Update:iCrudMovimentoDetalhes;
+    function Delete:iCrudMovimentoDetalhes;
+
+    constructor Create;
+    destructor Destroy; override;
+    class function New : iCrudMovimentoDetalhes;
+  end;
+
+implementation
+
+{ TCrudMovimentoDetalhes }
+
+constructor TCrudMovimentoDetalhes.Create;
+begin
+  inherited;
+  GetInstancia;
+  FMovimento := TModelMovimentoDetalhes.New;
+  CreateFields;
+end;
+
+destructor TCrudMovimentoDetalhes.Destroy;
+begin
+  inherited;
+end;
+
+class function TCrudMovimentoDetalhes.New:iCrudMovimentoDetalhes;
+begin
+  Result := Self.Create;
+end;
+
+function TCrudMovimentoDetalhes.OpenQuery: iCrudMovimentoDetalhes;
+begin
+  Result := Self;
+  OpenQueryPai;
+end;
+
+function TCrudMovimentoDetalhes.AlimentarDados:iModelMovimentoDetalhes;
+begin
+  Result := FMovimento.SeqDetalhe(ClientDataSet.FieldByName('SEQ_DETALHE').AsInteger)
+                      .CodMovimento(ClientDataSet.FieldByName('COD_MOVIMENTO').AsInteger)
+                      .SeqMovimento(ClientDataSet.FieldByName('SEQ_MOVIMENTO').AsInteger)
+                      .CodServico(ClientDataSet.FieldByName('COD_SERVICO').AsInteger)
+                      .DesServico(ClientDataSet.FieldByName('DES_SERVICO').AsString)
+                      .TipServico(ClientDataSet.FieldByName('TIP_SERVICO').AsInteger)
+                      .QtdServicos(ClientDataSet.FieldByName('QTD_SERVICOS').AsFloat)
+                      .VlrServico(ClientDataSet.FieldByName('VLR_SERVICO').AsFloat)
+                      .VlrDesconto(ClientDataSet.FieldByName('VLR_DESCONTO').AsFloat)
+                      .VlrAcrescimo(ClientDataSet.FieldByName('VLR_ACRESCIMO').AsFloat)
+                      .VlrFrete(ClientDataSet.FieldByName('VLR_FRETE').AsFloat)
+                      .VlrTotal(ClientDataSet.FieldByName('VLR_TOTAL').AsFloat)
+                      .ObsServico(ClientDataSet.FieldByName('OBS_SERVICO').AsString)
+                      .CodUsuarioAlt(ClientDataSet.FieldByName('COD_USUARIO_ALT').AsInteger)
+                      .DatCadastro(ClientDataSet.FieldByName('DAT_CADASTRO').AsDateTime)
+                      .DatAlteracao(ClientDataSet.FieldByName('DAT_ALTERACAO').AsDateTime);
+end;
+
+function TCrudMovimentoDetalhes.Cadastro:iModelMovimentoDetalhes;
+begin
+  Result := FMovimento;
+end;
+
+procedure TCrudMovimentoDetalhes.CreateFields;
+begin
+  ClientDataSet.FieldDefs.Add('SEQ_DETALHE', ftInteger);
+  ClientDataSet.FieldDefs.Add('COD_MOVIMENTO', ftInteger);
+  ClientDataSet.FieldDefs.Add('SEQ_MOVIMENTO', ftInteger);
+  ClientDataSet.FieldDefs.Add('COD_SERVICO', ftInteger);
+  ClientDataSet.FieldDefs.Add('DES_SERVICO', ftString, 80);
+  ClientDataSet.FieldDefs.Add('TIP_SERVICO', ftInteger);
+  ClientDataSet.FieldDefs.Add('QTD_SERVICOS', ftFloat);
+  ClientDataSet.FieldDefs.Add('VLR_SERVICO', ftFloat);
+  ClientDataSet.FieldDefs.Add('VLR_DESCONTO', ftFloat);
+  ClientDataSet.FieldDefs.Add('VLR_ACRESCIMO', ftFloat);
+  ClientDataSet.FieldDefs.Add('VLR_FRETE', ftFloat);
+  ClientDataSet.FieldDefs.Add('VLR_TOTAL', ftFloat);
+  ClientDataSet.FieldDefs.Add('OBS_SERVICO', ftString, 250);
+  ClientDataSet.FieldDefs.Add('COD_USUARIO_ALT', ftInteger);
+  ClientDataSet.FieldDefs.Add('DAT_CADASTRO', ftDateTime);
+  ClientDataSet.FieldDefs.Add('DAT_ALTERACAO', ftDateTime);  
+  ClientDataSet.CreateDataSet;
+
+  ClientDataSet.IndexFieldNames := 'COD_MOVIMENTO';
+end;
+
+function TCrudMovimentoDetalhes.DataSet: TDataSet;
+begin
+  Result := ClientDataSet;
+end;
+
+function TCrudMovimentoDetalhes.Select: iCrudMovimentoDetalhes;
+begin
+  Result := Self;
+
+  Query.Close;
+  Query.SQL.Clear;
+  Query.SQL.Add('SELECT');
+  Query.SQL.Add('SEQ_DETALHE,');
+  Query.SQL.Add('COD_MOVIMENTO,');
+  Query.SQL.Add('SEQ_MOVIMENTO,');
+  Query.SQL.Add('COD_SERVICO,');
+  Query.SQL.Add('DES_SERVICO,');
+  Query.SQL.Add('TIP_SERVICO,');
+  Query.SQL.Add('QTD_SERVICOS,');
+  Query.SQL.Add('VLR_SERVICO,');
+  Query.SQL.Add('VLR_DESCONTO,');
+  Query.SQL.Add('VLR_ACRESCIMO,');
+  Query.SQL.Add('VLR_FRETE,');
+  Query.SQL.Add('VLR_TOTAL,');
+  Query.SQL.Add('OBS_SERVICO,');
+  Query.SQL.Add('COD_USUARIO_ALT,');
+  Query.SQL.Add('DAT_CADASTRO,');
+  Query.SQL.Add('DAT_ALTERACAO');
+  Query.SQL.Add('FROM MOVIMENTO_DETALHES');
+  
+  
+end;
+
+function TCrudMovimentoDetalhes.Delete: iCrudMovimentoDetalhes;
+begin
+  Result := Self;
+
+  Query.Close;
+  Query.SQL.Clear;
+  Query.SQL.Add(' DELETE FROM MOVIMENTO_DETALHES');
+end;
+
+function TCrudMovimentoDetalhes.Insert: iCrudMovimentoDetalhes;
+begin
+  Result := Self;
+
+  Query.Close;
+  Query.SQL.Clear;
+  Query.SQL.Add('INSERT INTO MOVIMENTO_DETALHES (');
+  Query.SQL.Add(' SEQ_DETALHE,');
+  Query.SQL.Add(' COD_MOVIMENTO,');
+  Query.SQL.Add(' SEQ_MOVIMENTO,');
+  Query.SQL.Add(' COD_SERVICO,');
+  Query.SQL.Add(' DES_SERVICO,');
+  Query.SQL.Add(' TIP_SERVICO,');
+  Query.SQL.Add(' QTD_SERVICOS,');
+  Query.SQL.Add(' VLR_SERVICO,');
+  Query.SQL.Add(' VLR_DESCONTO,');
+  Query.SQL.Add(' VLR_ACRESCIMO,');
+  Query.SQL.Add(' VLR_FRETE,');
+  Query.SQL.Add(' VLR_TOTAL,');
+  Query.SQL.Add(' OBS_SERVICO,');
+  Query.SQL.Add(' COD_USUARIO_ALT,');
+  Query.SQL.Add(' DAT_CADASTRO,');
+  Query.SQL.Add(' DAT_ALTERACAO');
+  Query.SQL.Add(' ) VALUES ( ');
+  Query.SQL.Add(' :pSEQ_DETALHE,');
+  Query.SQL.Add(' :pCOD_MOVIMENTO,');
+  Query.SQL.Add(' :pSEQ_MOVIMENTO,');
+  Query.SQL.Add(' :pCOD_SERVICO,');
+  Query.SQL.Add(' :pDES_SERVICO,');
+  Query.SQL.Add(' :pTIP_SERVICO,');
+  Query.SQL.Add(' :pQTD_SERVICOS,');
+  Query.SQL.Add(' :pVLR_SERVICO,');
+  Query.SQL.Add(' :pVLR_DESCONTO,');
+  Query.SQL.Add(' :pVLR_ACRESCIMO,');
+  Query.SQL.Add(' :pVLR_FRETE,');
+  Query.SQL.Add(' :pVLR_TOTAL,');
+  Query.SQL.Add(' :pOBS_SERVICO,');
+  Query.SQL.Add(' :pCOD_USUARIO_ALT,');
+  Query.SQL.Add(' :pDAT_CADASTRO,');
+  Query.SQL.Add(' :pDAT_ALTERACAO');
+  Query.SQL.Add(' )');
+
+  Query.ParamByName('pSEQ_DETALHE').AsInteger := Cadastro.GetSeqDetalhe;
+  Query.ParamByName('pCOD_MOVIMENTO').AsInteger := Cadastro.GetCodMovimento;
+  Query.ParamByName('pSEQ_MOVIMENTO').AsInteger := Cadastro.GetSeqMovimento;
+  Query.ParamByName('pCOD_SERVICO').AsInteger := Cadastro.GetCodServico;
+  Query.ParamByName('pDES_SERVICO').AsString := Cadastro.GetDesServico;
+  Query.ParamByName('pTIP_SERVICO').AsInteger := Cadastro.GetTipServico;
+  Query.ParamByName('pQTD_SERVICOS').AsFloat := Cadastro.GetQtdServicos;
+  Query.ParamByName('pVLR_SERVICO').AsFloat := Cadastro.GetVlrServico;
+  Query.ParamByName('pVLR_DESCONTO').AsFloat := Cadastro.GetVlrDesconto;
+  Query.ParamByName('pVLR_ACRESCIMO').AsFloat := Cadastro.GetVlrAcrescimo;
+  Query.ParamByName('pVLR_FRETE').AsFloat := Cadastro.GetVlrFrete;
+  Query.ParamByName('pVLR_TOTAL').AsFloat := Cadastro.GetVlrTotal;
+  Query.ParamByName('pOBS_SERVICO').AsString := Cadastro.GetObsServico;
+  Query.ParamByName('pCOD_USUARIO_ALT').AsInteger := Cadastro.GetCodUsuarioAlt;
+  Query.ParamByName('pDAT_CADASTRO').AsDateTime := Cadastro.GetDatCadastro;
+  Query.ParamByName('pDAT_ALTERACAO').AsDateTime := Cadastro.GetDatAlteracao;
+
+  Query.ExecSQL;
+end;
+
+function TCrudMovimentoDetalhes.Update: iCrudMovimentoDetalhes;
+begin
+  Result := Self;
+
+  Query.Close;
+  Query.SQL.Clear;
+  Query.SQL.Add('UPDATE MOVIMENTO_DETALHES SET ');
+  Query.SQL.Add(' SEQ_DETALHE =:pSEQ_DETALHE,');
+  Query.SQL.Add(' COD_MOVIMENTO =:pCOD_MOVIMENTO,');
+  Query.SQL.Add(' SEQ_MOVIMENTO =:pSEQ_MOVIMENTO,');
+  Query.SQL.Add(' COD_SERVICO =:pCOD_SERVICO,');
+  Query.SQL.Add(' DES_SERVICO =:pDES_SERVICO,');
+  Query.SQL.Add(' TIP_SERVICO =:pTIP_SERVICO,');
+  Query.SQL.Add(' QTD_SERVICOS =:pQTD_SERVICOS,');
+  Query.SQL.Add(' VLR_SERVICO =:pVLR_SERVICO,');
+  Query.SQL.Add(' VLR_DESCONTO =:pVLR_DESCONTO,');
+  Query.SQL.Add(' VLR_ACRESCIMO =:pVLR_ACRESCIMO,');
+  Query.SQL.Add(' VLR_FRETE =:pVLR_FRETE,');
+  Query.SQL.Add(' VLR_TOTAL =:pVLR_TOTAL,');
+  Query.SQL.Add(' OBS_SERVICO =:pOBS_SERVICO,');
+  Query.SQL.Add(' COD_USUARIO_ALT =:pCOD_USUARIO_ALT,');
+  Query.SQL.Add(' DAT_CADASTRO =:pDAT_CADASTRO,');
+  Query.SQL.Add(' DAT_ALTERACAO =:pDAT_ALTERACAO');
+
+  Query.ParamByName('pSEQ_DETALHE').AsInteger := Cadastro.GetSeqDetalhe;
+  Query.ParamByName('pCOD_MOVIMENTO').AsInteger := Cadastro.GetCodMovimento;
+  Query.ParamByName('pSEQ_MOVIMENTO').AsInteger := Cadastro.GetSeqMovimento;
+  Query.ParamByName('pCOD_SERVICO').AsInteger := Cadastro.GetCodServico;
+  Query.ParamByName('pDES_SERVICO').AsString := Cadastro.GetDesServico;
+  Query.ParamByName('pTIP_SERVICO').AsInteger := Cadastro.GetTipServico;
+  Query.ParamByName('pQTD_SERVICOS').AsFloat := Cadastro.GetQtdServicos;
+  Query.ParamByName('pVLR_SERVICO').AsFloat := Cadastro.GetVlrServico;
+  Query.ParamByName('pVLR_DESCONTO').AsFloat := Cadastro.GetVlrDesconto;
+  Query.ParamByName('pVLR_ACRESCIMO').AsFloat := Cadastro.GetVlrAcrescimo;
+  Query.ParamByName('pVLR_FRETE').AsFloat := Cadastro.GetVlrFrete;
+  Query.ParamByName('pVLR_TOTAL').AsFloat := Cadastro.GetVlrTotal;
+  Query.ParamByName('pOBS_SERVICO').AsString := Cadastro.GetObsServico;
+  Query.ParamByName('pCOD_USUARIO_ALT').AsInteger := Cadastro.GetCodUsuarioAlt;
+  Query.ParamByName('pDAT_CADASTRO').AsDateTime := Cadastro.GetDatCadastro;
+  Query.ParamByName('pDAT_ALTERACAO').AsDateTime := Cadastro.GetDatAlteracao;
+
+  Query.ExecSQL;
+end;
+
+end.

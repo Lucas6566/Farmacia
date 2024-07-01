@@ -1,0 +1,62 @@
+inherited FormPesquisaServico: TFormPesquisaServico
+  Caption = 'Servi'#231'o'
+  TextHeight = 15
+  inherited PnlMainCenter: TPanel
+    inherited PnlClient: TPanel
+      inherited GridPesquisa: TcxGrid
+        inherited GridPesquisaDBTableView: TcxGridDBTableView
+          object GridCodigo: TcxGridDBColumn
+            Caption = 'Codigo'
+            DataBinding.FieldName = 'COD_SERVICO'
+            DataBinding.IsNullValueType = True
+            Width = 104
+          end
+          object GridDescricao: TcxGridDBColumn
+            Caption = 'Servi'#231'o'
+            DataBinding.FieldName = 'DES_SERVICO'
+            DataBinding.IsNullValueType = True
+            Width = 306
+          end
+          object GridTipo: TcxGridDBColumn
+            Caption = 'Tipo'
+            DataBinding.FieldName = 'TIP_SERVICO'
+            DataBinding.IsNullValueType = True
+            Width = 158
+          end
+          object GridServico: TcxGridDBColumn
+            Caption = 'Valor'
+            DataBinding.FieldName = 'VLR_SERVICO'
+            DataBinding.IsNullValueType = True
+            Width = 121
+          end
+        end
+      end
+    end
+    inherited PnlTop: TPanel
+      inherited PnlTopTitle: TPanel
+        inherited LblTitleForm: TcxLabel
+          Caption = 'Servi'#231'os'
+          Style.LookAndFeel.SkinName = ''
+          StyleDisabled.LookAndFeel.SkinName = ''
+          StyleFocused.LookAndFeel.SkinName = ''
+          StyleHot.LookAndFeel.SkinName = ''
+          AnchorY = 26
+        end
+      end
+      inherited PnlTopInfo: TPanel
+        inherited Panel1: TPanel
+          inherited BtnNew: TSpeedButton
+            OnClick = BtnNewClick
+            ExplicitLeft = 318
+          end
+          inherited BtnAlterar: TSpeedButton
+            OnClick = BtnAlterarClick
+          end
+          inherited btnExcluir: TSpeedButton
+            OnClick = btnExcluirClick
+          end
+        end
+      end
+    end
+  end
+end

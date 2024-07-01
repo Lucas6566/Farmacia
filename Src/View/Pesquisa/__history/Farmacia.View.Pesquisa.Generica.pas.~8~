@@ -1,0 +1,74 @@
+unit Farmacia.View.Pesquisa.Generica;
+
+interface
+
+uses
+  Winapi.Windows,
+  Winapi.Messages,
+  System.SysUtils,
+  System.Variants,
+  System.Classes,
+  Vcl.Graphics,
+  Vcl.Controls,
+  Vcl.Forms,
+  Vcl.Dialogs,
+  Farmacia.View.Pesquisa.Pai,
+  cxGraphics,
+  cxControls,
+  cxLookAndFeels,
+  cxLookAndFeelPainters,
+  dxSkinsCore,
+  dxSkinBlack,
+  cxStyles,
+  cxCustomData,
+  cxFilter,
+  cxData,
+  cxDataStorage,
+  cxEdit,
+  cxNavigator,
+  dxDateRanges,
+  dxScrollbarAnnotations,
+  Data.DB,
+  cxDBData,
+  cxContainer,
+  cxTextEdit,
+  Vcl.Buttons,
+  Vcl.StdCtrls,
+  cxLabel,
+  cxGridLevel,
+  cxClasses,
+  cxGridCustomView,
+  cxGridCustomTableView,
+  cxGridTableView,
+  cxGridDBTableView,
+  cxGrid,
+  Vcl.ExtCtrls;
+
+type
+  TFormPesquisaGenerica = class(TFormPesquisaPai)
+  private
+
+  public
+    class function ShowFormGerneric(pTable, pField1, pField2 : String; pDS: TDataSource): String;
+  end;
+
+var
+  FormPesquisaGenerica: TFormPesquisaGenerica;
+
+implementation
+
+{$R *.dfm}
+
+{ TFormPesquisaGenerica }
+
+class function TFormPesquisaGenerica.ShowFormGerneric(pTable, pField1,
+  pField2: String; pDS: TDataSource): String;
+begin
+  try
+
+  finally
+
+  end;
+end;
+
+end.

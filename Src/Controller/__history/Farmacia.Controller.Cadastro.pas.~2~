@@ -1,0 +1,13 @@
+unit Farmacia.Controller.Cadastro;
+
+interface
+
+type
+  iControllerCadastro = Interface
+    ['{BA614CDE-C93C-4E78-9416-9A11F80E7B0E}']
+    function Funcionario : iCrudFunctionario;
+  End;
+
+implementation
+
+end.

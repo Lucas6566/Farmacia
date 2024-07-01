@@ -1,0 +1,206 @@
+object FormConexao: TFormConexao
+  Left = 0
+  Top = 0
+  Caption = 'FormConexao'
+  ClientHeight = 442
+  ClientWidth = 628
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -12
+  Font.Name = 'Segoe UI'
+  Font.Style = []
+  TextHeight = 15
+  object FDConnection: TFDConnection
+    Params.Strings = (
+      'Database=farmacia'
+      'User_Name=root'
+      'Password=masterkey'
+      'ODBCDriver=MySQL ODBC 8.0 ANSI Driver'
+      'DriverID=ODBC')
+    Connected = True
+    LoginPrompt = False
+    Left = 56
+    Top = 24
+  end
+  object FDGUIxErrorDialog1: TFDGUIxErrorDialog
+    Provider = 'Forms'
+    Left = 56
+    Top = 152
+  end
+  object FDGUIxWaitCursor1: TFDGUIxWaitCursor
+    Provider = 'Forms'
+    Left = 56
+    Top = 88
+  end
+  object FDPhysODBCDriverLink1: TFDPhysODBCDriverLink
+    Left = 48
+    Top = 224
+  end
+  object QyBairros: TFDQuery
+    Connection = FDConnection
+    SQL.Strings = (
+      'select * from farmacia.bairros')
+    Left = 168
+    Top = 96
+    object QyBairrosSEQ_BAIRRO: TIntegerField
+      FieldName = 'SEQ_BAIRRO'
+      Origin = 'SEQ_BAIRRO'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+    end
+    object QyBairrosNOM_CIDADE: TWideStringField
+      FieldName = 'NOM_CIDADE'
+      Origin = 'NOM_CIDADE'
+      Size = 80
+    end
+    object QyBairrosNOM_BAIRRO: TWideStringField
+      FieldName = 'NOM_BAIRRO'
+      Origin = 'NOM_BAIRRO'
+      Size = 80
+    end
+    object QyBairrosSIG_UF: TWideStringField
+      FieldName = 'SIG_UF'
+      Origin = 'SIG_UF'
+      Size = 2
+    end
+    object QyBairrosVLR_FRETE: TBCDField
+      FieldName = 'VLR_FRETE'
+      Origin = 'VLR_FRETE'
+      Precision = 15
+    end
+    object QyBairrosCOD_USUARIO_ALT: TIntegerField
+      FieldName = 'COD_USUARIO_ALT'
+      Origin = 'COD_USUARIO_ALT'
+    end
+    object QyBairrosDAT_CADASTRO: TSQLTimeStampField
+      FieldName = 'DAT_CADASTRO'
+      Origin = 'DAT_CADASTRO'
+    end
+    object QyBairrosDAT_ALTERACAO: TSQLTimeStampField
+      FieldName = 'DAT_ALTERACAO'
+      Origin = 'DAT_ALTERACAO'
+    end
+  end
+  object QyClientes: TFDQuery
+    Connection = FDConnection
+    SQL.Strings = (
+      'select * from farmacia.clientes')
+    Left = 168
+    Top = 32
+    object QyClientesCOD_CLIENTE: TIntegerField
+      FieldName = 'COD_CLIENTE'
+      Origin = 'COD_CLIENTE'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+    end
+    object QyClientesNOM_CLIENTE: TStringField
+      FieldName = 'NOM_CLIENTE'
+      Origin = 'NOM_CLIENTE'
+      Size = 80
+    end
+    object QyClientesIND_DOCUMENTO: TIntegerField
+      FieldName = 'IND_DOCUMENTO'
+      Origin = 'IND_DOCUMENTO'
+    end
+    object QyClientesDOC_CLIENTE: TStringField
+      FieldName = 'DOC_CLIENTE'
+      Origin = 'DOC_CLIENTE'
+    end
+    object QyClientesNUM_CEP: TStringField
+      FieldName = 'NUM_CEP'
+      Origin = 'NUM_CEP'
+    end
+    object QyClientesEND_LOGRADOURO: TStringField
+      FieldName = 'END_LOGRADOURO'
+      Origin = 'END_LOGRADOURO'
+      Size = 200
+    end
+    object QyClientesNUM_ENDERECO: TIntegerField
+      FieldName = 'NUM_ENDERECO'
+      Origin = 'NUM_ENDERECO'
+    end
+    object QyClientesNOM_BAIRRO: TStringField
+      FieldName = 'NOM_BAIRRO'
+      Origin = 'NOM_BAIRRO'
+      Size = 80
+    end
+    object QyClientesNOM_CIDADE: TStringField
+      FieldName = 'NOM_CIDADE'
+      Origin = 'NOM_CIDADE'
+      Size = 80
+    end
+    object QyClientesSIG_UF: TStringField
+      FieldName = 'SIG_UF'
+      Origin = 'SIG_UF'
+      Size = 2
+    end
+    object QyClientesEND_COMPLEMENTO: TStringField
+      FieldName = 'END_COMPLEMENTO'
+      Origin = 'END_COMPLEMENTO'
+      Size = 80
+    end
+    object QyClientesEND_ELETRONICO: TStringField
+      FieldName = 'END_ELETRONICO'
+      Origin = 'END_ELETRONICO'
+      Size = 250
+    end
+    object QyClientesTEL_FIXO: TStringField
+      FieldName = 'TEL_FIXO'
+      Origin = 'TEL_FIXO'
+    end
+    object QyClientesTEL_FAX: TStringField
+      FieldName = 'TEL_FAX'
+      Origin = 'TEL_FAX'
+    end
+    object QyClientesTEL_CELULAR: TStringField
+      FieldName = 'TEL_CELULAR'
+      Origin = 'TEL_CELULAR'
+    end
+    object QyClientesCOD_USUARIO_ALT: TIntegerField
+      FieldName = 'COD_USUARIO_ALT'
+      Origin = 'COD_USUARIO_ALT'
+    end
+    object QyClientesDAT_CADASTRO: TSQLTimeStampField
+      FieldName = 'DAT_CADASTRO'
+      Origin = 'DAT_CADASTRO'
+    end
+    object QyClientesDAT_ALTERACAO: TSQLTimeStampField
+      FieldName = 'DAT_ALTERACAO'
+      Origin = 'DAT_ALTERACAO'
+    end
+  end
+  object QyFuncionarios: TFDQuery
+    Connection = FDConnection
+    SQL.Strings = (
+      'select * from farmacia.Funcionarios')
+    Left = 248
+    Top = 32
+    object QyFuncionariosCOD_FUNCIONARIO: TIntegerField
+      FieldName = 'COD_FUNCIONARIO'
+      Origin = 'COD_FUNCIONARIO'
+      Required = True
+    end
+    object QyFuncionariosNOM_FUNCIONARIO: TStringField
+      FieldName = 'NOM_FUNCIONARIO'
+      Origin = 'NOM_FUNCIONARIO'
+      Size = 80
+    end
+    object QyFuncionariosTIP_FUNCIONARIO: TIntegerField
+      FieldName = 'TIP_FUNCIONARIO'
+      Origin = 'TIP_FUNCIONARIO'
+    end
+    object QyFuncionariosCOD_USUARIO_ALT: TIntegerField
+      FieldName = 'COD_USUARIO_ALT'
+      Origin = 'COD_USUARIO_ALT'
+    end
+    object QyFuncionariosDAT_CADASTRO: TSQLTimeStampField
+      FieldName = 'DAT_CADASTRO'
+      Origin = 'DAT_CADASTRO'
+    end
+    object QyFuncionariosDAT_ALTERACAO: TSQLTimeStampField
+      FieldName = 'DAT_ALTERACAO'
+      Origin = 'DAT_ALTERACAO'
+    end
+  end
+end

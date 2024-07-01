@@ -1,0 +1,17 @@
+inherited FormPesquisaPai1: TFormPesquisaPai1
+  Caption = 'FormPesquisaPai1'
+  TextHeight = 15
+  inherited PnlMainCenter: TPanel
+    inherited PnlTop: TPanel
+      inherited PnlTopTitle: TPanel
+        inherited LblTitleForm: TcxLabel
+          Style.LookAndFeel.SkinName = ''
+          StyleDisabled.LookAndFeel.SkinName = ''
+          StyleFocused.LookAndFeel.SkinName = ''
+          StyleHot.LookAndFeel.SkinName = ''
+          AnchorY = 26
+        end
+      end
+    end
+  end
+end

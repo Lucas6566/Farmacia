@@ -1,0 +1,29 @@
+inherited FormPesquisaServico: TFormPesquisaServico
+  Caption = 'Servi'#231'o'
+  OnCreate = FormCreate
+  TextHeight = 15
+  inherited PnlMainCenter: TPanel
+    inherited PnlTop: TPanel
+      inherited PnlTopTitle: TPanel
+        inherited LblTitleForm: TcxLabel
+          Style.LookAndFeel.SkinName = ''
+          StyleDisabled.LookAndFeel.SkinName = ''
+          StyleFocused.LookAndFeel.SkinName = ''
+          StyleHot.LookAndFeel.SkinName = ''
+          AnchorY = 26
+        end
+      end
+      inherited PnlTopInfo: TPanel
+        inherited Panel1: TPanel
+          inherited BtnNew: TSpeedButton
+            OnClick = BtnNewClick
+            ExplicitLeft = 318
+          end
+          inherited BtnAlterar: TSpeedButton
+            OnClick = BtnAlterarClick
+          end
+        end
+      end
+    end
+  end
+end

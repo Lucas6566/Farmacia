@@ -1,0 +1,92 @@
+unit Farmacia.Controller.Cadastros;
+
+interface
+
+uses
+  Farmacia.Controller.Cadastros.Interfaces,
+  Farmacia.Model.Dao.Clientes.Interfaces,
+  Farmacia.Model.Dao.Clientes,
+  Farmacia.Model.Dao.Funcionarios.Interfaces,
+  Farmacia.Model.Dao.Funcionarios,
+  Farmacia.Model.Dao.Servicos.Interfaces,
+  Farmacia.Model.Dao.Servicos,
+  Farmacia.Model.Dao.TipoServicos.Interfaces,
+  Farmacia.Model.Dao.TipoServicos;
+  Farmacia.Model.Dao.Movimentos.Interfaces,
+  Farmacia.Model.Dao.Movimentos;
+
+type
+  TControllerCadastros = Class(TInterfacedObject, iControllerCadastros)
+  private
+    FClientes : iCrudClientes;
+    FFuncionarios : iCrudFuncionarios;
+    FServicos : iCrudServicos;
+    FTipoServicos : iCrudTipoServicos;
+    FMovimentos : iCrudMovimentos;
+  public
+    function Clientes : iCrudClientes;
+    function Funcionarios : iCrudFuncionarios;
+    function Servicos : iCrudServicos;
+    function TipoServicos : iCrudTipoServicos;
+    function Movimento : iCrudTipoServicos;
+
+    constructor Create;
+    destructor Destroy; override;
+    class function New : iControllerCadastros;
+  End;
+
+implementation
+
+{ TControllerCadastro }
+
+function TControllerCadastros.Clientes: iCrudClientes;
+begin
+  if not Assigned(FClientes) then
+    FClientes := TCrudClientes.New;
+  Result := FClientes
+end;
+
+constructor TControllerCadastros.Create;
+begin
+end;
+
+destructor TControllerCadastros.Destroy;
+begin
+
+  inherited;
+end;
+
+function TControllerCadastros.Funcionarios: iCrudFuncionarios;
+begin
+  if not Assigned(FFuncionarios) then
+    FFuncionarios := TCrudFuncionarios.New;
+  Result := FFuncionarios
+end;
+
+function TControllerCadastros.Movimento: iCrudTipoServicos;
+begin
+  if not Assigned(FServicos) then
+    FMovimentos := TCrudMovimentos.New;
+  Result := FMovimentos
+end;
+
+class function TControllerCadastros.New: iControllerCadastros;
+begin
+  Result := Self.Create;
+end;
+
+function TControllerCadastros.Servicos: iCrudServicos;
+begin
+  if not Assigned(FServicos) then
+    FServicos := TCrudServicos.New;
+  Result := FServicos
+end;
+
+function TControllerCadastros.TipoServicos: iCrudTipoServicos;
+begin
+  if not Assigned(FTipoServicos) then
+    FTipoServicos := TCrudTipoServicos.New;
+  Result := FTipoServicos
+end;
+
+end.

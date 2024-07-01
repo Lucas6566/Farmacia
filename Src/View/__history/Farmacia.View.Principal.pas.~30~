@@ -1,0 +1,169 @@
+unit Farmacia.View.Principal;
+
+interface
+
+uses
+  Winapi.Windows,
+  Winapi.Messages,
+  System.SysUtils,
+  System.Variants,
+  System.Classes,
+  Vcl.Graphics,
+  Vcl.Controls,
+  Vcl.Forms,
+  Vcl.Dialogs,
+  System.ImageList,
+  Vcl.ImgList,
+  Vcl.Buttons,
+  Vcl.ExtCtrls,
+  Router4D.Interfaces,
+  Router4D, Farmacia.View.Login, Farmacia.Service.Conexao,
+  Farmacia.Util.Variaveis, Vcl.Imaging.pngimage, uMPanel;
+
+type
+  TFormPrincipal = class(TForm)
+    PnlPrincipal: TPanel;
+    PnlMainTop: TPanel;
+    PnlLogo: TPanel;
+    PnlMainFull: TPanel;
+    PnlMainCenter: TPanel;
+    ImageList: TImageList;
+    pnlCadastros: TPanel;
+    pnlBairros: TmPanelButton;
+    imgBairros: TImage;
+    pnlCadastrosHome: TPanel;
+    pnlFormaPagto: TmPanelButton;
+    imgFormaPagto: TImage;
+    pnlFuncionario: TmPanelButton;
+    imgFuncionario: TImage;
+    pnlTipoServicos: TmPanelButton;
+    imgTipoServico: TImage;
+    pnlUsuarios: TmPanelButton;
+    imgUsuarios: TImage;
+    pnlServicos: TmPanelButton;
+    imgServicos: TImage;
+    pnlClientes: TmPanelButton;
+    imgClientes: TImage;
+    pnlMenu: TPanel;
+    pnlMenus: TmPanelButton;
+    imgMenu: TImage;
+    pnlCadastro: TmPanelButton;
+    imgCadastros: TImage;
+    pnlRelatorio: TmPanelButton;
+    imgRelatorios: TImage;
+    pnlMovimentos: TmPanelButton;
+    imgMovimentos: TImage;
+    procedure SbtHomeClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
+    procedure pnlMenusClick(Sender: TObject);
+    procedure pnlCadastroClick(Sender: TObject);
+    procedure pnlClientesClick(Sender: TObject);
+    procedure pnlFuncionarioClick(Sender: TObject);
+    procedure pnlServicosClick(Sender: TObject);
+  private
+    procedure DesabilitarMenu;
+    procedure DesabilitaSubMenu(pPanelMenu, pPanelSub: TPanel; pCaption: String);
+  public
+    function Render : TForm;
+    procedure unRender;
+  end;
+
+var
+  FormPrincipal: TFormPrincipal;
+
+implementation
+
+{$R *.dfm}
+
+uses Farmacia.View.Main;
+
+{ TFormPrincipal }
+
+procedure TFormPrincipal.DesabilitarMenu;
+begin
+  pnlCadastros.Visible   := False;
+  pnlCadastro.Caption    := '           Cadastros';
+  pnlRelatorio.Caption   := '           Relatórios';
+end;
+
+procedure TFormPrincipal.DesabilitaSubMenu(pPanelMenu, pPanelSub: TPanel;
+  pCaption: String);
+begin
+  if not pPanelSub.Visible then
+  begin
+    pPanelMenu.Caption  := '           '+pCaption+' >>';
+    pPanelSub.Visible := True;
+    pPanelSub.Width   := 190;
+  end
+  else
+  begin
+    pPanelMenu.Caption  := '           '+pCaption;
+    pPanelSub.Visible := False;
+    pPanelSub.Width   := 0;
+  end;
+end;
+
+procedure TFormPrincipal.FormCreate(Sender: TObject);
+begin
+  Connection := TConexao.Create;
+
+  TRouter4D
+    .Render<TFormMain>
+      .SetElement(PnlMainCenter, PnlPrincipal);
+end;
+
+procedure TFormPrincipal.FormDestroy(Sender: TObject);
+begin
+  if Assigned(Connection) then
+    FreeAndNil(Connection);
+end;
+
+procedure TFormPrincipal.FormShow(Sender: TObject);
+begin
+//  if not FormLogin.OpenLogin then
+//    Close;
+end;
+
+procedure TFormPrincipal.pnlCadastroClick(Sender: TObject);
+begin
+  DesabilitaSubMenu(pnlCadastro, pnlCadastros, 'Cadastros');
+end;
+
+procedure TFormPrincipal.pnlClientesClick(Sender: TObject);
+begin
+  TRouter4D.Link.&To('Cliente');
+end;
+
+procedure TFormPrincipal.pnlFuncionarioClick(Sender: TObject);
+begin
+  TRouter4D.Link.&To('Funcionario');
+end;
+
+procedure TFormPrincipal.pnlMenusClick(Sender: TObject);
+begin
+  DesabilitarMenu;
+end;
+
+procedure TFormPrincipal.pnlServicosClick(Sender: TObject);
+begin
+  TRouter4D.Link.&To('Servico');
+end;
+
+function TFormPrincipal.Render: TForm;
+begin
+  Result := Self;
+end;
+
+procedure TFormPrincipal.SbtHomeClick(Sender: TObject);
+begin
+  TRouter4D.Link.&To('Principal');
+end;
+
+procedure TFormPrincipal.unRender;
+begin
+  //
+end;
+
+end.

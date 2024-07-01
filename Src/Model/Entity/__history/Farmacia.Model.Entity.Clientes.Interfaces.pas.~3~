@@ -1,0 +1,50 @@
+unit Farmacia.Model.Entity.Clientes.Interfaces;
+
+interface
+
+type
+  iModelFuncionarios = interface
+    ['{95A17A0F-9D2F-4D6D-8D2A-87FDDF27B450}']
+    function Codigo( aValue : Integer ): iModelFuncionarios;
+    function Nome( aValue : String ): iModelFuncionarios;
+    function IndDocumento( aValue : Integer ): iModelFuncionarios;
+    function Documento( aValue : String ): iModelFuncionarios;
+    function Cep( aValue : String ): iModelFuncionarios;
+    function Logradouro( aValue : String ): iModelFuncionarios;
+    function NumEndereco( aValue : Integer ): iModelFuncionarios;
+    function Bairro( aValue : String ): iModelFuncionarios;
+    function Cidade( aValue : String ): iModelFuncionarios;
+    function Uf( aValue : String ): iModelFuncionarios;
+    function Complemento( aValue : String ): iModelFuncionarios;
+    function EndEletronico( aValue : String ): iModelFuncionarios;
+    function TelFixo( aValue : String ): iModelFuncionarios;
+    function Fax( aValue : String ): iModelFuncionarios;
+    function Celular( aValue : String ): iModelFuncionarios;
+    function CodigoUsuario( aValue : Integer ): iModelFuncionarios;
+    function DataCadastro( aValue : TDate ): iModelFuncionarios;
+    function DataAlteracao( aValue : TDate ): iModelFuncionarios;
+
+  	function GetCodigo : Integer;
+    function GetNome : String;
+    function GetIndDocumento: Integer;
+    function GetDocumento: String;
+    function GetCep: String;
+    function GetLogradouro: String;
+    function GetNumEndereco: Integer;
+    function GetBairro: String;
+    function GetCidade: String;
+    function GetUf: String;
+    function GetComplemento: String;
+    function GetEndEletronico: String;
+    function GetTelFixo: String;
+    function GetFax: String;
+    function GetCelular: String;
+    function GetCodigoUsuario : Integer;
+    function GetDataCadastro : TDate;
+    function GetDataAlteracao : TDate;
+  end;
+
+
+implementation
+
+end.

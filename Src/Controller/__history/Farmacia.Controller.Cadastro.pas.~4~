@@ -1,0 +1,23 @@
+unit Farmacia.Controller.Cadastro;
+
+interface
+
+uses
+  Farmacia.Controller.Cadastro.Interfaces,
+  Farmacia.Model.Dao.Clientes.Interfaces,
+  Farmacia.Model.Dao.Clientes,
+  Farmacia.Model.Dao.Funcionarios.Interfaces,
+  Farmacia.Model.Dao.Funcionarios,
+  Farmacia.Model.Dao.Servicos.Interfaces,
+  Farmacia.Model.Dao.Servicos,
+  Farmacia.Model.Dao.TipoServicos.Interfaces,
+  Farmacia.Model.Dao.TipoServicos;
+
+type
+  TControllerCadastro = Class(TInterfacedObject, iControllerCadastro)
+
+  End;
+
+implementation
+
+end.

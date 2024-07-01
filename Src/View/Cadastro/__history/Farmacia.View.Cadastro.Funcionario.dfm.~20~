@@ -1,0 +1,78 @@
+inherited FormCadastroFuncionario: TFormCadastroFuncionario
+  Caption = 'Cadastro Funcionario'
+  ClientHeight = 145
+  ClientWidth = 414
+  ExplicitWidth = 430
+  ExplicitHeight = 184
+  TextHeight = 15
+  inherited PnlBackground: TPanel
+    Width = 414
+    Height = 145
+    ExplicitWidth = 418
+    ExplicitHeight = 146
+    object Label1: TLabel [0]
+      Left = 7
+      Top = 9
+      Width = 39
+      Height = 15
+      Caption = 'C'#243'digo'
+    end
+    object Label2: TLabel [1]
+      Left = 121
+      Top = 9
+      Width = 33
+      Height = 15
+      Caption = 'Nome'
+    end
+    object Label3: TLabel [2]
+      Left = 7
+      Top = 49
+      Width = 39
+      Height = 15
+      Caption = 'Fun'#231#227'o'
+    end
+    object EdtCodigo: TEdit [3]
+      Left = 7
+      Top = 24
+      Width = 108
+      Height = 23
+      ReadOnly = True
+      TabOrder = 0
+    end
+    object EdtNome: TEdit [4]
+      Left = 121
+      Top = 24
+      Width = 288
+      Height = 23
+      TabOrder = 1
+    end
+    object CbxTipoFuncionario: TComboBox [5]
+      Left = 9
+      Top = 64
+      Width = 106
+      Height = 23
+      TabOrder = 2
+      Items.Strings = (
+        'Gerente'
+        'Atendente'
+        'Vendendo '
+        'Farmaceutico ')
+    end
+    inherited Panel2: TPanel
+      Top = 107
+      Width = 412
+      TabOrder = 3
+      ExplicitTop = 108
+      ExplicitWidth = 416
+      inherited SpbGravar: TSpeedButton
+        Left = 294
+        ExplicitLeft = 300
+      end
+      inherited SpbCancelar: TSpeedButton
+        Left = 169
+        OnClick = nil
+        ExplicitLeft = 169
+      end
+    end
+  end
+end

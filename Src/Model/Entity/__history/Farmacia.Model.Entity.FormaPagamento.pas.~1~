@@ -1,0 +1,149 @@
+unit Farmacia.Model.Entity.FormaPagamento;
+
+interface
+
+uses
+  System.SysUtils,
+  Data.DB,
+  Datasnap.DBClient,
+  FireDAC.Comp.Client,
+  FireDAC.Stan.Param,
+  Farmacia.Funcoes.Util,
+  Farmacia.Types.Util,
+  Farmacia.ConnectFuncoes.Util,
+  Farmacia.LoadClientDataSet.Util;
+
+type
+  iModelMovimentoPag = interface
+    Ctrl+Shift+G
+    function CodPagamento(pValue:Integer):iModelMovimentoPag;
+    function DesPagamento(pValue:String):iModelMovimentoPag;
+    function TipPagamento(pValue:Integer):iModelMovimentoPag;
+    function CodUsuarioAlt(pValue:Integer):iModelMovimentoPag;
+    function DatCadastro(pValue:TDateTime):iModelMovimentoPag;
+    function DatAlteracao(pValue:TDateTime):iModelMovimentoPag;
+
+    function GetCodPagamento:Integer;
+    function GetDesPagamento:String;
+    function GetTipPagamento:Integer;
+    function GetCodUsuarioAlt:Integer;
+    function GetDatCadastro:TDateTime;
+    function GetDatAlteracao:TDateTime;
+    function Clear:ModelMovimentoPag;
+  end;
+
+  TModelMovimentoPag = class(TInterfacedObject, iModelMovimentoPag)
+  private
+    FCodPagamento:Integer;
+    FDesPagamento:String;
+    FTipPagamento:Integer;
+    FCodUsuarioAlt:Integer;
+    FDatCadastro:TDateTime;
+    FDatAlteracao:TDateTime;
+  public
+    function CodPagamento(pValue:Integer):iModelMovimentoPag;
+    function DesPagamento(pValue:String):iModelMovimentoPag;
+    function TipPagamento(pValue:Integer):iModelMovimentoPag;
+    function CodUsuarioAlt(pValue:Integer):iModelMovimentoPag;
+    function DatCadastro(pValue:TDateTime):iModelMovimentoPag;
+    function DatAlteracao(pValue:TDateTime):iModelMovimentoPag;
+
+    function GetCodPagamento:Integer;
+    function GetDesPagamento:String;
+    function GetTipPagamento:Integer;
+    function GetCodUsuarioAlt:Integer;
+    function GetDatCadastro:TDateTime;
+    function GetDatAlteracao:TDateTime;
+
+    constructor Create;
+    destructor Destroy; override;
+    class function New : iModelMovimentoPag;
+  end;
+
+implementation
+
+{ TModelMovimentoPag }
+
+constructor TModelMovimentoPag.Create;
+begin
+
+end;
+
+destructor TModelMovimentoPag.Destroy;
+begin
+
+  inherited;
+end;
+
+class function TModelMovimentoPag.New: iModelMovimentoPag;
+begin
+  Result := Self.Create;
+end;
+
+function TModelMovimentoPag.CodPagamento(pValue:Integer):iModelMovimentoPag;
+begin
+  Result := Self;
+  FCodPagamento:= pValue;
+end;
+
+function TModelMovimentoPag.DesPagamento(pValue:String):iModelMovimentoPag;
+begin
+  Result := Self;
+  FDesPagamento:= pValue;
+end;
+
+function TModelMovimentoPag.TipPagamento(pValue:Integer):iModelMovimentoPag;
+begin
+  Result := Self;
+  FTipPagamento:= pValue;
+end;
+
+function TModelMovimentoPag.CodUsuarioAlt(pValue:Integer):iModelMovimentoPag;
+begin
+  Result := Self;
+  FCodUsuarioAlt:= pValue;
+end;
+
+function TModelMovimentoPag.DatCadastro(pValue:TDateTime):iModelMovimentoPag;
+begin
+  Result := Self;
+  FDatCadastro:= pValue;
+end;
+
+function TModelMovimentoPag.DatAlteracao(pValue:TDateTime):iModelMovimentoPag;
+begin
+  Result := Self;
+  FDatAlteracao:= pValue;
+end;
+
+function TModelMovimentoPag.GetCodPagamento:Integer;
+begin
+  Result := FCodPagamento;
+end;
+
+function TModelMovimentoPag.GetDesPagamento:String;
+begin
+  Result := FDesPagamento;
+end;
+
+function TModelMovimentoPag.GetTipPagamento:Integer;
+begin
+  Result := FTipPagamento;
+end;
+
+function TModelMovimentoPag.GetCodUsuarioAlt:Integer;
+begin
+  Result := FCodUsuarioAlt;
+end;
+
+function TModelMovimentoPag.GetDatCadastro:TDateTime;
+begin
+  Result := FDatCadastro;
+end;
+
+function TModelMovimentoPag.GetDatAlteracao:TDateTime;
+begin
+  Result := FDatAlteracao;
+end;
+
+end.

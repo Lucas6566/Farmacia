@@ -1,0 +1,89 @@
+unit NewRetail.View.Main;
+
+interface
+
+uses
+  Winapi.Windows,
+  Winapi.Messages,
+  System.SysUtils,
+  System.Variants,
+  System.Classes,
+  Vcl.Graphics,
+  Vcl.Controls,
+  Vcl.Forms,
+  Vcl.Dialogs,
+  Vcl.StdCtrls,
+  Vcl.ExtCtrls,
+  Vcl.Buttons,
+  Router4D.Interfaces,
+  Router4D, NewRetail.Controller.Cadastro, NewRetail.View.Cadastro.Cliente;
+
+type
+  TFormMain = class(TForm, iRouter4DComponent)
+    PnlBackground: TPanel;
+    PnlTopMain: TPanel;
+    PnlTopMainBtn: TPanel;
+    PnlTopMainBtnCliente: TPanel;
+    SpbPesquisaCliente: TSpeedButton;
+    PnlMain: TPanel;
+    BitBtn1: TBitBtn;
+    procedure FormCreate(Sender: TObject);
+    procedure SpbPesquisaClienteClick(Sender: TObject);
+    procedure BitBtn1Click(Sender: TObject);
+  private
+    procedure ApplyStyle;
+    { Private declarations }
+  public
+    { Public declarations }
+    function Render : TForm;
+    procedure unRender;
+  end;
+
+var
+  FormMain: TFormMain;
+
+implementation
+
+{$R *.dfm}
+
+uses NewRetail.View.Pesquisa.Cliente;
+
+procedure TFormMain.ApplyStyle;
+begin
+  PnlBackground.Color        := $00FCF3E9;//$00FCD3E9;
+  PnlTopMain.Color           := $00FCF3E9;
+  PnlTopMainBtn.Color        := $00FCF3E9;
+  PnlTopMainBtnCliente.Color := $00FCF3E9;
+end;
+
+procedure TFormMain.BitBtn1Click(Sender: TObject);
+begin
+  FormCadastroCliente := TFormCadastroCliente.Create(nil);
+  try
+    FormCadastroCliente.ShowModal;
+  finally
+    FreeAndNil(FormCadastroCliente);
+  end;
+end;
+
+procedure TFormMain.FormCreate(Sender: TObject);
+begin
+  ApplyStyle;
+end;
+
+function TFormMain.Render: TForm;
+begin
+  Result := Self;
+end;
+
+procedure TFormMain.SpbPesquisaClienteClick(Sender: TObject);
+begin
+  TRouter4D.Link.&To('Cliente');
+end;
+
+procedure TFormMain.unRender;
+begin
+  //
+end;
+
+end.

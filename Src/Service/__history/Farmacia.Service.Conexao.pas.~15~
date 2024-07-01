@@ -1,0 +1,45 @@
+unit Farmacia.Service.Conexao;
+
+interface
+
+uses
+  FireDAC.Comp.Client,
+  Farmacia.Model.Connection.Interfaces,
+  Farmacia.Model.Connection;
+
+type
+  TConexao = class
+  private
+    FConnecta : iModelConnection;
+    FConnect: TFDConnection;
+    function GetConnect: TFDConnection;
+    procedure SetConnect(const Value: TFDConnection);
+  public
+    property Connect: TFDConnection read GetConnect;
+  public
+    constructor Create;
+    destructor Destroy; override;
+  end;
+
+implementation
+
+{ TConexao }
+
+constructor TConexao.Create;
+begin
+  FConnecta := TConnection.New;
+  FConnect := FConnecta.Connection;
+end;
+
+destructor TConexao.Destroy;
+begin
+
+  inherited;
+end;
+
+function TConexao.GetConnect: TFDConnection;
+begin
+  Result := FConnect;
+end;
+
+end.

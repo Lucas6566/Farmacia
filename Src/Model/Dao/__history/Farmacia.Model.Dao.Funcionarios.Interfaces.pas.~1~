@@ -1,0 +1,7 @@
+unit Farmacia.Model.Dao.Funcionarios.Interfaces;
+
+interface
+
+implementation
+
+end.

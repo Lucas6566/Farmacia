@@ -1,0 +1,233 @@
+unit Farmacia.View.Cadastro.Cliente;
+
+interface
+
+uses
+  Winapi.Windows,
+  Winapi.Messages,
+  System.SysUtils,
+  System.Variants,
+  System.Classes,
+  Vcl.Graphics,
+  Vcl.Controls,
+  Vcl.Forms,
+  Vcl.Dialogs,
+  Farmacia.View.Cadastro.Pai,
+  Vcl.ExtCtrls,
+  dxBarBuiltInMenu,
+  cxGraphics,
+  cxControls,
+  cxLookAndFeels,
+  cxLookAndFeelPainters,
+  dxSkinsCore,
+  dxSkinBlack,
+  cxContainer,
+  cxEdit,
+  Vcl.ComCtrls,
+  dxCore,
+  cxDateUtils,
+  cxGeometry,
+  dxFramedControl,
+  dxPanel,
+  Vcl.StdCtrls,
+  Vcl.Buttons,
+  Vcl.Grids,
+  Vcl.ValEdit,
+  cxTextEdit,
+  cxMaskEdit,
+  cxDropDownEdit,
+  cxCalendar,
+  cxCheckBox,
+  dxToggleSwitch,
+  cxPC,
+  Vcl.Menus,
+  cxButtons, Farmacia.Util.Types, Farmacia.Service.Conexao, Data.DB,
+  Farmacia.Controller.Cadastros.Interfaces;
+
+type
+  TFormCadastroCliente = class(TFormCadastroPai)
+    PctCadastro: TcxPageControl;
+    TbSCliente: TcxTabSheet;
+    PnlCadastro: TPanel;
+    Label1: TLabel;
+    Label2: TLabel;
+    Label18: TLabel;
+    EdtCodigo: TEdit;
+    EdtNome: TEdit;
+    PnlCadastroEndereco: TPanel;
+    Label6: TLabel;
+    Label7: TLabel;
+    Label8: TLabel;
+    Label15: TLabel;
+    Label16: TLabel;
+    EdtCep: TEdit;
+    EdtComplemento: TEdit;
+    EdtBairro: TEdit;
+    EdtLogradouro: TEdit;
+    EdtFax: TEdit;
+    EdtCelular: TEdit;
+    Label10: TLabel;
+    EdtFixo: TEdit;
+    Label12: TLabel;
+    EdtCidade: TEdit;
+    EdtEndEletronico: TEdit;
+    Label3: TLabel;
+    EdtUf: TEdit;
+    Label4: TLabel;
+    EdtDocumento: TEdit;
+    LblCpfCnpj: TLabel;
+    btnAdiPesquisar: TcxButton;
+    LblTipoPessoa: TLabel;
+    EdtNumEndereco: TEdit;
+    Label5: TLabel;
+    TgSTipoPessoa: TdxToggleSwitch;
+    procedure SpbGravarClick(Sender: TObject);
+    procedure TgSTipoPessoaClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure SpbCancelarClick(Sender: TObject);
+  private
+    procedure IncludeData;
+    procedure OpenRegister(pCodigo : Integer = 0);
+    procedure GetRegister;
+    procedure TipoPessoa;
+    procedure IncludeRegister;
+  public
+    class function ClienteShow(pTypeOperation : TTypeOperation; pDados: iControllerCadastros): Boolean;
+  end;
+
+var
+  FormCadastroCliente: TFormCadastroCliente;
+
+implementation
+
+{$R *.dfm}
+
+class function TFormCadastroCliente.ClienteShow(pTypeOperation: TTypeOperation;
+  pDados: iControllerCadastros): Boolean;
+begin
+  Result := False;
+  FormCadastroCliente := TFormCadastroCliente.Create(nil);
+  try
+    FormCadastroCliente.FTypeOperation := pTypeOperation;
+    FormCadastroCliente.FDados := pDados;
+    FormCadastroCliente.OpenRegister;
+    FormCadastroCliente.ShowModal;
+    if FormCadastroCliente.ModalResult = mrOk then
+      Result := True;
+  finally
+    FreeAndNil(FormCadastroCliente);
+  end;
+end;
+
+procedure TFormCadastroCliente.FormCreate(Sender: TObject);
+begin
+  inherited;
+  FForm := Self;
+  TipoPessoa;
+end;
+
+procedure TFormCadastroCliente.GetRegister;
+begin
+  FDados.Clientes.AlimentaDados;
+
+  EdtCodigo.Text          := IntToStr(FDados.Clientes.Cadastro.GetCodigo);
+  EdtNome.Text            := FDados.Clientes.Cadastro.GetNome;
+  TgSTipoPessoa.EditValue := FDados.Clientes.Cadastro.GetIndDocumento;
+  EdtDocumento.Text       := FDados.Clientes.Cadastro.GetDocumento;
+  EdtCep.Text             := FDados.Clientes.Cadastro.GetCep;
+  EdtLogradouro.Text      := FDados.Clientes.Cadastro.GetLogradouro;
+  EdtNumEndereco.Text     := IntToStr(FDados.Clientes.Cadastro.GetNumEndereco);
+  EdtBairro.Text          := FDados.Clientes.Cadastro.GetBairro;
+  EdtCidade.Text          := FDados.Clientes.Cadastro.GetCidade;
+  EdtUf.Text              := FDados.Clientes.Cadastro.GetUf;
+  EdtComplemento.Text     := FDados.Clientes.Cadastro.GetComplemento;
+  EdtEndEletronico.Text   := FDados.Clientes.Cadastro.GetEndEletronico;
+  EdtFixo.Text            := FDados.Clientes.Cadastro.GetTelFixo;
+  EdtFax.Text             := FDados.Clientes.Cadastro.GetFax;
+  EdtCelular.Text         := FDados.Clientes.Cadastro.GetCelular;
+end;
+
+procedure TFormCadastroCliente.IncludeData;
+begin
+  FDados
+    .Clientes
+      .Cadastro
+        .Codigo(StrToInt(EdtCodigo.Text))
+        .Nome(EdtNome.Text)
+        .IndDocumento(TgSTipoPessoa.EditValue)
+        .Documento(EdtDocumento.Text)
+        .Cep(EdtCep.Text)
+        .Logradouro(EdtLogradouro.Text)
+        .NumEndereco(StrToIntDef(EdtNumEndereco.Text, 0))
+        .Bairro(EdtBairro.Text)
+        .Cidade(EdtCidade.Text)
+        .Uf(EdtUf.Text)
+        .Complemento(EdtComplemento.Text)
+        .EndEletronico(EdtEndEletronico.Text)
+        .TelFixo(EdtFixo.Text)
+        .Fax(EdtFax.Text)
+        .Celular(EdtCelular.Text)
+end;
+
+procedure TFormCadastroCliente.IncludeRegister;
+begin
+  case FTypeOperation of
+    TpInsert : begin
+      FDados
+        .Clientes
+          .Insert;
+    end;
+
+    TpUpdate : begin
+      FDados
+        .Clientes
+          .Update;
+    end;
+
+    TpDelete : begin
+      FDados
+        .Clientes
+          .Delete;
+    end;
+  end;
+end;
+
+procedure TFormCadastroCliente.OpenRegister(pCodigo: Integer);
+begin
+  case FTypeOperation of
+    TpInsert : begin
+      EdtCodigo.Text := GetCodigo('Clientes', 'Cod_Cliente');
+    end else
+      GetRegister;
+  end;
+end;
+
+procedure TFormCadastroCliente.SpbCancelarClick(Sender: TObject);
+begin
+  inherited;
+  //
+end;
+
+procedure TFormCadastroCliente.SpbGravarClick(Sender: TObject);
+begin
+  inherited;
+  IncludeData;
+  IncludeRegister;
+end;
+
+procedure TFormCadastroCliente.TgSTipoPessoaClick(Sender: TObject);
+begin
+  inherited;
+  TipoPessoa;
+end;
+
+procedure TFormCadastroCliente.TipoPessoa;
+begin
+  if TgSTipoPessoa.EditingValue = 1 then
+    LblTipoPessoa.Caption := 'Fisico'
+  else
+    LblTipoPessoa.Caption := 'Juridico'
+
+end;
+
+end.

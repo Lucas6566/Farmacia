@@ -1,0 +1,27 @@
+unit Farmacia.Controller.Cadastros.Interfaces;
+
+interface
+
+uses
+  Farmacia.Model.Dao.Clientes.Interfaces,
+  Farmacia.Model.Dao.Clientes,
+  Farmacia.Model.Dao.Funcionarios.Interfaces,
+  Farmacia.Model.Dao.Funcionarios,
+  Farmacia.Model.Dao.Servicos.Interfaces,
+  Farmacia.Model.Dao.Servicos,
+  Farmacia.Model.Dao.TipoServicos.Interfaces,
+  Farmacia.Model.Dao.TipoServicos;
+
+type
+  iControllerCadastro = Interface
+    ['{FA7ED330-B5F5-4A0F-90F0-6BFB833D41FF}']
+    function Clientes : iCrudClientes;
+    function Funcionarios : iCrudFuncionarios;
+    function Servicos : iCrudServicos;
+    function TipoServicos : iCrudTipoServicos;
+  End;
+
+
+implementation
+
+end.

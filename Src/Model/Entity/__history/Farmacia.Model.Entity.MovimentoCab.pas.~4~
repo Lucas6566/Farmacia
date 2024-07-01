@@ -1,0 +1,271 @@
+unit Farmacia.Model.Entity.MovimentoCab;
+
+interface
+
+uses
+  Farmacia.Model.Entity.MovimentoCab.Interfaces;
+
+type
+  TMovimentoCab = class(TInterfacedObject, iModelMovimentoCab)
+  private
+    FCodMovimento:Integer;
+    FCodPaciente:Integer;
+    FNomPaciente:String;
+    FDocPaciente:String;
+    FTelPaciente:String;
+    FVlrSubtotal:Double;
+    FVlrDesconto:Double;
+    FVlrAcrescimo:Double;
+    FVlrFrete:Double;
+    FVlrTotal:Double;
+    FObsMovimento:String;
+    FQtdServicos:Double;
+    FCodUsuarioAlt:Integer;
+    FDatCadastro:TDateTime;
+    FDatAlteracao:TDateTime;
+  public
+    function CodMovimento(pValue:Integer):iModelMovimentoCab;
+    function CodPaciente(pValue:Integer):iModelMovimentoCab;
+    function NomPaciente(pValue:String):iModelMovimentoCab;
+    function DocPaciente(pValue:String):iModelMovimentoCab;
+    function TelPaciente(pValue:String):iModelMovimentoCab;
+    function VlrSubtotal(pValue:Double):iModelMovimentoCab;
+    function VlrDesconto(pValue:Double):iModelMovimentoCab;
+    function VlrAcrescimo(pValue:Double):iModelMovimentoCab;
+    function VlrFrete(pValue:Double):iModelMovimentoCab;
+    function VlrTotal(pValue:Double):iModelMovimentoCab;
+    function ObsMovimento(pValue:String):iModelMovimentoCab;
+    function QtdServicos(pValue:Double):iModelMovimentoCab;
+    function CodUsuarioAlt(pValue:Integer):iModelMovimentoCab;
+    function DatCadastro(pValue:TDateTime):iModelMovimentoCab;
+    function DatAlteracao(pValue:TDateTime):iModelMovimentoCab;
+
+    function GetCodMovimento:Integer;
+    function GetCodPaciente:Integer;
+    function GetNomPaciente:String;
+    function GetDocPaciente:String;
+    function GetTelPaciente:String;
+    function GetVlrSubtotal:Double;
+    function GetVlrDesconto:Double;
+    function GetVlrAcrescimo:Double;
+    function GetVlrFrete:Double;
+    function GetVlrTotal:Double;
+    function GetObsMovimento:String;
+    function GetQtdServicos:Double;
+    function GetCodUsuarioAlt:Integer;
+    function GetDatCadastro:TDateTime;
+    function GetDatAlteracao:TDateTime;
+
+    function Clear:iModelMovimentoCab;
+
+    constructor Create;
+    destructor Destroy; override;
+    class function New : iModelMovimentoCab;
+  end;
+
+implementation
+
+{ TMovimentoCab }
+
+constructor TMovimentoCab.Create;
+begin
+
+end;
+
+destructor TMovimentoCab.Destroy;
+begin
+
+  inherited;
+end;
+
+class function TMovimentoCab.New: iModelMovimentoCab;
+begin
+  Result := Self.Create;
+end;
+
+function TMovimentoCab.CodMovimento(pValue:Integer):iModelMovimentoCab;
+begin
+  Result := Self;
+  FCodMovimento:= pValue;
+end;
+
+function TMovimentoCab.CodPaciente(pValue:Integer):iModelMovimentoCab;
+begin
+  Result := Self;
+  FCodPaciente:= pValue;
+end;
+
+function TMovimentoCab.NomPaciente(pValue:String):iModelMovimentoCab;
+begin
+  Result := Self;
+  FNomPaciente:= pValue;
+end;
+
+function TMovimentoCab.DocPaciente(pValue:String):iModelMovimentoCab;
+begin
+  Result := Self;
+  FDocPaciente:= pValue;
+end;
+
+function TMovimentoCab.TelPaciente(pValue:String):iModelMovimentoCab;
+begin
+  Result := Self;
+  FTelPaciente:= pValue;
+end;
+
+function TMovimentoCab.VlrSubtotal(pValue:Double):iModelMovimentoCab;
+begin
+  Result := Self;
+  FVlrSubtotal:= pValue;
+end;
+
+function TMovimentoCab.VlrDesconto(pValue:Double):iModelMovimentoCab;
+begin
+  Result := Self;
+  FVlrDesconto:= pValue;
+end;
+
+function TMovimentoCab.VlrAcrescimo(pValue:Double):iModelMovimentoCab;
+begin
+  Result := Self;
+  FVlrAcrescimo:= pValue;
+end;
+
+function TMovimentoCab.VlrFrete(pValue:Double):iModelMovimentoCab;
+begin
+  Result := Self;
+  FVlrFrete:= pValue;
+end;
+
+function TMovimentoCab.VlrTotal(pValue:Double):iModelMovimentoCab;
+begin
+  Result := Self;
+  FVlrTotal:= pValue;
+end;
+
+function TMovimentoCab.ObsMovimento(pValue:String):iModelMovimentoCab;
+begin
+  Result := Self;
+  FObsMovimento:= pValue;
+end;
+
+function TMovimentoCab.QtdServicos(pValue:Double):iModelMovimentoCab;
+begin
+  Result := Self;
+  FQtdServicos:= pValue;
+end;
+
+function TMovimentoCab.CodUsuarioAlt(pValue:Integer):iModelMovimentoCab;
+begin
+  Result := Self;
+  FCodUsuarioAlt:= pValue;
+end;
+
+function TMovimentoCab.DatCadastro(pValue:TDateTime):iModelMovimentoCab;
+begin
+  Result := Self;
+  FDatCadastro:= pValue;
+end;
+
+function TMovimentoCab.DatAlteracao(pValue:TDateTime):iModelMovimentoCab;
+begin
+  Result := Self;
+  FDatAlteracao:= pValue;
+end;
+
+function TMovimentoCab.GetCodMovimento:Integer;
+begin
+  Result := FCodMovimento;
+end;
+
+function TMovimentoCab.GetCodPaciente:Integer;
+begin
+  Result := FCodPaciente;
+end;
+
+function TMovimentoCab.GetNomPaciente:String;
+begin
+  Result := FNomPaciente;
+end;
+
+function TMovimentoCab.GetDocPaciente:String;
+begin
+  Result := FDocPaciente;
+end;
+
+function TMovimentoCab.GetTelPaciente:String;
+begin
+  Result := FTelPaciente;
+end;
+
+function TMovimentoCab.GetVlrSubtotal:Double;
+begin
+  Result := FVlrSubtotal;
+end;
+
+function TMovimentoCab.GetVlrDesconto:Double;
+begin
+  Result := FVlrDesconto;
+end;
+
+function TMovimentoCab.GetVlrAcrescimo:Double;
+begin
+  Result := FVlrAcrescimo;
+end;
+
+function TMovimentoCab.GetVlrFrete:Double;
+begin
+  Result := FVlrFrete;
+end;
+
+function TMovimentoCab.GetVlrTotal:Double;
+begin
+  Result := FVlrTotal;
+end;
+
+function TMovimentoCab.GetObsMovimento:String;
+begin
+  Result := FObsMovimento;
+end;
+
+function TMovimentoCab.GetQtdServicos:Double;
+begin
+  Result := FQtdServicos;
+end;
+
+function TMovimentoCab.GetCodUsuarioAlt:Integer;
+begin
+  Result := FCodUsuarioAlt;
+end;
+
+function TMovimentoCab.GetDatCadastro:TDateTime;
+begin
+  Result := FDatCadastro;
+end;
+
+function TMovimentoCab.GetDatAlteracao:TDateTime;
+begin
+  Result := FDatAlteracao;
+end;
+
+function TMovimentoCab.Clear:iModelMovimentoCab;
+begin
+  Result := Self;
+  FCodMovimento := 0;
+  FCodPaciente := 0;
+  FNomPaciente := EmptyStr;
+  FDocPaciente := EmptyStr;
+  FTelPaciente := EmptyStr;
+  FVlrSubtotal := EmptyStr;
+  FVlrDesconto := EmptyStr;
+  FVlrAcrescimo := EmptyStr;
+  FVlrFrete := EmptyStr;
+  FVlrTotal := EmptyStr;
+  FObsMovimento := EmptyStr;
+  FQtdServicos := EmptyStr;
+  FCodUsuarioAlt := 0;
+  FDatCadastro := 0;
+  FDatAlteracao := 0;
+end;
+
+end.
