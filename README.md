@@ -27,6 +27,6 @@ Após clicar em salvar, o sistema irá gravar o serviço e somar os totalizadore
 ![MovimentoCadastro1](https://github.com/Lucas6566/Farmacia/assets/89346011/35478ca9-eae4-43ac-8917-7032f3f2c69c)
 
 Após a confirmação da tela de vendas, você poderá selecionar a condição de pagamento 
-![Uploading Pagamento.png…]()
+![Pagamento](https://github.com/Lucas6566/Farmacia/assets/89346011/707d8215-196e-48f3-b2e5-17b146f13ff5)
 
 
