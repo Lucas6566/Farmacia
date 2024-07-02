@@ -1,3 +1,5 @@
-Esse projeto é o sistema de farmacia, nele você podera ter o controle de serviços farmaceutico.
+Ola esse projeto foi desenvolvido em Delphi utilizando o banco de dados firebird
 
-Nela contendo serviços, tipo do serviço, cadastro de clientes, funcionario e vendas 
+Sistema desenvolvido para controle de serviços farmacêuticos
+
+![ClientePesquisa](https://github.com/Lucas6566/Farmacia/assets/89346011/965e3efb-193c-4494-90d0-b5e2f3e4739c)
