@@ -18,7 +18,7 @@ Pesquisa o tipo de serviço
 ![PesquisaGenericaTipoServico](https://github.com/Lucas6566/Farmacia/assets/89346011/b3260ef8-34a4-47c3-bc11-4517063e5755)
 
 Cadastro do tipo de serviço
-![PesquisaGenericaTipoServico](https://github.com/Lucas6566/Farmacia/assets/89346011/58ab207f-54fd-48cd-ba3f-c10e6420211b)
+![CadastroTipoServico](https://github.com/Lucas6566/Farmacia/assets/89346011/59abc881-1384-4f3a-83b9-9b9b92ac540f)
 
 Inclusão de Vendas, onde você pode pesquisar cliente, e incluir os itens 
 ![MovimentoCadastro](https://github.com/Lucas6566/Farmacia/assets/89346011/e0e1326b-093b-4bd7-b033-7956223bc9ed)
