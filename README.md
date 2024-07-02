@@ -8,7 +8,7 @@ Pesquisa de Clientes contendo botão de Excluir, consultar, alterer e incluir
 Cadastro de Clientes
 ![ClienteCadastro](https://github.com/Lucas6566/Farmacia/assets/89346011/2d6cd1ed-f1ef-44c4-b66b-642bea1e0b52)
 
-Cadastro de Funcionarios
+Cadastro de Funcionarios, onde você poderá escolher a sua função 
 ![FuncionarioCadastro](https://github.com/Lucas6566/Farmacia/assets/89346011/b774de7e-1e4e-4c46-830d-d671c7390814)
 
 Cadastro de Serviços
@@ -20,8 +20,10 @@ Pesquisa o tipo de serviço
 Cadastro do tipo de serviço
 ![PesquisaGenericaTipoServico](https://github.com/Lucas6566/Farmacia/assets/89346011/58ab207f-54fd-48cd-ba3f-c10e6420211b)
 
-Inclusão de Vendas
+Inclusão de Vendas, onde você pode pesquisar cliente, e incluir os itens 
 ![MovimentoCadastro](https://github.com/Lucas6566/Farmacia/assets/89346011/e0e1326b-093b-4bd7-b033-7956223bc9ed)
+
+Após clicar em salvar, o sistema irá gravar o serviço e somar os totalizadores dos itens
 ![MovimentoCadastro1](https://github.com/Lucas6566/Farmacia/assets/89346011/35478ca9-eae4-43ac-8917-7032f3f2c69c)
 
 Após a confirmação da tela de vendas, você poderá selecionar a condição de pagamento 
